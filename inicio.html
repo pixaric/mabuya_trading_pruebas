@@ -236,7 +236,31 @@
             </div>
         </section>
 
-        <!-- Sección de Lista de Seguimiento (Watchlist) - Tabla Estilizada con 10 Activos -->
+        <!-- Sección de Buscador de Noticias (REORDENADA: Ahora va aquí) -->
+        <section class="mb-12 sm:mb-20 pt-8 sm:pt-16">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-accent-blue mb-6 sm:mb-10">Buscador Web Directo de Noticias Financieras</h2>
+            <div class="bg-secondary-dark p-6 sm:p-8 rounded-2xl shadow-xl max-w-4xl mx-auto border-2 border-accent-blue/50">
+                <p class="text-base sm:text-xl text-gray-400 mb-4 sm:mb-6 text-center">
+                    Ingresa un símbolo de acciones (ticker, ej: AAPL, TSLA) y pulsa "Buscar" para abrir una nueva pestaña de Google con las noticias filtradas por los principales medios financieros.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-4 sm:mb-8"> <!-- Flex-col en móvil, gap responsivo -->
+                    <input type="text" id="tickerInput" placeholder="Ej: GOOG, MSFT, BTC/USD" class="flex-grow p-3 sm:p-4 rounded-xl bg-primary-dark border border-gray-600 focus:ring-accent-gold focus:border-accent-gold text-white text-base sm:text-xl uppercase" style="text-transform: uppercase;">
+                    <button id="searchButton" class="bg-accent-gold text-primary-dark font-black py-3 sm:py-4 px-6 sm:px-8 rounded-xl text-base sm:text-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed">
+                        Buscar Noticias Directas
+                    </button>
+                </div>
+                
+                <!-- Área de Resultados y Mensajes de Error (Simplificada) -->
+                <div id="resultsArea" class="mt-4 sm:mt-8">
+                    <div id="errorOutput" class="hidden p-3 sm:p-4 rounded-lg bg-sell/20 border border-sell text-sell text-base sm:text-xl font-medium">
+                        <!-- Error text will be injected here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Sección de Lista de Seguimiento (Watchlist) - Tabla Estilizada con 10 Activos (REORDENADA: Ahora va aquí) -->
         <section class="mb-12 sm:mb-20 pt-8 sm:pt-16">
             <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-accent-blue mb-6 sm:mb-10">Lista de Seguimiento (Activos Clave)</h2>
             <p class="text-base sm:text-xl text-gray-400 text-center mb-6 sm:mb-8 max-w-3xl mx-auto">
@@ -358,30 +382,6 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-        </section>
-
-        <!-- Sección de Buscador de Noticias -->
-        <section class="mb-12 sm:mb-20 pt-8 sm:pt-16">
-            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-accent-blue mb-6 sm:mb-10">Buscador Web Directo de Noticias Financieras</h2>
-            <div class="bg-secondary-dark p-6 sm:p-8 rounded-2xl shadow-xl max-w-4xl mx-auto border-2 border-accent-blue/50">
-                <p class="text-base sm:text-xl text-gray-400 mb-4 sm:mb-6 text-center">
-                    Ingresa un símbolo de acciones (ticker, ej: AAPL, TSLA) y pulsa "Buscar" para abrir una nueva pestaña de Google con las noticias filtradas por los principales medios financieros.
-                </p>
-
-                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-4 sm:mb-8"> <!-- Flex-col en móvil, gap responsivo -->
-                    <input type="text" id="tickerInput" placeholder="Ej: GOOG, MSFT, BTC/USD" class="flex-grow p-3 sm:p-4 rounded-xl bg-primary-dark border border-gray-600 focus:ring-accent-gold focus:border-accent-gold text-white text-base sm:text-xl uppercase" style="text-transform: uppercase;">
-                    <button id="searchButton" class="bg-accent-gold text-primary-dark font-black py-3 sm:py-4 px-6 sm:px-8 rounded-xl text-base sm:text-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed">
-                        Buscar Noticias Directas
-                    </button>
-                </div>
-                
-                <!-- Área de Resultados y Mensajes de Error (Simplificada) -->
-                <div id="resultsArea" class="mt-4 sm:mt-8">
-                    <div id="errorOutput" class="hidden p-3 sm:p-4 rounded-lg bg-sell/20 border border-sell text-sell text-base sm:text-xl font-medium">
-                        <!-- Error text will be injected here -->
-                    </div>
-                </div>
             </div>
         </section>
 
