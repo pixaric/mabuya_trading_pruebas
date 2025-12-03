@@ -39,11 +39,11 @@
         }
         /* Aumento de la fuente base para todo el cuerpo */
         body {
-            font-size: 1.25rem; /* text-xl: 20px */
+            font-size: 1rem; /* text-xl: 20px */
         }
         /* Ajuste de inputs y botones para mejor legibilidad */
         input, button, select {
-            font-size: 1.25rem; /* text-xl: 20px */
+            font-size: 1rem; /* text-xl: 20px */
         }
     </style>
 </head>
@@ -143,20 +143,20 @@
                     
                     <!-- 1. Precio de Entrada -->
                     <div>
-                        <label for="purchasePrice" class="block text-xl font-medium text-gray-300 mb-3">Precio de Entrada ($)</label>
-                        <input type="number" id="purchasePrice" value="" step="0.0001" class="w-full p-5 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateMarkup()">
+                        <label for="purchasePrice" class="block text-xl font-medium text-gray-300 mb-1">Precio de Entrada ($)</label>
+                        <input type="number" id="purchasePrice" value="" step="0.0001" class="w-full p-2 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateMarkup()">
                     </div>
 
                     <!-- 2. Ganancia Objetivo (%) -->
                     <div>
                         <label for="markupPercent" class="block text-xl font-medium text-gray-300 mb-3">Ganancia Objetivo (%)</label>
-                        <input type="number" id="markupPercent" value="" step="0.01" class="w-full p-5 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateMarkup()">
+                        <input type="number" id="markupPercent" value="" step="0.01" class="w-full p-2 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateMarkup()">
                     </div>
                     
                     <!-- 3. Cantidad de Acciones -->
                     <div>
                         <label for="sharesQuantity" class="block text-xl font-medium text-gray-300 mb-3">Cantidad de Acciones</label>
-                        <input type="number" id="sharesQuantity" value="" step="1" class="w-full p-5 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateMarkup()">
+                        <input type="number" id="sharesQuantity" value="" step="1" class="w-full p-2 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateMarkup()">
                     </div>
                     
                 </div>
@@ -271,25 +271,25 @@
                     <!-- Precio (Premium) -->
                     <div>
                         <label for="optionPrice" class="block text-xl font-medium text-gray-300 mb-3">Precio de Opción (Premium $)</label>
-                        <input type="number" id="optionPrice" value="" step="0.01" class="w-full p-5 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateOptionsPosition()">
+                        <input type="number" id="optionPrice" value="" step="0.01" class="w-full p-2 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateOptionsPosition()">
                     </div>
 
                     <!-- Cantidad de Contratos -->
                     <div>
                         <label for="optionContracts" class="block text-xl font-medium text-gray-300 mb-3">Cantidad de Contratos</label>
-                        <input type="number" id="optionContracts" value="" step="1" class="w-full p-5 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateOptionsPosition()">
+                        <input type="number" id="optionContracts" value="" step="1" class="w-full p-2 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateOptionsPosition()">
                     </div>
 
                     <!-- Porcentaje de Ganancia Objetivo (Valor por defecto 12) -->
                     <div>
                         <label for="optionTargetPercent" class="block text-xl font-medium text-gray-300 mb-3">Ganancia Objetivo (%)</label>
-                        <input type="number" id="optionTargetPercent" value="12" step="1" class="w-full p-5 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateOptionsPosition()">
+                        <input type="number" id="optionTargetPercent" value="12" step="1" class="w-full p-2 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateOptionsPosition()">
                     </div>
                     
                     <!-- Comisión por Contrato (Default 2) -->
                     <div>
                         <label for="optionCommission" class="block text-xl font-medium text-gray-300 mb-3">Comisión por Contrato ($)</label>
-                        <input type="number" id="optionCommission" value="2" step="0.01" class="w-full p-5 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateOptionsPosition()">
+                        <input type="number" id="optionCommission" value="2" step="0.01" class="w-full p-2 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateOptionsPosition()">
                     </div>
                     
                 </div>
