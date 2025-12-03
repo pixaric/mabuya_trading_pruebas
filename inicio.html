@@ -30,67 +30,77 @@
         }
     </script>
     <style>
+        /* Aumento de la fuente base para todo el cuerpo */
+        body {
+            font-size: 1.25rem; /* text-xl: 20px */
+        }
         /* Estilo para el enlace activo */
         .active-link {
-            border-bottom: 2px solid #ffc107;
+            border-bottom: 3px solid #ffc107; /* Borde más grueso */
             color: #ffc107 !important;
         }
         /* Estilos del Contenedor de la Imagen/Gráfico para mantener la altura */
         .tradingview-widget-container {
-            max-height: 400px;
-            min-height: 250px;
+            max-height: 450px; /* Aumentado */
+            min-height: 300px; /* Aumentado */
         }
         /* Estilos para la tabla de seguimiento */
         .watchlist-table th {
-            padding: 1rem;
+            padding: 1.5rem; /* Aumentado */
             text-align: left;
-            font-weight: 600;
+            font-weight: 700;
             color: #ffc107;
+            font-size: 1.5rem; /* text-2xl */
         }
         .watchlist-table td {
-            padding: 1rem;
+            padding: 1.5rem; /* Aumentado */
             border-top: 1px solid #2d2d2d;
+            font-size: 1.25rem; /* text-xl */
         }
         .watchlist-table tr:hover {
-            background-color: #262626; /* Slightly lighter hover for visibility */
+            background-color: #262626; 
+        }
+        .watchlist-recommendation {
+            font-size: 1rem; /* Pequeño para la etiqueta */
         }
     </style>
 </head>
-<body class="bg-primary-dark text-gray-100 font-sans min-h-screen">
+<body class="bg-primary-dark text-gray-100 font-sans min-h-screen pt-32 sm:pt-40"> <!-- Aumento de padding superior por header grande -->
 
     <!-- Barra de Navegación Fija -->
-    <header class="sticky top-0 z-50 bg-secondary-dark shadow-xl">
+    <header class="fixed top-0 left-0 right-0 z-50 bg-secondary-dark shadow-2xl">
+        <!-- Contenedor principal de navegación -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
+            <div class="flex justify-between items-center h-24"> <!-- Altura muy aumentada -->
                 <!-- Logo -->
-                <a href="inicio.html" class="text-2xl font-bold tracking-wider text-accent-gold transition duration-300 hover:text-white">
+                <a href="inicio.html" class="text-4xl font-black tracking-widest text-accent-gold transition duration-300 hover:text-white"> <!-- text-4xl -->
                     MABUYA <span class="text-white">TRADING</span>
                 </a>
                 
                 <!-- Menú de Navegación (Desktop) - Inicio Activo -->
-                <nav class="hidden md:flex space-x-8">
+                <nav class="hidden md:flex space-x-12"> <!-- Espacio aumentado -->
                     <!-- Inicio está activo -->
-                    <a href="inicio.html" class="nav-link active-link text-gray-300 transition duration-150 py-2 border-b-2 border-transparent hover:border-accent-gold">Inicio</a>
-                    <a href="academia.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-2 border-b-2 border-transparent hover:border-accent-gold">Academia</a>
-                    <a href="videos.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-2 border-b-2 border-transparent hover:border-accent-gold">Videos</a>
-                    <a href="calculadora.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-2 border-b-2 border-transparent hover:border-accent-gold">Calculadora</a>
+                    <a href="inicio.html" class="nav-link active-link text-gray-300 transition duration-150 py-3 text-xl font-medium border-b-3 border-transparent hover:border-accent-gold">Inicio</a>
+                    <a href="academia.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-3 text-xl font-medium border-b-3 border-transparent hover:border-accent-gold">Academia</a>
+                    <a href="videos.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-3 text-xl font-medium border-b-3 border-transparent hover:border-accent-gold">Videos</a>
+                    <a href="calculadora.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-3 text-xl font-medium border-b-3 border-transparent hover:border-accent-gold">Calculadora</a>
                 </nav>
 
                 <!-- Botón de Menú Móvil -->
-                <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-accent-gold focus:outline-none p-2 rounded-md" aria-label="Toggle Menu">
+                <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-accent-gold focus:outline-none p-3 rounded-md" aria-label="Toggle Menu">
                     <!-- Icono de Hamburguesa (SVG) -->
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
             </div>
         </div>
         
         <!-- Menú Móvil Desplegable -->
         <div id="mobile-menu" class="hidden md:hidden">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="inicio.html" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-accent-blue/20 hover:bg-accent-gold/20 active-link">Inicio</a>
-                <a href="academia.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-accent-gold/20">Academia</a>
-                <a href="videos.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-accent-gold/20">Videos</a>
-                <a href="calculadora.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-accent-gold/20">Calculadora</a>
+            <div class="px-4 pt-2 pb-4 space-y-2 sm:px-6">
+                <a href="inicio.html" class="block px-3 py-3 rounded-lg text-2xl font-semibold text-white bg-accent-blue/20 hover:bg-accent-gold/20 active-link">Inicio</a>
+                <a href="academia.html" class="block px-3 py-3 rounded-lg text-2xl font-semibold text-gray-300 hover:bg-accent-gold/20">Academia</a>
+                <a href="videos.html" class="block px-3 py-3 rounded-lg text-2xl font-semibold text-gray-300 hover:bg-accent-gold/20">Videos</a>
+                <a href="calculadora.html" class="block px-3 py-3 rounded-lg text-2xl font-semibold text-gray-300 hover:bg-accent-gold/20">Calculadora</a>
             </div>
         </div>
     </header>
@@ -99,15 +109,15 @@
 
         <!-- Sección Principal de Inicio (Home) -->
         <section class="mb-20">
-            <div class="bg-secondary-dark p-8 md:p-16 rounded-2xl shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-10">
+            <div class="bg-secondary-dark p-10 md:p-20 rounded-2xl shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-12">
                 <div class="lg:w-1/2">
-                    <h1 class="text-5xl md:text-6xl font-extrabold text-white leading-tight mb-4">
+                    <h1 class="text-6xl md:text-7xl font-extrabold text-white leading-tight mb-6"> <!-- Fuente muy grande -->
                         <span class="text-accent-gold">Transforma</span> tu Trading.
                     </h1>
-                    <p class="text-xl text-gray-300 mb-8">
+                    <p class="text-2xl text-gray-300 mb-10"> <!-- Fuente más grande -->
                         En Mabuya Trading, te proporcionamos las herramientas y el conocimiento experto para navegar los mercados financieros con confianza y estrategia. Somos tu guía hacia la rentabilidad sostenible.
                     </p>
-                    <a href="academia.html" class="inline-block bg-accent-gold text-primary-dark font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-500">
+                    <a href="academia.html" class="inline-block bg-accent-gold text-primary-dark font-black py-4 px-10 rounded-full text-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-500"> <!-- Botón más grande -->
                         ¡Empieza a Aprender Hoy!
                     </a>
                 </div>
@@ -117,7 +127,7 @@
                     <!-- Contenedor para mantener la estética y altura -->
                     <div class="tradingview-widget-container rounded-xl w-full shadow-lg border-2 border-accent-gold/50 overflow-hidden">
                         
-                        <!-- SVG de Gráfico de Velas Japonesas -->
+                        <!-- SVG de Gráfico de Velas Japonesas (El SVG no cambia, pero el contenedor es más grande) -->
                         <svg viewBox="0 0 800 450" class="w-full h-full" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg" style="background-color: #1e1e1e;">
                             <!-- Líneas de Cuadrícula (Gris Sutil) -->
                             <line x1="50" y1="400" x2="750" y2="400" stroke="#2d2d2d" stroke-dasharray="2 2"/>
@@ -186,10 +196,10 @@
                             <line x1="715" y1="120" x2="715" y2="90" stroke="#ef4444" stroke-width="1"/>
                             
                             <!-- Texto de Título y Subtítulo -->
-                            <text x="50%" y="40" dominant-baseline="middle" text-anchor="middle" font-size="28" fill="white" font-family="Inter, sans-serif" font-weight="bold">
+                            <text x="50%" y="40" dominant-baseline="middle" text-anchor="middle" font-size="32" fill="white" font-family="Inter, sans-serif" font-weight="bold"> <!-- Aumentado -->
                                 ANÁLISIS TÉCNICO
                             </text>
-                            <text x="50%" y="65" dominant-baseline="middle" text-anchor="middle" font-size="16" fill="#ffc107" font-family="Inter, sans-serif">
+                            <text x="50%" y="70" dominant-baseline="middle" text-anchor="middle" font-size="20" fill="#ffc107" font-family="Inter, sans-serif"> <!-- Aumentado -->
                                 Gráfico de Velas Japonesas (M5)
                             </text>
                         </svg>
@@ -200,36 +210,37 @@
         </section>
 
         <!-- Sección de Características Clave -->
-        <section class="mb-20 pt-10">
-            <h2 class="text-4xl font-bold text-center text-white mb-8">¿Por Qué Elegirnos?</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                <div class="bg-secondary-dark p-6 rounded-xl shadow-lg border border-gray-700">
-                    <span class="text-4xl text-accent-gold mb-3 block">📈</span>
-                    <h3 class="text-xl font-semibold mb-2">Estrategias Probadas</h3>
-                    <p class="text-gray-400">Acceso a metodologías que han demostrado ser efectivas en diversos mercados.</p>
+        <section class="mb-20 pt-16">
+            <h2 class="text-5xl font-bold text-center text-white mb-10">¿Por Qué Elegirnos?</h2> <!-- Aumentado -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center"> <!-- Espacio aumentado -->
+                <div class="bg-secondary-dark p-8 rounded-xl shadow-lg border border-gray-700"> <!-- Padding aumentado -->
+                    <span class="text-5xl text-accent-gold mb-4 block">📈</span> <!-- Icono más grande -->
+                    <h3 class="text-2xl font-semibold mb-3">Estrategias Probadas</h3> <!-- Aumentado -->
+                    <p class="text-xl text-gray-400">Acceso a metodologías que han demostrado ser efectivas en diversos mercados.</p> <!-- Aumentado -->
                 </div>
-                <div class="bg-secondary-dark p-6 rounded-xl shadow-lg border border-gray-700">
-                    <span class="text-4xl text-accent-gold mb-3 block">🧠</span>
-                    <h3 class="text-xl font-semibold mb-2">Psicología de Trading</h3>
-                    <p class="text-gray-400">Entrenamiento mental crucial para mantener la disciplina y gestionar las emociones.</p>
+                <div class="bg-secondary-dark p-8 rounded-xl shadow-lg border border-gray-700">
+                    <span class="text-5xl text-accent-gold mb-4 block">🧠</span>
+                    <h3 class="text-2xl font-semibold mb-3">Psicología de Trading</h3>
+                    <p class="text-xl text-gray-400">Entrenamiento mental crucial para mantener la disciplina y gestionar las emociones.</p>
                 </div>
-                <div class="bg-secondary-dark p-6 rounded-xl shadow-lg border border-gray-700">
-                    <span class="text-4xl text-accent-gold mb-3 block">🛠️</span>
-                    <h3 class="text-xl font-semibold mb-2">Herramientas Útiles</h3>
-                    <p class="text-gray-400">Calculadoras y recursos diseñados para simplificar tu planificación operativa diaria.</p>
+                <div class="bg-secondary-dark p-8 rounded-xl shadow-lg border border-gray-700">
+                    <span class="text-5xl text-accent-gold mb-4 block">🛠️</span>
+                    <h3 class="text-2xl font-semibold mb-3">Herramientas Útiles</h3>
+                    <p class="text-xl text-gray-400">Calculadoras y recursos diseñados para simplificar tu planificación operativa diaria.</p>
                 </div>
             </div>
         </section>
 
         <!-- Sección de Lista de Seguimiento (Watchlist) - Tabla Estilizada con 10 Activos -->
-        <section class="mb-20 pt-10">
-            <h2 class="text-4xl font-bold text-center text-accent-blue mb-8">Lista de Seguimiento (Activos Clave)</h2>
-            <p class="text-gray-400 text-center mb-6 max-w-3xl mx-auto">
+        <section class="mb-20 pt-16">
+            <h2 class="text-5xl font-bold text-center text-accent-blue mb-10">Lista de Seguimiento (Activos Clave)</h2> <!-- Aumentado -->
+            <p class="text-xl text-gray-400 text-center mb-8 max-w-3xl mx-auto"> <!-- Aumentado -->
                 Una selección de 10 activos populares con recomendaciones simuladas.
             </p>
 
-            <div class="bg-secondary-dark p-4 rounded-2xl shadow-xl max-w-4xl mx-auto border-2 border-accent-blue/50 overflow-x-auto">
-                <table class="w-full text-sm watchlist-table">
+            <!-- La clase watchlist-table maneja el tamaño de fuente y padding en el CSS -->
+            <div class="bg-secondary-dark p-6 rounded-2xl shadow-xl max-w-6xl mx-auto border-2 border-accent-blue/50 overflow-x-auto">
+                <table class="w-full watchlist-table">
                     <thead>
                         <tr>
                             <th>Activo</th>
@@ -247,7 +258,7 @@
                             <td class="font-mono">$185.34</td>
                             <td class="text-buy">+1.25%</td>
                             <td>
-                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-buy/20 text-buy">COMPRAR</span>
+                                <span class="px-4 py-2 watchlist-recommendation font-semibold rounded-full bg-buy/20 text-buy">COMPRAR</span>
                             </td>
                         </tr>
                         <!-- Fila 2 -->
@@ -257,7 +268,7 @@
                             <td class="font-mono">$410.78</td>
                             <td class="text-sell">-0.55%</td>
                             <td>
-                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-hold/20 text-hold">MANTENER</span>
+                                <span class="px-4 py-2 watchlist-recommendation font-semibold rounded-full bg-hold/20 text-hold">MANTENER</span>
                             </td>
                         </tr>
                         <!-- Fila 3 -->
@@ -267,7 +278,7 @@
                             <td class="font-mono">$215.12</td>
                             <td class="text-sell">-2.10%</td>
                             <td>
-                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-sell/20 text-sell">VENDER</span>
+                                <span class="px-4 py-2 watchlist-recommendation font-semibold rounded-full bg-sell/20 text-sell">VENDER</span>
                             </td>
                         </tr>
                         <!-- Fila 4 -->
@@ -277,7 +288,7 @@
                             <td class="font-mono">$138.99</td>
                             <td class="text-buy">+0.88%</td>
                             <td>
-                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-buy/20 text-buy">COMPRAR</span>
+                                <span class="px-4 py-2 watchlist-recommendation font-semibold rounded-full bg-buy/20 text-buy">COMPRAR</span>
                             </td>
                         </tr>
                         <!-- Fila 5 -->
@@ -287,7 +298,7 @@
                             <td class="font-mono">$65,100.00</td>
                             <td class="text-buy">+3.50%</td>
                             <td>
-                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-buy/20 text-buy">COMPRAR</span>
+                                <span class="px-4 py-2 watchlist-recommendation font-semibold rounded-full bg-buy/20 text-buy">COMPRAR</span>
                             </td>
                         </tr>
                         <!-- Fila 6 -->
@@ -297,7 +308,7 @@
                             <td class="font-mono">$3,450.50</td>
                             <td class="text-hold">0.00%</td>
                             <td>
-                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-hold/20 text-hold">MANTENER</span>
+                                <span class="px-4 py-2 watchlist-recommendation font-semibold rounded-full bg-hold/20 text-hold">MANTENER</span>
                             </td>
                         </tr>
                         <!-- Fila 7 -->
@@ -307,7 +318,7 @@
                             <td class="font-mono">$2,321.45</td>
                             <td class="text-sell">-0.15%</td>
                             <td>
-                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-hold/20 text-hold">MANTENER</span>
+                                <span class="px-4 py-2 watchlist-recommendation font-semibold rounded-full bg-hold/20 text-hold">MANTENER</span>
                             </td>
                         </tr>
                         <!-- Fila 8 -->
@@ -317,7 +328,7 @@
                             <td class="font-mono">$1.0755</td>
                             <td class="text-sell">-0.22%</td>
                             <td>
-                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-sell/20 text-sell">VENDER</span>
+                                <span class="px-4 py-2 watchlist-recommendation font-semibold rounded-full bg-sell/20 text-sell">VENDER</span>
                             </td>
                         </tr>
                         <!-- Fila 9 -->
@@ -327,7 +338,7 @@
                             <td class="font-mono">$188.45</td>
                             <td class="text-buy">+0.42%</td>
                             <td>
-                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-buy/20 text-buy">COMPRAR</span>
+                                <span class="px-4 py-2 watchlist-recommendation font-semibold rounded-full bg-buy/20 text-buy">COMPRAR</span>
                             </td>
                         </tr>
                         <!-- Fila 10 -->
@@ -337,7 +348,7 @@
                             <td class="font-mono">$625.00</td>
                             <td class="text-sell">-1.80%</td>
                             <td>
-                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-sell/20 text-sell">VENDER</span>
+                                <span class="px-4 py-2 watchlist-recommendation font-semibold rounded-full bg-sell/20 text-sell">VENDER</span>
                             </td>
                         </tr>
                     </tbody>
@@ -345,75 +356,392 @@
             </div>
         </section>
 
-        <!-- Nueva Sección: Checklist Diario del Trader -->
-        <section class="mb-20 pt-10">
-            <h2 class="text-4xl font-bold text-center text-accent-gold mb-8">Checklist Diario del Trader</h2>
-            <p class="text-gray-400 text-center mb-6 max-w-3xl mx-auto">
-                Pasos esenciales para una preparación de mercado sólida y disciplinada antes de ejecutar cualquier operación.
-            </p>
+        <!-- Sección de Checklist y Enlaces (Organizado en Grid de 2 Columnas) -->
+        <section class="mb-20 pt-16">
+            <h2 class="text-5xl font-bold text-center text-accent-gold mb-10">Recursos y Preparación</h2> <!-- Título general para la sección -->
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                
+                <!-- Columna 1: Checklist Diario del Trader -->
+                <div class="bg-secondary-dark p-8 rounded-2xl shadow-xl border-2 border-accent-gold/50"> <!-- Padding y ancho aumentado -->
+                    <h3 class="text-4xl font-bold text-center text-white mb-6">Checklist Diario</h3>
+                    <ul class="space-y-6"> <!-- Espacio entre elementos aumentado -->
+                        <!-- Tarea 1 -->
+                        <li class="flex items-start text-2xl"> <!-- Aumentado -->
+                            <span class="text-buy mr-4 mt-1">✅</span>
+                            <p class="text-gray-200">
+                                **Revisar el Calendario Económico:** Identificar eventos de alto impacto (noticias/discursos).
+                            </p>
+                        </li>
+                        <!-- Tarea 2 -->
+                        <li class="flex items-start text-2xl">
+                            <span class="text-buy mr-4 mt-1">✅</span>
+                            <p class="text-gray-200">
+                                **Analizar la Estructura Superior:** Confirmar la tendencia macro (diaria/semanal).
+                            </p>
+                        </li>
+                        <!-- Tarea 3 -->
+                        <li class="flex items-start text-2xl">
+                            <span class="text-buy mr-4 mt-1">✅</span>
+                            <p class="text-gray-200">
+                                **Evaluar el Sentimiento General:** Determinar si hay 'Aversión al Riesgo' o 'Apetito por el Riesgo'.
+                            </p>
+                        </li>
+                        <!-- Tarea 4 -->
+                        <li class="flex items-start text-2xl">
+                            <span class="text-buy mr-4 mt-1">✅</span>
+                            <p class="text-gray-200">
+                                **Definir Sesgos de Trading:** Establecer si buscarás principalmente COMPRAS o VENTAS.
+                            </p>
+                        </li>
+                        <!-- Tarea 5 -->
+                        <li class="flex items-start text-2xl">
+                            <span class="text-buy mr-4 mt-1">✅</span>
+                            <p class="text-gray-200">
+                                **Verificar el Plan de Gestión de Riesgo:** Confirmar el riesgo máximo por operación.
+                            </p>
+                        </li>
+                        <!-- Tarea 6 -->
+                        <li class="flex items-start text-2xl">
+                            <span class="text-buy mr-4 mt-1">✅</span>
+                            <p class="text-gray-200">
+                                **Preparación Mental:** Asegurarse de estar descansado y emocionalmente estable.
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Columna 2: Enlaces de Interés -->
+                <div class="bg-secondary-dark p-8 rounded-2xl shadow-xl border-2 border-accent-gold/50">
+                    <h3 class="text-4xl font-bold text-center text-white mb-6">Enlaces de Interés</h3>
+                    <p class="text-xl text-gray-400 mb-6 text-center">Acceso rápido a las mejores plataformas de datos y análisis.</p>
+                    <ul class="space-y-4">
+                        
+                        <!-- Enlace 1: Finviz (Análisis de Acciones) -->
+                        <li class="flex items-center bg-[#1c2a38]/50 p-4 rounded-lg hover:bg-[#1c2a38] transition duration-300 border border-gray-700">
+                            <span class="text-3xl mr-4 text-accent-blue">📊</span>
+                            <a href="https://finviz.com/" target="_blank" class="text-2xl font-semibold text-white hover:text-accent-gold flex-grow">
+                                Finviz
+                            </a>
+                            <p class="text-xl text-gray-400 hidden sm:block">Filtro y visualización de acciones.</p>
+                        </li>
 
-            <div class="bg-secondary-dark p-6 rounded-2xl shadow-xl max-w-3xl mx-auto border-2 border-accent-gold/50">
-                <ul class="space-y-4">
-                    <!-- Tarea 1 -->
-                    <li class="flex items-start text-lg">
-                        <span class="text-buy mr-3 mt-1">✅</span>
-                        <p class="text-gray-200">
-                            **Revisar el Calendario Económico:** Identificar eventos de alto impacto (noticias/discursos) que puedan causar volatilidad.
-                        </p>
-                    </li>
-                    <!-- Tarea 2 -->
-                    <li class="flex items-start text-lg">
-                        <span class="text-buy mr-3 mt-1">✅</span>
-                        <p class="text-gray-200">
-                            **Analizar la Estructura Superior:** Confirmar la tendencia macro (diaria/semanal) y las zonas de liquidez clave.
-                        </p>
-                    </li>
-                    <!-- Tarea 3 -->
-                    <li class="flex items-start text-lg">
-                        <span class="text-buy mr-3 mt-1">✅</span>
-                        <p class="text-gray-200">
-                            **Evaluar el Sentimiento General:** Determinar si el mercado está en modo 'Aversión al Riesgo' o 'Apetito por el Riesgo'.
-                        </p>
-                    </li>
-                    <!-- Tarea 4 -->
-                    <li class="flex items-start text-lg">
-                        <span class="text-buy mr-3 mt-1">✅</span>
-                        <p class="text-gray-200">
-                            **Definir Sesgos de Trading:** Establecer si buscarás principalmente COMPRAS o VENTAS en los activos de tu lista.
-                        </p>
-                    </li>
-                    <!-- Tarea 5 -->
-                    <li class="flex items-start text-lg">
-                        <span class="text-buy mr-3 mt-1">✅</span>
-                        <p class="text-gray-200">
-                            **Verificar el Plan de Gestión de Riesgo:** Confirmar el riesgo máximo por operación y el límite de pérdida diaria (Stop Loss).
-                        </p>
-                    </li>
-                    <!-- Tarea 6 -->
-                    <li class="flex items-start text-lg">
-                        <span class="text-buy mr-3 mt-1">✅</span>
-                        <p class="text-gray-200">
-                            **Preparación Mental:** Asegurarse de estar descansado, sin distracciones y emocionalmente estable para la sesión.
-                        </p>
-                    </li>
-                </ul>
+                        <!-- Enlace 2: Investing.com (Calendario Económico y Noticias) -->
+                        <li class="flex items-center bg-[#2e3740]/50 p-4 rounded-lg hover:bg-[#2e3740] transition duration-300 border border-gray-700">
+                            <span class="text-3xl mr-4 text-accent-blue">📰</span>
+                            <a href="https://www.investing.com/economic-calendar/" target="_blank" class="text-2xl font-semibold text-white hover:text-accent-gold flex-grow">
+                                Investing.com (Calendario)
+                            </a>
+                            <p class="text-xl text-gray-400 hidden sm:block">Noticias y eventos macroeconómicos.</p>
+                        </li>
+
+                        <!-- Enlace 3: Yahoo Finance (Cotizaciones y Datos) -->
+                        <li class="flex items-center bg-[#4f0288]/50 p-4 rounded-lg hover:bg-[#4f0288] transition duration-300 border border-gray-700">
+                            <span class="text-3xl mr-4 text-accent-blue">💰</span>
+                            <a href="https://finance.yahoo.com/" target="_blank" class="text-2xl font-semibold text-white hover:text-accent-gold flex-grow">
+                                Yahoo Finanzas
+                            </a>
+                            <p class="text-xl text-gray-400 hidden sm:block">Datos históricos y noticias empresariales.</p>
+                        </li>
+
+                        <!-- Enlace 4: FXStreet (Noticias de Forex) -->
+                        <li class="flex items-center bg-[#405662]/50 p-4 rounded-lg hover:bg-[#405662] transition duration-300 border border-gray-700">
+                            <span class="text-3xl mr-4 text-accent-blue">💱</span>
+                            <a href="https://www.fxstreet.es/" target="_blank" class="text-2xl font-semibold text-white hover:text-accent-gold flex-grow">
+                                FXStreet
+                            </a>
+                            <p class="text-xl text-gray-400 hidden sm:block">Especializado en mercado de divisas (Forex).</p>
+                        </li>
+
+                        <!-- Enlace 5: TradingView (Gráficos y Análisis) -->
+                        <li class="flex items-center bg-[#17202A]/50 p-4 rounded-lg hover:bg-[#17202A] transition duration-300 border border-gray-700">
+                            <span class="text-3xl mr-4 text-accent-blue">📈</span>
+                            <a href="https://es.tradingview.com/" target="_blank" class="text-2xl font-semibold text-white hover:text-accent-gold flex-grow">
+                                TradingView
+                            </a>
+                            <p class="text-xl text-gray-400 hidden sm:block">Plataforma líder en gráficos interactivos.</p>
+                        </li>
+
+                    </ul>
+                </div>
+                
             </div>
         </section>
+        
+        <!-- Sección de Buscador de Noticias con IA (NUEVA) -->
+        <section class="mb-20 pt-16">
+            <h2 class="text-5xl font-bold text-center text-accent-blue mb-10">Buscador de Noticias con IA</h2>
+            <div class="bg-secondary-dark p-8 rounded-2xl shadow-xl max-w-4xl mx-auto border-2 border-accent-blue/50">
+                <p class="text-xl text-gray-400 mb-6 text-center">
+                    Ingresa un símbolo de acciones (ticker, ej: AAPL, TSLA) para obtener un resumen de noticias clave del mercado, asistido por Inteligencia Artificial.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                    <input type="text" id="tickerInput" placeholder="Ej: GOOG, MSFT, BTC/USD" class="flex-grow p-4 rounded-xl bg-primary-dark border border-gray-600 focus:ring-accent-gold focus:border-accent-gold text-white text-xl uppercase" style="text-transform: uppercase;">
+                    <button id="searchButton" class="bg-accent-gold text-primary-dark font-black py-4 px-8 rounded-xl text-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed">
+                        Buscar Noticias con IA
+                    </button>
+                </div>
+                
+                <!-- Área de Resultados -->
+                <div id="resultsArea" class="mt-8">
+                    <!-- Loading state -->
+                    <div id="loadingIndicator" class="hidden text-center">
+                        <svg class="animate-spin h-10 w-10 text-accent-gold mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <p class="mt-4 text-xl text-gray-400">Analizando el mercado y generando el resumen...</p>
+                    </div>
+
+                    <!-- Output summary -->
+                    <div id="summaryOutput" class="hidden bg-primary-dark p-6 rounded-xl border border-accent-gold/50">
+                        <h4 class="text-3xl font-bold text-accent-gold mb-4">Resumen de Noticias para <span id="tickerDisplay" class="text-white"></span></h4>
+                        <p id="summaryText" class="text-xl text-gray-300 leading-relaxed"></p>
+                    </div>
+
+                    <!-- Sources/Citations -->
+                    <div id="sourcesOutput" class="hidden mt-6 bg-primary-dark p-6 rounded-xl border border-gray-600">
+                        <h4 class="text-xl font-semibold text-white mb-3">Fuentes (Grounding)</h4>
+                        <ul id="sourcesList" class="space-y-2 text-lg">
+                            <!-- Sources will be injected here -->
+                        </ul>
+                    </div>
+
+                    <!-- Error message -->
+                    <div id="errorOutput" class="hidden p-4 rounded-lg bg-sell/20 border border-sell text-sell text-xl font-medium">
+                        <!-- Error text will be injected here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
 
     </main>
 
     <!-- Footer -->
-    <footer class="bg-secondary-dark mt-10 p-6 text-center text-gray-400">
+    <footer class="bg-secondary-dark mt-10 p-8 text-center text-xl text-gray-400"> <!-- Padding y texto aumentado -->
         <p>&copy; 2025 Mabuya Trading. Todos los derechos reservados. Educando la próxima generación de traders.</p>
     </footer>
 
-    <script>
-        // Lógica de JavaScript para la Navegación Móvil
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
+    <!-- Bloque de Script Reestructurado como Módulo -->
+    <script type="module">
+        // Importaciones de Firebase (Necesarias para la autenticación del entorno)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+        // Variables Globales para Firebase y el entorno Canvas
+        let app;
+        let db;
+        let auth;
+        let userId = null;
+        let isAuthReady = false;
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // Función de Inicialización de Firebase (OBLIGATORIA)
+        const initializeFirebase = async () => {
+            if (firebaseConfig) {
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        userId = user.uid;
+                    } else {
+                        userId = null;
+                    }
+                    isAuthReady = true;
+                });
+
+                try {
+                    if (initialAuthToken) {
+                        await signInWithCustomToken(auth, initialAuthToken);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch (error) {
+                    console.error("Error during Firebase sign-in:", error);
+                    isAuthReady = true; 
+                }
+            } else {
+                console.warn("Firebase config not found. AI search will still function, but using the default API key.");
+                isAuthReady = true; 
+            }
+        };
+
+        // --- Lógica del Buscador de Noticias con IA (Gemini API) ---
+
+        // Función para implementar la retirada exponencial para reintentos de API
+        const fetchWithRetry = async (url, options, maxRetries = 5) => {
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (!response.ok) {
+                        if (response.status === 429 && i < maxRetries - 1) {
+                            throw new Error("Rate limit exceeded. Retrying...");
+                        }
+                        const errorData = await response.json();
+                        throw new Error(errorData.error?.message || `API request failed with status: ${response.status}`);
+                    }
+                    return response;
+                } catch (error) {
+                    if (error.message.includes("Rate limit exceeded") && i < maxRetries - 1) {
+                        const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                    } else {
+                        throw error;
+                    }
+                }
+            }
+            throw new Error("La llamada a la API falló después de múltiples reintentos.");
+        };
+
+        const handleNewsSearch = async () => {
+            const tickerInput = document.getElementById('tickerInput');
+            const searchButton = document.getElementById('searchButton');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const summaryOutput = document.getElementById('summaryOutput');
+            const summaryText = document.getElementById('summaryText');
+            const tickerDisplay = document.getElementById('tickerDisplay');
+            const sourcesOutput = document.getElementById('sourcesOutput');
+            const sourcesList = document.getElementById('sourcesList');
+            const errorOutput = document.getElementById('errorOutput');
+
+            const ticker = tickerInput.value.trim().toUpperCase();
+
+            // 1. Resetear la UI
+            summaryOutput.classList.add('hidden');
+            sourcesOutput.classList.add('hidden');
+            errorOutput.classList.add('hidden');
+            errorOutput.textContent = '';
+            
+            if (!ticker) {
+                errorOutput.textContent = 'Por favor, introduce un símbolo de acciones válido.';
+                errorOutput.classList.remove('hidden');
+                return;
+            }
+
+            // 2. Establecer el estado de carga
+            searchButton.disabled = true;
+            loadingIndicator.classList.remove('hidden');
+            tickerDisplay.textContent = ticker;
+            
+            // 3. Configuración de la API Gemini
+            const systemPrompt = "Actúa como un analista de noticias financieras especializado. Tu tarea es encontrar las noticias más relevantes y recientes (últimas 48 horas) para el ticker o activo proporcionado. Proporciona un resumen conciso de los hallazgos clave en español. Al final de tu resumen, DEBES indicar '---' y luego listar el activo, el precio y el cambio porcentual si están disponibles y son relevantes para las noticias, formateado en párrafos o viñetas. NO inventes datos. Finalmente, asegúrate de que todas las afirmaciones fácticas estén respaldadas por las fuentes citadas.";
+            const userQuery = `Encuentra y resume las noticias más relevantes sobre el ticker de acciones o activo: ${ticker}`;
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                tools: [{ "google_search": {} }], // Habilitar Google Search Grounding (tiempo real)
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+            };
+
+            try {
+                // 4. Realizar la llamada a la API
+                const response = await fetchWithRetry(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+                const candidate = result.candidates?.[0];
+
+                if (!candidate || !candidate.content?.parts?.[0]?.text) {
+                    throw new Error("La IA no pudo generar un resumen de noticias. Inténtalo con un ticker diferente o verifica la conexión.");
+                }
+
+                const rawText = candidate.content.parts[0].text;
+                
+                // Dividir el texto en resumen y datos adicionales (si existen)
+                const textParts = rawText.split('---');
+                const text = textParts[0].trim();
+                
+                summaryText.innerHTML = text.replace(/\n/g, '<br><br>'); // Mostrar saltos de línea
+                summaryOutput.classList.remove('hidden');
+
+                // 5. Extraer y mostrar las fuentes
+                let sources = [];
+                const groundingMetadata = candidate.groundingMetadata;
+                sourcesList.innerHTML = ''; 
+
+                if (groundingMetadata && groundingMetadata.groundingAttributions) {
+                    sources = groundingMetadata.groundingAttributions
+                        .map((attribution, index) => ({
+                            uri: attribution.web?.uri,
+                            title: attribution.web?.title || `Fuente ${index + 1}`,
+                        }))
+                        .filter(source => source.uri); 
+
+                    if (sources.length > 0) {
+                        sources.forEach(source => {
+                            const li = document.createElement('li');
+                            li.className = 'flex items-start text-gray-400';
+                            li.innerHTML = `
+                                <span class="text-accent-gold mr-3 mt-1">🔗</span>
+                                <a href="${source.uri}" target="_blank" class="hover:text-white transition duration-200 text-lg sm:text-xl font-medium" title="${source.title}">
+                                    ${source.title}
+                                </a>
+                            `;
+                            sourcesList.appendChild(li);
+                        });
+                        sourcesOutput.classList.remove('hidden');
+                    }
+                }
+
+
+            } catch (error) {
+                console.error("News Search Error:", error);
+                errorOutput.textContent = `Error al buscar noticias: ${error.message}`;
+                errorOutput.classList.remove('hidden');
+            } finally {
+                // 6. Finalizar el estado de carga
+                loadingIndicator.classList.add('hidden');
+                searchButton.disabled = false;
+            }
+        };
+
+
+        // Listener para la carga completa del DOM
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeFirebase(); // Iniciar Firebase
+
+            // Lógica para el Buscador de Noticias
+            const searchButton = document.getElementById('searchButton');
+            const tickerInput = document.getElementById('tickerInput');
+            
+            if (searchButton) {
+                searchButton.addEventListener('click', handleNewsSearch);
+            }
+            
+            // También disparar la búsqueda con la tecla 'Enter'
+            if (tickerInput) {
+                tickerInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault(); 
+                        handleNewsSearch();
+                    }
+                });
+            }
+
+            // Lógica de JavaScript para la Navegación Móvil (Existente)
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
         });
     </script>
 </body>
