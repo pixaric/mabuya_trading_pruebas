@@ -122,12 +122,11 @@
                     </a>
                 </div>
                 
-                <!-- Gráfico de Análisis de Mercado (Ahora como SVG de Velas Japonesas) -->
+                <!-- Gráfico de Análisis de Mercado (SVG de Velas Japonesas) -->
                 <div class="lg:w-1/2 w-full">
-                    <!-- Contenedor para mantener la estética y altura -->
                     <div class="tradingview-widget-container rounded-xl w-full shadow-lg border-2 border-accent-gold/50 overflow-hidden">
                         
-                        <!-- SVG de Gráfico de Velas Japonesas (El SVG no cambia, pero el contenedor es más grande) -->
+                        <!-- SVG de Gráfico de Velas Japonesas -->
                         <svg viewBox="0 0 800 450" class="w-full h-full" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg" style="background-color: #1e1e1e;">
                             <!-- Líneas de Cuadrícula (Gris Sutil) -->
                             <line x1="50" y1="400" x2="750" y2="400" stroke="#2d2d2d" stroke-dasharray="2 2"/>
@@ -356,7 +355,32 @@
             </div>
         </section>
 
-        <!-- Sección de Checklist y Enlaces (Organizado en Grid de 2 Columnas) -->
+        <!-- Sección de Buscador de Noticias (MODIFICADA a Búsqueda Directa Google) -->
+        <section class="mb-20 pt-16">
+            <h2 class="text-5xl font-bold text-center text-accent-blue mb-10">Buscador Web Directo de Noticias Financieras</h2>
+            <div class="bg-secondary-dark p-8 rounded-2xl shadow-xl max-w-4xl mx-auto border-2 border-accent-blue/50">
+                <p class="text-xl text-gray-400 mb-6 text-center">
+                    Ingresa un símbolo de acciones (ticker, ej: AAPL, TSLA) y pulsa "Buscar" para abrir una nueva pestaña de Google con las noticias filtradas por los principales medios financieros.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                    <input type="text" id="tickerInput" placeholder="Ej: GOOG, MSFT, BTC/USD" class="flex-grow p-4 rounded-xl bg-primary-dark border border-gray-600 focus:ring-accent-gold focus:border-accent-gold text-white text-xl uppercase" style="text-transform: uppercase;">
+                    <button id="searchButton" class="bg-accent-gold text-primary-dark font-black py-4 px-8 rounded-xl text-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed">
+                        Buscar Noticias Directas
+                    </button>
+                </div>
+                
+                <!-- Área de Resultados y Mensajes de Error (Simplificada) -->
+                <div id="resultsArea" class="mt-8">
+                    <div id="errorOutput" class="hidden p-4 rounded-lg bg-sell/20 border border-sell text-sell text-xl font-medium">
+                        <!-- Error text will be injected here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Sección de Checklist y Enlaces -->
         <section class="mb-20 pt-16">
             <h2 class="text-5xl font-bold text-center text-accent-gold mb-10">Recursos y Preparación</h2> <!-- Título general para la sección -->
             
@@ -467,63 +491,6 @@
                 
             </div>
         </section>
-        
-        <!-- Sección de Buscador de Noticias con IA (MODIFICADA para Proxy) -->
-        <section class="mb-20 pt-16">
-            <h2 class="text-5xl font-bold text-center text-accent-blue mb-10">Buscador Web de Noticias Financieras</h2>
-            <div class="bg-secondary-dark p-8 rounded-2xl shadow-xl max-w-4xl mx-auto border-2 border-accent-blue/50">
-                <p class="text-xl text-gray-400 mb-6 text-center">
-                    Ingresa un símbolo de acciones (ticker, ej: AAPL, TSLA) para obtener los enlaces a noticias clave del mercado.
-                </p>
-                <div id="proxyNote" class="bg-yellow-800/30 p-4 mb-6 rounded-lg border border-accent-gold text-lg text-gray-200">
-                    ⚠️ **Nota de Despliegue en GitHub:** Para que la funcionalidad de búsqueda en tiempo real funcione, debes configurar una **Función Proxy sin Servidor** (consulta el documento `SOLUCION_PROXY.md`). Este código está configurado para llamar al endpoint `/api/gemini-proxy`.
-                </div>
-
-                <div class="flex flex-col sm:flex-row gap-4 mb-8">
-                    <input type="text" id="tickerInput" placeholder="Ej: GOOG, MSFT, BTC/USD" class="flex-grow p-4 rounded-xl bg-primary-dark border border-gray-600 focus:ring-accent-gold focus:border-accent-gold text-white text-xl uppercase" style="text-transform: uppercase;">
-                    <button id="searchButton" class="bg-accent-gold text-primary-dark font-black py-4 px-8 rounded-xl text-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed">
-                        Buscar Artículos
-                    </button>
-                </div>
-                
-                <!-- Área de Resultados -->
-                <div id="resultsArea" class="mt-8">
-                    <!-- Loading state -->
-                    <div id="loadingIndicator" class="hidden text-center">
-                        <svg class="animate-spin h-10 w-10 text-accent-gold mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        <p class="mt-4 text-xl text-gray-400">Buscando en la web y cargando artículos...</p>
-                    </div>
-
-                    <!-- Output summary (Ahora una Introducción Mínima) -->
-                    <div id="summaryOutput" class="hidden bg-primary-dark p-6 rounded-xl border border-accent-gold/50">
-                        <h4 class="text-3xl font-bold text-accent-gold mb-4">Introducción de la Búsqueda para <span id="tickerDisplay" class="text-white"></span></h4>
-                        <p id="summaryText" class="text-xl text-gray-300 leading-relaxed"></p>
-                    </div>
-                    
-                    <!-- MENSAJE DE FALLBACK (NUEVO) -->
-                    <div id="noSourcesWarning" class="hidden mt-4 p-4 rounded-lg bg-yellow-600/20 border border-yellow-500 text-yellow-300 text-xl font-medium">
-                        ⚠️ **Nota:** El sistema generó el resumen, pero no se encontraron fuentes específicas de noticias en tiempo real para este activo en este momento. Intenta con un ticker diferente.
-                    </div>
-
-                    <!-- Sources/Citations - ENFOCADO COMO LISTA DE ARTÍCULOS -->
-                    <div id="sourcesOutput" class="hidden mt-8 bg-secondary-dark p-6 rounded-xl border border-accent-blue/50">
-                        <h4 class="text-2xl font-bold text-accent-blue mb-4">Artículos de Noticias Encontrados (Acceso Directo)</h4>
-                        <p class="text-gray-400 mb-4 text-lg">Haz clic en los enlaces a continuación para ir directamente a la fuente original:</p>
-                        <ul id="sourcesList" class="space-y-3 text-lg">
-                            <!-- Sources will be injected here -->
-                        </ul>
-                    </div>
-
-                    <!-- Error message -->
-                    <div id="errorOutput" class="hidden p-4 rounded-lg bg-sell/20 border border-sell text-sell text-xl font-medium">
-                        <!-- Error text will be injected here -->
-                    </div>
-                </div>
-            </div>
-        </section>
 
 
     </main>
@@ -533,9 +500,9 @@
         <p>&copy; 2025 Mabuya Trading. Todos los derechos reservados. Educando la próxima generación de traders.</p>
     </footer>
 
-    <!-- Bloque de Script Reestructurado como Módulo -->
+    <!-- Bloque de Script (Solo incluye la lógica del buscador directo y Firebase Init) -->
     <script type="module">
-        // Importaciones de Firebase (Necesarias para la autenticación del entorno Canvas)
+        // Importaciones de Firebase (Se mantienen por ser un requisito del entorno Canvas)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
@@ -552,12 +519,6 @@
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
         
-        // ** URL del Proxy Serverless: ¡ADAPTA ESTO EN GITHUB! **
-        const PROXY_URL = "/api/gemini-proxy"; 
-        
-        // Esta variable nos ayuda a saber si estamos ejecutando en el entorno Canvas.
-        const IS_IN_CANVAS_RUNTIME = typeof __initial_auth_token !== 'undefined';
-
 
         // Función de Inicialización de Firebase (OBLIGATORIA)
         const initializeFirebase = async () => {
@@ -586,188 +547,53 @@
                     isAuthReady = true; 
                 }
             } else {
-                console.warn("Firebase config not found. Assuming external deployment.");
+                console.warn("Firebase config not found.");
                 isAuthReady = true; 
             }
         };
 
-        // --- Lógica del Buscador de Noticias con IA (Gemini API o Proxy) ---
 
-        // Función para implementar la retirada exponencial para reintentos de API
-        const fetchWithRetry = async (url, options, maxRetries = 5) => {
-            for (let i = 0; i < maxRetries; i++) {
-                try {
-                    const response = await fetch(url, options);
-                    if (!response.ok) {
-                        if (response.status === 429 && i < maxRetries - 1) {
-                            throw new Error("Rate limit exceeded. Retrying...");
-                        }
-                        // Intenta parsear el error si no es 429 para dar un mensaje más claro
-                        const errorData = await response.json().catch(() => ({})); 
-                        throw new Error(errorData.error?.message || `API request failed with status: ${response.status}`);
-                    }
-                    return response;
-                } catch (error) {
-                    if (error.message.includes("Rate limit exceeded") && i < maxRetries - 1) {
-                        const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                    } else {
-                        throw error;
-                    }
-                }
-            }
-            throw new Error("La llamada a la API falló después de múltiples reintentos.");
-        };
+        // --- Lógica del Buscador de Noticias Directo (Google Search) ---
 
-        // Función de MOCK para cuando la llamada real (proxy) falla
-        const getMockNews = (ticker) => {
-            const mockText = `
-                🚨 **[Modo de Emergencia/Simulación]** 🚨
-                
-                No se pudo contactar al servidor proxy de búsqueda (${PROXY_URL}). Esto ocurre si el servidor está caído o si el código se está ejecutando en un entorno que bloquea las llamadas de red externas.
-
-                ---
-                
-                **Resultados Simulados:**
-                
-                El activo ${ticker.toUpperCase()} muestra un comportamiento errático en la pre-apertura. Las métricas de volumen indican indecisión, pero el sentimiento general se inclina ligeramente a la baja debido a preocupaciones macroeconómicas globales.
-            `;
-            const mockSources = [
-                { title: "Mabuya Trading - Fallback de Datos Simulados (Sin Enlace Real)", uri: "#" },
-            ];
-            return { text: mockText, sources: mockSources };
-        };
-
-
-        const handleNewsSearch = async () => {
+        const handleDirectSearch = () => {
             const tickerInput = document.getElementById('tickerInput');
-            const searchButton = document.getElementById('searchButton');
-            const loadingIndicator = document.getElementById('loadingIndicator');
-            const summaryOutput = document.getElementById('summaryOutput');
-            const summaryText = document.getElementById('summaryText');
-            const tickerDisplay = document.getElementById('tickerDisplay');
-            const sourcesOutput = document.getElementById('sourcesOutput');
-            const sourcesList = document.getElementById('sourcesList');
             const errorOutput = document.getElementById('errorOutput');
-            const noSourcesWarning = document.getElementById('noSourcesWarning'); // NUEVO
-
             const ticker = tickerInput.value.trim().toUpperCase();
 
-            // 1. Resetear la UI
-            summaryOutput.classList.add('hidden');
-            sourcesOutput.classList.add('hidden');
+            // 1. Limpiar error
             errorOutput.classList.add('hidden');
-            noSourcesWarning.classList.add('hidden'); // NUEVO
             errorOutput.textContent = '';
             
             if (!ticker) {
-                errorOutput.textContent = 'Por favor, introduce un símbolo de acciones válido.';
+                errorOutput.textContent = 'Por favor, introduce un símbolo de acciones (ticker) válido.';
                 errorOutput.classList.remove('hidden');
                 return;
             }
 
-            // 2. Establecer el estado de carga
-            searchButton.disabled = true;
-            loadingIndicator.classList.remove('hidden');
-            tickerDisplay.textContent = ticker;
+            // Lista de dominios financieros principales (usando el operador site:OR)
+            // Esto asegura que la búsqueda se centre en fuentes relevantes.
+            const newsSites = [
+                'bloomberg.com',
+                'wsj.com',
+                'reuters.com',
+                'ft.com',
+                'cnbc.com',
+                'invertia.com',
+                'expansion.com',
+                'eleconomista.es'
+            ];
             
-            let finalResult;
+            // Construye la cadena de operadores site:OR site:
+            const siteQuery = newsSites.map(site => `site:${site}`).join(' OR ');
+
+            // Query final: [TICKER] noticias [site:A OR site:B ...]
+            const finalQuery = `${ticker} noticias (${siteQuery})`;
             
-            // ** PROMPT ALTAMENTE REFORZADO **
-            const systemPrompt = `Actúa estrictamente como un Analista de Búsqueda Web Financiera. Tu única misión es:
-                1. USAR OBLIGATORIAMENTE la herramienta de Google Search para encontrar noticias recientes para el ticker: ${ticker}.
-                2. Generar UNA ÚNICA frase de introducción muy breve sobre la actualidad del activo.
-                3. ES IMPERATIVO que la respuesta NO contenga la lista de enlaces, ya que el código JavaScript extrae automáticamente las fuentes del 'groundingMetadata'. Solo enfócate en la frase de introducción.
-                4. Tu respuesta debe ser breve y concisa, y debe ser posible citar la información en ella.`;
-            
-            const userQuery = `Busca noticias y artículos recientes para el activo: ${ticker}`;
+            // Codificar la URL para asegurar que los espacios y operadores sean correctos
+            const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(finalQuery)}`;
 
-            // El payload que enviamos al proxy o a la API de Gemini
-            const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                tools: [{ "google_search": {} }], 
-                systemInstruction: {
-                    parts: [{ text: systemPrompt }]
-                },
-                model: "gemini-2.5-flash-preview-09-2025" // Especificamos el modelo
-            };
-            
-            const urlToCall = IS_IN_CANVAS_RUNTIME 
-                ? `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=` 
-                : PROXY_URL; 
-
-
-            try {
-                // 3. Realizar la llamada al Proxy o a la API (si estamos en Canvas)
-                const response = await fetchWithRetry(urlToCall, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload) 
-                });
-                
-                const result = await response.json();
-
-                // Usamos el mismo objeto de resultado tanto si viene del Proxy como de la API directa.
-                const candidate = result.candidates?.[0]; 
-
-                if (!candidate || !candidate.content?.parts?.[0]?.text) {
-                    throw new Error("El buscador no pudo generar resultados o la estructura de respuesta es incorrecta.");
-                }
-
-                const text = candidate.content.parts[0].text.trim();
-                
-                let sources = [];
-                const groundingMetadata = candidate.groundingMetadata;
-                
-                // *** LÓGICA CLAVE: EXTRACCIÓN DE FUENTES ***
-                if (groundingMetadata && groundingMetadata.groundingAttributions) {
-                    sources = groundingMetadata.groundingAttributions
-                        .map((attribution, index) => ({
-                            uri: attribution.web?.uri,
-                            title: attribution.web?.title || `Fuente ${index + 1}`,
-                        }))
-                        .filter(source => source.uri); 
-                }
-                
-                finalResult = { text, sources };
-
-            } catch (error) {
-                console.error("News Search Error (Llamada al Proxy/API Fallida):", error);
-                // Fallback a modo de simulación.
-                finalResult = getMockNews(ticker);
-            }
-            
-            // 4. Mostrar los resultados
-            // 4a. Mostrar la introducción generada.
-            summaryText.innerHTML = finalResult.text.replace(/\n/g, '<br><br>');
-            summaryOutput.classList.remove('hidden');
-            
-            // 4b. Procesar y mostrar las fuentes (Artículos)
-            sourcesList.innerHTML = ''; 
-            if (finalResult.sources.length > 0) {
-                finalResult.sources.forEach(source => {
-                    const li = document.createElement('li');
-                    li.className = 'flex items-start text-gray-400';
-                    li.innerHTML = `
-                        <span class="text-accent-gold mr-3 mt-1">🔗</span>
-                        <a href="${source.uri}" target="_blank" class="hover:text-white transition duration-200 text-lg sm:text-xl font-medium" title="${source.title}">
-                            ${source.title}
-                        </a>
-                    `;
-                    sourcesList.appendChild(li);
-                });
-                sourcesOutput.classList.remove('hidden');
-                noSourcesWarning.classList.add('hidden'); // Ocultar advertencia si hay fuentes
-            } else {
-                // Mostrar advertencia si hay texto de resumen pero no fuentes (el caso reportado por el usuario)
-                noSourcesWarning.classList.remove('hidden');
-                sourcesOutput.classList.add('hidden');
-            }
-
-
-            // 5. Finalizar el estado de carga
-            loadingIndicator.classList.add('hidden');
-            searchButton.disabled = false;
+            // Abrir la búsqueda en una nueva pestaña
+            window.open(googleSearchUrl, '_blank');
         };
 
 
@@ -780,7 +606,7 @@
             const tickerInput = document.getElementById('tickerInput');
             
             if (searchButton) {
-                searchButton.addEventListener('click', handleNewsSearch);
+                searchButton.addEventListener('click', handleDirectSearch);
             }
             
             // También disparar la búsqueda con la tecla 'Enter'
@@ -788,16 +614,11 @@
                 tickerInput.addEventListener('keypress', (e) => {
                     if (e.key === 'Enter') {
                         e.preventDefault(); 
-                        handleNewsSearch();
+                        handleDirectSearch();
                     }
                 });
             }
 
-            // Ocultar la nota de proxy si estamos en el entorno Canvas
-            if (IS_IN_CANVAS_RUNTIME) {
-                 document.getElementById('proxyNote').classList.add('hidden');
-            }
-            
             // Lógica de JavaScript para la Navegación Móvil (Existente)
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
