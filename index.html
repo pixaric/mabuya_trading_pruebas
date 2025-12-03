@@ -129,8 +129,8 @@
             margin-bottom: 2rem;
             padding: 1.5rem;
             background-color: #f9fafb;
-            border-radius: 0.5rem;
             border-left: 5px solid #3b82f6;
+            border-radius: 0.5rem;
         }
 
         .bullet-list, .topic-list {
@@ -267,6 +267,17 @@
             font-size: 0.875rem; /* text-sm */
         }
 
+        /* Estilos para los botones de acceso rápido */
+        .quick-access-button {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+            cursor: pointer;
+            margin-bottom: 0.5rem;
+        }
+
     </style>
 </head>
 <body>
@@ -292,20 +303,20 @@
         </div>
     </header>
 
-    <!-- Navegación de Pestañas (Mi Portafolio renombrada a Calculadora) -->
+    <!-- Navegación de Pestañas -->
     <nav class="nav-tabs shadow-sm">
         <button class="tab-button active" data-tab="inicio">Inicio</button>
         <button class="tab-button" data-tab="academia">Academia</button>
         <button class="tab-button" data-tab="noticias-ia">Noticias IA</button>
         <button class="tab-button" data-tab="videos">Videos</button>
         <button class="tab-button" data-tab="eventos">Eventos Clave</button>
-        <button class="tab-button" data-tab="calculadora">Calculadora</button> <!-- Pestaña renombrada -->
+        <button class="tab-button" data-tab="calculadora">Calculadora</button>
     </nav>
 
     <!-- Contenido Principal de las Pestañas -->
     <main class="main">
         
-        <!-- Pestaña 1: INICIO (Gráfico de TradingView y Enlaces) -->
+        <!-- Pestaña 1: INICIO (Estructura Solicitada) -->
         <div id="inicio" class="tab-panel active">
             <div class="panel-inner">
                 <h1 class="panel-title accent-color">Dashboard de Activos e Información</h1>
@@ -313,9 +324,10 @@
                     Visualiza gráficos en tiempo real con TradingView y accede a tus herramientas de análisis.
                 </p>
                 
+                <!-- GRID PRINCIPAL: 3 columnas en desktop para alinear Graph (2/3) y Enlaces (1/3) -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     
-                    <!-- Columna Principal: Gráfico, Lista de Seguimiento y Ticker (2/3 de ancho) -->
+                    <!-- Columna 1: Gráfico y Lista de Seguimiento (2/3 de ancho) -->
                     <div class="lg:col-span-2 space-y-6">
                         
                         <!-- Tarjeta de Gráfico y Ticker -->
@@ -331,19 +343,18 @@
                                 <!-- El widget se inyectará aquí con JavaScript -->
                             </div>
                             
-                            <!-- Selector de Ticker (Responsive: vertical en móvil, horizontal en sm+) -->
+                            <!-- Selector de Ticker (Responsive) -->
                             <div class="p-4 flex flex-col sm:flex-row gap-3 border-t border-gray-100">
                                 <input type="text" id="ticker-input" placeholder="Ej: BTCUSD, XAUUSD, TSLA" value="EURUSD" 
                                     class="flex-grow p-3 rounded bg-white border border-gray-300 text-gray-800 focus:ring-blue-500 focus:border-blue-500 uppercase text-sm"
                                 >
-                                <!-- CLAVE: w-full en móvil y sm:w-auto para que el botón no se desborde -->
                                 <button onclick="updateTicker()" class="w-full sm:w-auto px-6 py-3 accent-bg hover:bg-blue-600 text-white font-semibold rounded-md transition duration-200 whitespace-nowrap text-sm">
                                     Cargar Ticker
                                 </button>
                             </div>
                         </div>
                         
-                        <!-- NUEVA TARJETA: Lista de Seguimiento de Activos -->
+                        <!-- Tarjeta: Lista de Seguimiento de Activos -->
                         <div class="card border-l-4 border-purple-500">
                             <h2 class="card-title text-purple-600">📊 Lista de Seguimiento Personalizada </h2>
                             <p class="text-sm text-gray-600 mb-4">Activos de alto interés y sus métricas clave (Datos estáticos de ejemplo).</p>
@@ -403,7 +414,51 @@
                         </div>
                         <!-- FIN LISTA DE SEGUIMIENTO -->
 
-                        <!-- Tarjeta de Checklist Diario -->
+                    </div>
+                    
+                    <!-- Columna 2: Enlaces Clave, Calculadoras y Buscador IA (1/3 de ancho - Mismo Nivel que Gráfico) -->
+                    <div class="lg:col-span-1 space-y-6">
+                        <!-- Tarjeta de Enlaces Clave -->
+                        <div class="card border-l-4 border-blue-500">
+                            <h2 class="card-title text-blue-600">🔗 Accesos Rápidos y Herramientas</h2>
+                            <p class="text-sm text-gray-600 mb-4">Herramientas esenciales y enlaces fundamentales.</p>
+                            
+                            <!-- NUEVOS ACCESOS DIRECTOS A CALCULADORAS Y NOTICIAS IA -->
+                            <div class="mb-4 pt-3 border-t border-gray-100">
+                                <p class="text-xs font-semibold uppercase text-gray-500 mb-2">Herramientas Propias:</p>
+                                
+                                <!-- Acceso a Calculadora 1: Precio Objetivo -->
+                                <button onclick="activateTab('calculadora')" class="quick-access-button bg-yellow-50 hover:bg-yellow-100 w-full">
+                                    <svg class="w-5 h-5 text-yellow-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c2.16 0 3.7.83 4.2 1.83 0 0 0 0 0 0 .5-.9 2.04-1.83 4.2-1.83 1.13 0 2.05.74 2.05 1.63V15c0 1.66-1.57 3-3.6 3H5c-1.38 0-2.5-.9-2.5-2V9.63c0-.9.92-1.63 2.05-1.63zM12 18h9M3 18h2.5M17 12h2.5M3 12h8.5"></path></svg>
+                                    <span class="text-sm font-medium text-yellow-800">Precio Objetivo / Margen</span>
+                                </button>
+                                
+                                <!-- Acceso a Calculadora 2: Posición Promedio -->
+                                <button onclick="activateTab('calculadora')" class="quick-access-button bg-blue-50 hover:bg-blue-100 w-full">
+                                    <svg class="w-5 h-5 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4.5l8 4-8 4v-3m0 0V4.5m0 0l-8 4m8-4v3"></path></svg>
+                                    <span class="text-sm font-medium text-blue-800">Posición Promedio (DCA)</span>
+                                </button>
+                                
+                                <!-- Acceso al Buscador de Noticias IA -->
+                                <button onclick="activateTab('noticias-ia')" class="quick-access-button bg-indigo-50 hover:bg-indigo-100 w-full">
+                                    <svg class="w-5 h-5 text-indigo-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 1.66-1.5 3-3 3s-3-1.34-3-3m15 0a9 9 0 11-18 0 9 9 0 0118 0zM17.5 7.5l-5 5-5-5"></path></svg>
+                                    <span class="text-sm font-medium text-indigo-800">Buscador de Noticias con IA</span>
+                                </button>
+                            </div>
+                            
+                            <hr class="my-4 border-gray-100"/>
+
+                            <p class="text-xs font-semibold uppercase text-gray-500 mb-2">Enlaces Esenciales:</p>
+                            <ul class="space-y-3 text-sm">
+                                <li><a href="https://www.investing.com/economic-calendar/" target="_blank" class="font-medium text-gray-700 hover:text-blue-600 transition">Calendario Económico (Investing)</a></li>
+                                <li><a href="https://finance.yahoo.com/" target="_blank" class="font-medium text-gray-700 hover:text-blue-600 transition">Cotizaciones y Noticias (Yahoo Finance)</a></li>
+                                <li><a href="https://www.tradingview.com/markets/" target="_blank" class="font-medium text-gray-700 hover:text-blue-600 transition">Mapas de Mercado (TradingView)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Fila 2: Checklist a Ancho Completo (lg:col-span-3) -->
+                    <div class="lg:col-span-3 mt-4">
                         <div class="card border-l-4 border-green-500">
                             <h2 class="card-title text-green-600">✅ Checklist de Análisis Diario</h2>
                             <p class="text-sm text-gray-600 mb-4">Pasos esenciales antes de ejecutar cualquier operación. (Recuerda usar la Pestaña de Eventos)</p>
@@ -431,25 +486,7 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Columna Lateral: Solo Enlaces Clave (1/3 de ancho) -->
-                    <div class="lg:col-span-1 space-y-6">
-                        <!-- Tarjeta de Enlaces Clave -->
-                        <div class="card border-l-4 border-green-500">
-                            <h2 class="card-title text-green-600">🔗 Enlaces Clave</h2>
-                            <p class="text-sm text-gray-600 mb-4">Herramientas esenciales para tu análisis fundamental y técnico.</p>
-                            <ul class="space-y-3 text-sm">
-                                <li><a href="https://www.investing.com/economic-calendar/" target="_blank" class="font-medium accent-color hover:underline">Calendario Económico (Investing)</a></li>
-                                <li><a href="https://finance.yahoo.com/" target="_blank" class="font-medium accent-color hover:underline">Cotizaciones y Noticias (Yahoo Finance)</a></li>
-                                <li><a href="https://finviz.com/screener.ashx" target="_blank" class="font-medium accent-color hover:underline">Screener de Acciones (Finviz)</a></li>
-                                <li><a href="https://www.tradingview.com/markets/" target="_blank" class="font-medium accent-color hover:underline">Mapas de Mercado (TradingView)</a></li>
-                                <li><a href="https://www.forexfactory.com/" target="_blank" class="font-medium accent-color hover:underline">Noticias Forex (Forex Factory)</a></li>
-                            </ul>
-                        </div>
-                        
-                        <!-- Las calculadoras han sido movidas a la pestaña 'Calculadora' -->
-                        
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -490,7 +527,7 @@
                             </p>
                             <!-- Imagen de ejemplo para la estructura -->
                             <div class="image-wrapper text-center my-4">
-                                
+                                <!-- Image of Diagrama de estructura de mercado financiero y liquidez -->
                             </div>
 
                             <ul class="topic-list">
@@ -582,7 +619,7 @@
                         <a href="https://www.youtube.com/watch?v=tutorial-estructura" target="_blank" class="block">
                             <!-- Placeholder de Miniatura -->
                             <div class="h-36 bg-gray-200 flex items-center justify-center relative">
-                                <img src="https://placehold.co/300x180/ef4444/ffffff?text=ESTRUCTURA+AVANZADA" alt="Miniatura de video 1" class="w-full h-full object-cover">
+                                <img src="https://placehold.co/300x180/ef4444/ffffff?text=ESTRUCTURA+AVANZADA" onerror="this.onerror=null;this.src='https://placehold.co/300x180/ef4444/ffffff?text=ESTRUCTURA+AVANZADA';" alt="Miniatura de video 1" class="w-full h-full object-cover">
                                 <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
                                     <svg class="w-10 h-10 text-white fill-current" viewBox="0 0 24 24"><path d="M6 3l12 9-12 9V3z"/></svg>
                                 </div>
@@ -599,7 +636,7 @@
                         <a href="https://www.youtube.com/watch?v=tutorial-backtesting" target="_blank" class="block">
                             <!-- Placeholder de Miniatura -->
                             <div class="h-36 bg-gray-200 flex items-center justify-center relative">
-                                <img src="https://placehold.co/300x180/f59e0b/ffffff?text=BACKTESTING+GUIA" alt="Miniatura de video 2" class="w-full h-full object-cover">
+                                <img src="https://placehold.co/300x180/f59e0b/ffffff?text=BACKTESTING+GUIA" onerror="this.onerror=null;this.src='https://placehold.co/300x180/f59e0b/ffffff?text=BACKTESTING+GUIA';" alt="Miniatura de video 2" class="w-full h-full object-cover">
                                 <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
                                     <svg class="w-10 h-10 text-white fill-current" viewBox="0 0 24 24"><path d="M6 3l12 9-12 9V3z"/></svg>
                                 </div>
@@ -616,7 +653,7 @@
                         <a href="https://www.youtube.com/watch?v=tutorial-psicologia" target="_blank" class="block">
                             <!-- Placeholder de Miniatura -->
                             <div class="h-36 bg-gray-200 flex items-center justify-center relative">
-                                <img src="https://placehold.co/300x180/10b981/ffffff?text=PSICOLOGIA+TRADING" alt="Miniatura de video 3" class="w-full h-full object-cover">
+                                <img src="https://placehold.co/300x180/10b981/ffffff?text=PSICOLOGIA+TRADING" onerror="this.onerror=null;this.src='https://placehold.co/300x180/10b981/ffffff?text=PSICOLOGIA+TRADING';" alt="Miniatura de video 3" class="w-full h-full object-cover">
                                 <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
                                     <svg class="w-10 h-10 text-white fill-current" viewBox="0 0 24 24"><path d="M6 3l12 9-12 9V3z"/></svg>
                                 </div>
@@ -633,7 +670,7 @@
                         <a href="https://www.youtube.com/watch?v=tutorial-gestion-riesgo" target="_blank" class="block">
                             <!-- Placeholder de Miniatura -->
                             <div class="h-36 bg-gray-200 flex items-center justify-center relative">
-                                <img src="https://placehold.co/300x180/3b82f6/ffffff?text=RIESGO+Y+LOTE" alt="Miniatura de video 4" class="w-full h-full object-cover">
+                                <img src="https://placehold.co/300x180/3b82f6/ffffff?text=RIESGO+Y+LOTE" onerror="this.onerror=null;this.src='https://placehold.co/300x180/3b82f6/ffffff?text=RIESGO+Y+LOTE';" alt="Miniatura de video 4" class="w-full h-full object-cover">
                                 <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
                                     <svg class="w-10 h-10 text-white fill-current" viewBox="0 0 24 24"><path d="M6 3l12 9-12 9V3z"/></svg>
                                 </div>
@@ -686,7 +723,7 @@
         </div>
         <!-- Fin Pestaña EVENTOS CLAVE -->
 
-        <!-- Pestaña 6: CALCULADORA (Anteriormente Mi Portafolio) -->
+        <!-- Pestaña 6: CALCULADORA (El contenido funcional de las calculadoras) -->
         <div id="calculadora" class="tab-panel">
             <div class="panel-inner">
                 <h1 class="panel-title" style="color: #10b981;">🧮 Calculadoras de Trading</h1>
@@ -919,6 +956,9 @@
             const profitPercentInput = document.getElementById('profitPercent');
             const minSellPriceOutput = document.getElementById('minSellPrice');
 
+            // Verificar si los elementos existen (solo existen en la pestaña Calculadora)
+            if (!compraPriceInput || !minSellPriceOutput) return;
+
             const compraPrice = parseFloat(compraPriceInput.value) || 0;
             const profitPercent = parseFloat(profitPercentInput.value) || 0;
 
@@ -945,6 +985,9 @@
                 const priceInput = document.getElementById(`price${i}`);
                 const quantityInput = document.getElementById(`quantity${i}`);
                 const totalDisplay = document.getElementById(`total${i}`);
+                
+                // Verificar si los elementos existen (solo existen en la pestaña Calculadora)
+                if (!priceInput) continue;
 
                 // Convertir a número, usando 0 si el valor es inválido
                 const price = parseFloat(priceInput.value) || 0;
@@ -952,7 +995,7 @@
                 const total = price * quantity;
 
                 // Actualizar total individual y acumular globales
-                totalDisplay.textContent = total.toFixed(2);
+                if (totalDisplay) totalDisplay.textContent = total.toFixed(2);
                 
                 totalQuantity += quantity;
                 totalInvestment += total;
@@ -963,10 +1006,14 @@
                 averagePrice = totalInvestment / totalQuantity;
             }
 
-            // Actualizar resultados globales
-            document.getElementById('totalQuantity').textContent = totalQuantity.toFixed(0);
-            document.getElementById('totalInvestment').textContent = totalInvestment.toFixed(2);
-            document.getElementById('averagePrice').textContent = averagePrice.toFixed(4); // Usar 4 decimales para mayor precisión
+            // Actualizar resultados globales, si existen
+            const totalQ = document.getElementById('totalQuantity');
+            const totalI = document.getElementById('totalInvestment');
+            const avgP = document.getElementById('averagePrice');
+
+            if (totalQ) totalQ.textContent = totalQuantity.toFixed(0);
+            if (totalI) totalI.textContent = totalInvestment.toFixed(2);
+            if (avgP) avgP.textContent = averagePrice.toFixed(4); // Usar 4 decimales para mayor precisión
         }
 
         // --- Lógica de Noticias IA (Gemini API) ---
@@ -1065,30 +1112,32 @@
 
         // --- Lógica General de Pestañas y Arranque ---
 
-        document.addEventListener('DOMContentLoaded', () => {
+        function activateTab(tabId) {
             const tabs = document.querySelectorAll('.tab-button');
             const panels = document.querySelectorAll('.tab-panel');
 
-            function activateTab(tabId) {
-                tabs.forEach(tab => tab.classList.remove('active'));
-                panels.forEach(panel => panel.classList.remove('active'));
+            tabs.forEach(tab => tab.classList.remove('active'));
+            panels.forEach(panel => panel.classList.remove('active'));
 
-                const activeTabButton = document.querySelector(`[data-tab="${tabId}"]`);
-                const activePanel = document.getElementById(tabId);
-                
-                if (activeTabButton) activeTabButton.classList.add('active');
-                if (activePanel) activePanel.classList.add('active');
+            const activeTabButton = document.querySelector(`[data-tab="${tabId}"]`);
+            const activePanel = document.getElementById(tabId);
+            
+            if (activeTabButton) activeTabButton.classList.add('active');
+            if (activePanel) activePanel.classList.add('active');
 
-                // Si la pestaña es 'inicio' o 'calculadora', forzar la actualización de las calculadoras y el gráfico
-                if (tabId === 'inicio' || tabId === 'calculadora') {
-                    actualizarCalculadoras(); 
-                    // Asegurar que el gráfico se cargue correctamente SOLO en la pestaña de inicio
-                    if (tabId === 'inicio') {
-                        const currentTicker = document.getElementById('ticker-input').value.trim().toUpperCase() || 'FX_IDC:EURUSD';
-                        window.loadTradingViewWidget(currentTicker);
-                    }
+            // Lógica de carga específica para pestañas
+            if (tabId === 'inicio' || tabId === 'calculadora') {
+                actualizarCalculadoras(); 
+                // Asegurar que el gráfico se cargue correctamente SOLO en la pestaña de inicio
+                if (tabId === 'inicio') {
+                    const currentTicker = document.getElementById('ticker-input').value.trim().toUpperCase() || 'FX_IDC:EURUSD';
+                    window.loadTradingViewWidget(currentTicker);
                 }
             }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.nav-tabs .tab-button');
 
             tabs.forEach(tab => {
                 tab.addEventListener('click', (event) => {
