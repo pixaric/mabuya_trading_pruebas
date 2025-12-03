@@ -12,12 +12,12 @@
             theme: {
                 extend: {
                     colors: {
-                        'primary-dark': '#121212',
-                        'secondary-dark': '#1e1e1e',
+                        'primary-dark': '#0d0d0d', /* Un poco más oscuro */
+                        'secondary-dark': '#1a1a1a',
                         'accent-gold': '#ffc107',
                         'accent-blue': '#007bff',
-                        'calc-red': '#ef4444',
-                        'calc-green': '#10b981',
+                        'calc-red': '#f87171', /* Tono más legible */
+                        'calc-green': '#34d399', /* Tono más legible */
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -29,158 +29,160 @@
     <style>
         /* Estilo para el enlace activo */
         .active-link {
-            border-bottom: 2px solid #ffc107;
+            border-bottom: 3px solid #ffc107; /* Borde más grueso */
             color: #ffc107 !important;
         }
         /* Estilos de la calculadora para el foco */
         input:focus {
-            box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.5);
+            box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.7); /* Anillo de foco más grueso */
             border-color: #ffc107 !important;
         }
         /* Aumento de la fuente base para todo el cuerpo */
         body {
-            font-size: 1.125rem; /* text-lg: 18px */
+            font-size: 1.25rem; /* text-xl: 20px */
         }
         /* Ajuste de inputs y botones para mejor legibilidad */
         input, button, select {
-            font-size: 1.125rem; /* text-lg: 18px */
+            font-size: 1.25rem; /* text-xl: 20px */
         }
     </style>
 </head>
-<body class="bg-primary-dark text-gray-100 font-sans min-h-screen pt-24 sm:pt-28">
+<body class="bg-primary-dark text-gray-100 font-sans min-h-screen pt-32 sm:pt-40"> 
     <!-- Aumento de padding superior por el tamaño de la barra de navegación aumentada -->
 
     <!-- ========================================================= -->
-    <!-- BARRA DE NAVEGACIÓN Y RELOJ FIJO JUNTOS -->
+    <!-- BARRA DE NAVEGACIÓN Y RELOJ FIJO JUNTOS (TAMAÑO AUMENTADO) -->
     <!-- ========================================================= -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-secondary-dark shadow-xl">
+    <header class="fixed top-0 left-0 right-0 z-50 bg-secondary-dark shadow-2xl">
         <!-- Contenedor principal de navegación -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20"> <!-- Altura aumentada -->
+            <div class="flex justify-between items-center h-24"> <!-- Altura muy aumentada -->
                 <!-- Logo -->
-                <a href="inicio.html" class="text-3xl font-bold tracking-wider text-accent-gold transition duration-300 hover:text-white"> <!-- text-3xl -->
+                <a href="inicio.html" class="text-4xl font-black tracking-widest text-accent-gold transition duration-300 hover:text-white"> <!-- text-4xl -->
                     MABUYA <span class="text-white">TRADING</span>
                 </a>
                 
-                <!-- Menú de Navegación (Desktop) - Calculadora Activa -->
-                <nav class="hidden md:flex space-x-10"> <!-- Espacio aumentado -->
-                    <a href="inicio.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-3 text-lg border-b-2 border-transparent hover:border-accent-gold">Inicio</a>
-                    <a href="academia.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-3 text-lg border-b-2 border-transparent hover:border-accent-gold">Academia</a>
-                    <a href="videos.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-3 text-lg border-b-2 border-transparent hover:border-accent-gold">Videos</a>
+                <!-- Menú de Navegación (Desktop) -->
+                <nav class="hidden md:flex space-x-12"> <!-- Espacio aumentado -->
+                    <a href="inicio.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-3 text-xl font-medium border-b-3 border-transparent hover:border-accent-gold">Inicio</a>
+                    <a href="academia.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-3 text-xl font-medium border-b-3 border-transparent hover:border-accent-gold">Academia</a>
+                    <a href="videos.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-3 text-xl font-medium border-b-3 border-transparent hover:border-accent-gold">Videos</a>
                     <!-- Calculadora está activa -->
-                    <a href="calculadora.html" class="nav-link active-link text-gray-300 transition duration-150 py-3 text-lg border-b-2 border-transparent hover:border-accent-gold">Calculadora</a>
+                    <a href="calculadora.html" class="nav-link active-link text-gray-300 transition duration-150 py-3 text-xl font-medium border-b-3 border-transparent hover:border-accent-gold">Calculadora</a>
                 </nav>
 
                 <!-- Botón de Menú Móvil -->
-                <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-accent-gold focus:outline-none p-2 rounded-md" aria-label="Toggle Menu">
+                <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-accent-gold focus:outline-none p-3 rounded-md" aria-label="Toggle Menu">
                     <!-- Icono de Hamburguesa (SVG) -->
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
             </div>
         </div>
         
         <!-- Menú Móvil Desplegable -->
         <div id="mobile-menu" class="hidden md:hidden">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="inicio.html" class="block px-3 py-2 rounded-md text-xl font-medium text-gray-300 hover:bg-accent-gold/20">Inicio</a>
-                <a href="academia.html" class="block px-3 py-2 rounded-md text-xl font-medium text-gray-300 hover:bg-accent-gold/20">Academia</a>
-                <a href="videos.html" class="block px-3 py-2 rounded-md text-xl font-medium text-gray-300 hover:bg-accent-gold/20">Videos</a>
-                <a href="calculadora.html" class="block px-3 py-2 rounded-md text-xl font-medium text-white bg-accent-blue/20 hover:bg-accent-gold/20 active-link">Calculadora</a>
+            <div class="px-4 pt-2 pb-4 space-y-2 sm:px-6">
+                <a href="inicio.html" class="block px-3 py-3 rounded-lg text-2xl font-semibold text-gray-300 hover:bg-accent-gold/20">Inicio</a>
+                <a href="academia.html" class="block px-3 py-3 rounded-lg text-2xl font-semibold text-gray-300 hover:bg-accent-gold/20">Academia</a>
+                <a href="videos.html" class="block px-3 py-3 rounded-lg text-2xl font-semibold text-gray-300 hover:bg-accent-gold/20">Videos</a>
+                <a href="calculadora.html" class="block px-3 py-3 rounded-lg text-2xl font-semibold text-white bg-accent-blue/20 hover:bg-accent-gold/20 active-link">Calculadora</a>
             </div>
         </div>
         
         <!-- ========================================================= -->
-        <!-- PANEL DE RELOJ (Compacto en una sola línea, debajo del menú) -->
+        <!-- PANEL DE RELOJ (Compacto y GRANDE) -->
         <!-- ========================================================= -->
-        <div class="bg-primary-dark border-t border-gray-700 p-2 sm:p-3 shadow-inner">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-center sm:justify-between items-center space-y-2 sm:space-y-0 sm:space-x-6">
+        <div class="bg-primary-dark border-t border-gray-700 p-3 sm:p-4 shadow-inner">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-center sm:justify-between items-center space-y-3 sm:space-y-0 sm:space-x-8">
                 
                 <!-- Contenedor de Relojes en una sola línea (mobile/desktop) -->
-                <div class="flex flex-row items-center space-x-6">
+                <div class="flex flex-row items-center space-x-8">
                     
                     <!-- 1. Hora NYSE -->
-                    <div class="flex items-center space-x-2 text-base text-gray-300">
-                        <span class="font-bold text-accent-gold hidden sm:inline text-lg">NYSE (ET):</span>
-                        <span class="font-bold text-accent-gold sm:hidden text-lg">NYSE:</span>
-                        <span id="nyseClock" class="font-mono text-xl sm:text-2xl text-white">00:00:00</span>
+                    <div class="flex items-center space-x-3 text-lg text-gray-300">
+                        <span class="font-bold text-accent-gold text-xl hidden sm:inline">NYSE (ET):</span>
+                        <span class="font-bold text-accent-gold text-xl sm:hidden">NYSE:</span>
+                        <span id="nyseClock" class="font-mono text-3xl sm:text-4xl text-white">00:00:00</span>
                     </div>
                     
                     <!-- Separador (Solo visible en desktop) -->
-                    <div class="hidden sm:block w-px h-8 bg-gray-700"></div>
+                    <div class="hidden sm:block w-px h-10 bg-gray-700"></div>
 
                     <!-- 2. Estado de la Bolsa (TEMPORIZADOR) -->
-                    <div class="flex items-center space-x-2">
+                    <div class="flex items-center space-x-3">
                         <!-- El texto y color se actualizan dinámicamente -->
-                        <span id="marketStatus" class="font-bold text-white text-xl sm:text-2xl">Cargando...</span>
+                        <span id="marketStatus" class="font-black text-white text-2xl sm:text-3xl">Cargando...</span>
                     </div>
                     
                     <!-- Separador (Solo visible en desktop) -->
-                    <div class="hidden sm:block w-px h-8 bg-gray-700"></div>
+                    <div class="hidden sm:block w-px h-10 bg-gray-700"></div>
 
                     <!-- 3. Hora Local -->
-                    <div class="flex items-center space-x-2 text-base text-gray-300">
-                        <span class="font-bold hidden sm:inline text-lg">Hora Local:</span>
-                        <span class="font-bold sm:hidden text-lg">Local:</span>
-                        <span id="localClock" class="font-mono text-xl sm:text-2xl text-white">00:00:00</span>
+                    <div class="flex items-center space-x-3 text-lg text-gray-300">
+                        <span class="font-bold text-xl hidden sm:inline">Hora Local:</span>
+                        <span class="font-bold text-xl sm:hidden">Local:</span>
+                        <span id="localClock" class="font-mono text-3xl sm:text-4xl text-white">00:00:00</span>
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
 
         <!-- Sección 1: Calculadora de Porcentaje (Target Price) -->
         <section class="pt-4">
-            <h1 class="text-4xl sm:text-5xl font-bold text-center text-accent-blue mb-4">Calculadora de Porcentaje</h1>
-            <p class="text-gray-400 mb-8 text-center max-w-xl mx-auto text-lg">Calcula el precio de venta (Take Profit) y el capital total invertido para la operación.</p>
+            <h1 class="text-5xl sm:text-6xl font-black text-center text-accent-blue mb-6">Calculadora de Porcentaje</h1>
+            <p class="text-gray-400 mb-10 text-center max-w-xl mx-auto text-xl">Calcula el precio de venta (Take Profit) y el capital total invertido para la operación.</p>
 
-            <!-- CAMBIO: max-w-3xl para PC -->
-            <div class="bg-secondary-dark p-6 md:p-12 rounded-2xl shadow-2xl max-w-sm sm:max-w-md md:max-w-3xl mx-auto">
+            <!-- CAMBIO: max-w-4xl para PC -->
+            <div class="bg-secondary-dark p-8 md:p-16 rounded-3xl shadow-2xl max-w-sm sm:max-w-md md:max-w-4xl mx-auto border-4 border-accent-blue/40">
                 
-                <!-- Inputs for Markup Calculator: Organizado en 2x2 grid -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Inputs for Markup Calculator: Organizado en 3 columnas -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
                     
                     <!-- 1. Precio de Entrada -->
                     <div>
-                        <label for="purchasePrice" class="block text-lg font-medium text-gray-300 mb-2">Precio de Entrada ($)</label>
-                        <input type="number" id="purchasePrice" value="" step="0.0001" class="w-full p-4 bg-primary-dark border border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-gold transition" oninput="calculateMarkup()">
+                        <label for="purchasePrice" class="block text-xl font-medium text-gray-300 mb-3">Precio de Entrada ($)</label>
+                        <input type="number" id="purchasePrice" value="" step="0.0001" class="w-full p-5 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateMarkup()">
                     </div>
 
                     <!-- 2. Ganancia Objetivo (%) -->
                     <div>
-                        <label for="markupPercent" class="block text-lg font-medium text-gray-300 mb-2">Ganancia Objetivo (%)</label>
-                        <input type="number" id="markupPercent" value="" step="0.01" class="w-full p-4 bg-primary-dark border border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-gold transition" oninput="calculateMarkup()">
+                        <label for="markupPercent" class="block text-xl font-medium text-gray-300 mb-3">Ganancia Objetivo (%)</label>
+                        <input type="number" id="markupPercent" value="" step="0.01" class="w-full p-5 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateMarkup()">
                     </div>
                     
                     <!-- 3. Cantidad de Acciones -->
                     <div>
-                        <label for="sharesQuantity" class="block text-lg font-medium text-gray-300 mb-2">Cantidad de Acciones</label>
-                        <input type="number" id="sharesQuantity" value="" step="1" class="w-full p-4 bg-primary-dark border border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-gold transition" oninput="calculateMarkup()">
+                        <label for="sharesQuantity" class="block text-xl font-medium text-gray-300 mb-3">Cantidad de Acciones</label>
+                        <input type="number" id="sharesQuantity" value="" step="1" class="w-full p-5 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateMarkup()">
                     </div>
                     
                 </div>
 
                 <!-- Results for Markup Calculator -->
-                <div class="border-t border-gray-700 pt-8 mt-4 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="border-t-2 border-gray-700 pt-10 mt-6 grid grid-cols-1 md:grid-cols-3 gap-8">
                     
                     <!-- Precio de Venta Calculado (Mayor énfasis) -->
-                    <div class="md:col-span-2 flex justify-between items-center p-5 sm:p-6 bg-primary-dark rounded-xl shadow-inner border border-accent-blue">
-                        <span class="text-xl sm:text-2xl font-semibold text-gray-300">Precio de Venta (TP):</span>
-                        <!-- Aumento de tamaño de fuente para el resultado clave -->
-                        <span id="outputSellingPrice" class="text-3xl sm:text-5xl font-extrabold text-accent-gold">0.00</span>
+                    <div class="md:col-span-2 flex flex-col sm:flex-row justify-between items-start sm:items-center p-6 sm:p-8 bg-primary-dark rounded-xl shadow-inner border-2 border-accent-blue">
+                        <span class="text-2xl sm:text-3xl font-black text-gray-300 mb-2 sm:mb-0">Precio de Venta (TP):</span>
+                        <!-- Aumento de tamaño de fuente a 6XL para el resultado clave -->
+                        <span id="outputSellingPrice" class="text-5xl sm:text-6xl font-extrabold text-accent-gold">0.00</span>
                     </div>
                     
-                    <!-- Total Invertido -->
-                    <div class="flex flex-col justify-center p-4 bg-primary-dark rounded-xl shadow-inner border border-accent-gold/50">
-                        <span class="text-base text-gray-400">Total Invertido:</span>
-                        <span id="outputTotalInvestmentMarkup" class="text-xl sm:text-2xl font-bold text-white">$0.00</span>
-                    </div>
-                    
-                    <!-- Incremento Absoluto ($) -->
-                    <div class="flex flex-col justify-center p-4 bg-primary-dark rounded-xl shadow-inner border border-gray-700 md:col-span-1">
-                        <span class="text-base text-gray-400">Incremento Absoluto:</span>
-                        <span id="outputGrossProfit" class="text-xl sm:text-2xl font-bold text-calc-green">0.00</span>
+                    <!-- Total Invertido & Incremento Absoluto -->
+                    <div class="md:col-span-1 space-y-6">
+                        <div class="flex flex-col justify-center p-4 bg-primary-dark rounded-xl shadow-inner border border-accent-gold/50">
+                            <span class="text-lg text-gray-400">Total Invertido:</span>
+                            <span id="outputTotalInvestmentMarkup" class="text-2xl sm:text-3xl font-bold text-white">$0.00</span>
+                        </div>
+                        
+                        <!-- Incremento Absoluto ($) -->
+                        <div class="flex flex-col justify-center p-4 bg-primary-dark rounded-xl shadow-inner border border-gray-700">
+                            <span class="text-lg text-gray-400">Incremento Absoluto:</span>
+                            <span id="outputGrossProfit" class="text-2xl sm:text-3xl font-bold text-calc-green">0.00</span>
+                        </div>
                     </div>
 
                 </div>
@@ -188,15 +190,15 @@
         </section>
 
         <!-- Sección 2: Calculadora de Precio Promedio Ponderado -->
-        <section class="pt-10 mt-12 border-t border-gray-700">
-            <h2 class="text-3xl sm:text-4xl font-bold text-center text-accent-gold mb-5">Calculadora de Posición Promedio</h2>
-            <p class="text-gray-400 mb-8 text-center max-w-3xl mx-auto text-lg">Calcula el precio promedio de tu posición combinada (DCA).</p>
+        <section class="pt-16 mt-16 border-t border-gray-700">
+            <h2 class="text-4xl sm:text-5xl font-black text-center text-accent-gold mb-6">Calculadora de Posición Promedio</h2>
+            <p class="text-gray-400 mb-10 text-center max-w-3xl mx-auto text-xl">Calcula el precio promedio de tu posición combinada (DCA).</p>
             
-            <!-- CAMBIO: max-w-3xl para PC -->
-            <div class="bg-secondary-dark p-6 md:p-12 rounded-2xl shadow-2xl max-w-sm sm:max-w-md md:max-w-3xl mx-auto">
+            <!-- CAMBIO: max-w-4xl para PC -->
+            <div class="bg-secondary-dark p-8 md:p-16 rounded-3xl shadow-2xl max-w-sm sm:max-w-md md:max-w-4xl mx-auto border-4 border-accent-gold/40">
                 
-                <!-- Encabezados de la tabla de posiciones: gap-4 en desktop -->
-                <div class="grid grid-cols-4 gap-6 text-lg font-semibold text-gray-300 mb-4 border-b border-gray-700 pb-3">
+                <!-- Encabezados de la tabla de posiciones: gap-6 en desktop -->
+                <div class="grid grid-cols-4 gap-8 text-xl font-bold text-gray-300 mb-6 border-b-2 border-gray-700 pb-4">
                     <span class="col-span-1 text-accent-gold">Posición</span>
                     <span class="col-span-1 text-center">Precio ($)</span>
                     <span class="col-span-1 text-center">Acciones</span>
@@ -204,50 +206,50 @@
                 </div>
 
                 <!-- Fila 1: Compra 1 -->
-                <div class="grid grid-cols-4 gap-6 items-center mb-4">
-                    <span class="col-span-1 text-lg">Compra 1</span>
-                    <input type="number" id="price1" value="" step="0.01" class="col-span-1 w-full p-3 bg-primary-dark border border-gray-600 rounded-xl text-white text-center" oninput="calculateDCA()">
-                    <input type="number" id="shares1" value="" step="1" class="col-span-1 w-full p-3 bg-primary-dark border border-gray-600 rounded-xl text-white text-center" oninput="calculateDCA()">
-                    <span id="invested1" class="col-span-1 text-right text-gray-400 text-lg">$0.00</span>
+                <div class="grid grid-cols-4 gap-8 items-center mb-6">
+                    <span class="col-span-1 text-xl font-medium">Compra 1</span>
+                    <input type="number" id="price1" value="" step="0.01" class="col-span-1 w-full p-4 bg-primary-dark border-2 border-gray-600 rounded-xl text-white text-center" oninput="calculateDCA()">
+                    <input type="number" id="shares1" value="" step="1" class="col-span-1 w-full p-4 bg-primary-dark border-2 border-gray-600 rounded-xl text-white text-center" oninput="calculateDCA()">
+                    <span id="invested1" class="col-span-1 text-right text-gray-400 text-xl">$0.00</span>
                 </div>
 
                 <!-- Fila 2: Compra 2 -->
-                <div class="grid grid-cols-4 gap-6 items-center mb-4">
-                    <span class="col-span-1 text-lg">Compra 2</span>
-                    <input type="number" id="price2" value="" step="0.01" class="col-span-1 w-full p-3 bg-primary-dark border border-gray-600 rounded-xl text-white text-center" oninput="calculateDCA()">
-                    <input type="number" id="shares2" value="" step="1" class="col-span-1 w-full p-3 bg-primary-dark border border-gray-600 rounded-xl text-white text-center" oninput="calculateDCA()">
-                    <span id="invested2" class="col-span-1 text-right text-gray-400 text-lg">$0.00</span>
+                <div class="grid grid-cols-4 gap-8 items-center mb-6">
+                    <span class="col-span-1 text-xl font-medium">Compra 2</span>
+                    <input type="number" id="price2" value="" step="0.01" class="col-span-1 w-full p-4 bg-primary-dark border-2 border-gray-600 rounded-xl text-white text-center" oninput="calculateDCA()">
+                    <input type="number" id="shares2" value="" step="1" class="col-span-1 w-full p-4 bg-primary-dark border-2 border-gray-600 rounded-xl text-white text-center" oninput="calculateDCA()">
+                    <span id="invested2" class="col-span-1 text-right text-gray-400 text-xl">$0.00</span>
                 </div>
                 
                 <!-- Fila 3: Compra 3 -->
-                <div class="grid grid-cols-4 gap-6 items-center mb-6">
-                    <span class="col-span-1 text-lg">Compra 3</span>
-                    <input type="number" id="price3" value="" step="0.01" class="col-span-1 w-full p-3 bg-primary-dark border border-gray-600 rounded-xl text-white text-center" oninput="calculateDCA()">
-                    <input type="number" id="shares3" value="" step="1" class="col-span-1 w-full p-3 bg-primary-dark border border-gray-600 rounded-xl text-white text-center" oninput="calculateDCA()">
-                    <span id="invested3" class="col-span-1 text-right text-gray-400 text-lg">$0.00</span>
+                <div class="grid grid-cols-4 gap-8 items-center mb-10">
+                    <span class="col-span-1 text-xl font-medium">Compra 3</span>
+                    <input type="number" id="price3" value="" step="0.01" class="col-span-1 w-full p-4 bg-primary-dark border-2 border-gray-600 rounded-xl text-white text-center" oninput="calculateDCA()">
+                    <input type="number" id="shares3" value="" step="1" class="col-span-1 w-full p-4 bg-primary-dark border-2 border-gray-600 rounded-xl text-white text-center" oninput="calculateDCA()">
+                    <span id="invested3" class="col-span-1 text-right text-gray-400 text-xl">$0.00</span>
                 </div>
 
                 <!-- Resultados Totales -->
-                <div class="border-t border-gray-600 pt-8 mt-4 space-y-4">
+                <div class="border-t-2 border-gray-600 pt-10 mt-6 space-y-6">
                     
                     <!-- Precio Promedio -->
-                    <div class="flex justify-between items-center p-5 bg-primary-dark rounded-xl shadow-inner border border-accent-gold/50">
-                        <span class="text-xl sm:text-2xl font-semibold text-gray-300">Precio Promedio:</span>
-                        <!-- Aumento de tamaño de fuente para el resultado clave -->
-                        <span id="outputAvgPrice" class="text-3xl sm:text-4xl font-extrabold text-accent-gold">$0.00</span>
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-6 sm:p-8 bg-primary-dark rounded-xl shadow-inner border-2 border-accent-gold/50">
+                        <span class="text-2xl sm:text-3xl font-black text-gray-300 mb-2 sm:mb-0">Precio Promedio:</span>
+                        <!-- Aumento de tamaño de fuente a 6XL para el resultado clave -->
+                        <span id="outputAvgPrice" class="text-5xl sm:text-6xl font-extrabold text-accent-gold">$0.00</span>
                     </div>
                     
-                    <div class="grid grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <!-- Acciones Totales -->
-                        <div class="flex flex-col justify-center p-4 bg-primary-dark rounded-xl shadow-inner">
-                            <span class="text-base text-gray-300">Total de Unidades:</span>
-                            <span id="outputTotalShares" class="text-xl sm:text-2xl font-bold text-white">0</span>
+                        <div class="flex flex-col justify-center p-5 bg-primary-dark rounded-xl shadow-inner">
+                            <span class="text-lg text-gray-300">Total de Unidades:</span>
+                            <span id="outputTotalShares" class="text-2xl sm:text-3xl font-bold text-white">0</span>
                         </div>
 
                         <!-- Capital Total Invertido -->
-                        <div class="flex flex-col justify-center p-4 bg-primary-dark rounded-xl shadow-inner">
-                            <span class="text-base text-gray-300">Capital Total ($):</span>
-                            <span id="outputTotalInvested" class="text-xl sm:text-2xl font-bold text-calc-green">$0.00</span>
+                        <div class="flex flex-col justify-center p-5 bg-primary-dark rounded-xl shadow-inner">
+                            <span class="text-lg text-gray-300">Capital Total ($):</span>
+                            <span id="outputTotalInvested" class="text-2xl sm:text-3xl font-bold text-calc-green">$0.00</span>
                         </div>
                     </div>
 
@@ -256,63 +258,63 @@
         </section>
         
         <!-- Sección 3: Calculadora de Posiciones de Opciones -->
-        <section class="pt-10 mt-12 border-t border-gray-700">
-            <h2 class="text-3xl sm:text-4xl font-bold text-center text-accent-blue mb-5">Calculadora de Opciones</h2>
-            <p class="text-gray-400 mb-8 text-center max-w-3xl mx-auto text-lg">Calcula la inversión, el beneficio neto y el precio de venta (premium) objetivo.</p>
+        <section class="pt-16 mt-16 border-t border-gray-700">
+            <h2 class="text-4xl sm:text-5xl font-black text-center text-accent-blue mb-6">Calculadora de Opciones</h2>
+            <p class="text-gray-400 mb-10 text-center max-w-3xl mx-auto text-xl">Calcula la inversión, el beneficio neto y el precio de venta (premium) objetivo.</p>
             
-            <!-- CAMBIO: max-w-3xl para PC -->
-            <div class="bg-secondary-dark p-6 md:p-12 rounded-2xl shadow-2xl max-w-sm sm:max-w-md md:max-w-3xl mx-auto border-2 border-accent-blue/50">
+            <!-- CAMBIO: max-w-4xl para PC -->
+            <div class="bg-secondary-dark p-8 md:p-16 rounded-3xl shadow-2xl max-w-sm sm:max-w-md md:max-w-4xl mx-auto border-4 border-accent-blue/40">
                 
-                <!-- Inputs for Options Calculator: Ahora en grid 2x2 también para PC, con p-3 para más espacio -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-8">
+                <!-- Inputs for Options Calculator: Ahora en grid 2x2 con p-5 para más espacio -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8 mb-10">
                     
                     <!-- Precio (Premium) -->
                     <div>
-                        <label for="optionPrice" class="block text-lg font-medium text-gray-300 mb-2">Precio de Opción (Premium $)</label>
-                        <input type="number" id="optionPrice" value="" step="0.01" class="w-full p-4 bg-primary-dark border border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-gold transition" oninput="calculateOptionsPosition()">
+                        <label for="optionPrice" class="block text-xl font-medium text-gray-300 mb-3">Precio de Opción (Premium $)</label>
+                        <input type="number" id="optionPrice" value="" step="0.01" class="w-full p-5 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateOptionsPosition()">
                     </div>
 
                     <!-- Cantidad de Contratos -->
                     <div>
-                        <label for="optionContracts" class="block text-lg font-medium text-gray-300 mb-2">Cantidad de Contratos</label>
-                        <input type="number" id="optionContracts" value="" step="1" class="w-full p-4 bg-primary-dark border border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-gold transition" oninput="calculateOptionsPosition()">
+                        <label for="optionContracts" class="block text-xl font-medium text-gray-300 mb-3">Cantidad de Contratos</label>
+                        <input type="number" id="optionContracts" value="" step="1" class="w-full p-5 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateOptionsPosition()">
                     </div>
 
                     <!-- Porcentaje de Ganancia Objetivo (Valor por defecto 12) -->
                     <div>
-                        <label for="optionTargetPercent" class="block text-lg font-medium text-gray-300 mb-2">Ganancia Objetivo (%)</label>
-                        <input type="number" id="optionTargetPercent" value="12" step="1" class="w-full p-4 bg-primary-dark border border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-gold transition" oninput="calculateOptionsPosition()">
+                        <label for="optionTargetPercent" class="block text-xl font-medium text-gray-300 mb-3">Ganancia Objetivo (%)</label>
+                        <input type="number" id="optionTargetPercent" value="12" step="1" class="w-full p-5 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateOptionsPosition()">
                     </div>
                     
                     <!-- Comisión por Contrato (Default 2) -->
                     <div>
-                        <label for="optionCommission" class="block text-lg font-medium text-gray-300 mb-2">Comisión por Contrato ($)</label>
-                        <input type="number" id="optionCommission" value="2" step="0.01" class="w-full p-4 bg-primary-dark border border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-gold transition" oninput="calculateOptionsPosition()">
+                        <label for="optionCommission" class="block text-xl font-medium text-gray-300 mb-3">Comisión por Contrato ($)</label>
+                        <input type="number" id="optionCommission" value="2" step="0.01" class="w-full p-5 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateOptionsPosition()">
                     </div>
                     
                 </div>
 
-                <!-- Results for Options Calculator: Ahora en grid 3x1 -->
-                <div class="border-t border-gray-700 pt-8 mt-4 space-y-4">
+                <!-- Results for Options Calculator -->
+                <div class="border-t-2 border-gray-700 pt-10 mt-6 space-y-6">
                     
                     <!-- Precio de Venta Objetivo (Output 2) -->
-                    <div class="flex justify-between items-center p-5 sm:p-6 bg-primary-dark rounded-xl shadow-inner border border-calc-green/50">
-                        <span class="text-xl sm:text-2xl font-semibold text-gray-300">Precio Venta Objetivo:</span>
-                        <!-- Aumento de tamaño de fuente para el resultado clave -->
-                        <span id="outputTargetSellingPrice" class="text-3xl sm:text-5xl font-extrabold text-calc-green">0.00</span>
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-6 sm:p-8 bg-primary-dark rounded-xl shadow-inner border-2 border-calc-green/50">
+                        <span class="text-2xl sm:text-3xl font-black text-gray-300 mb-2 sm:mb-0">Precio Venta Objetivo:</span>
+                        <!-- Aumento de tamaño de fuente a 6XL para el resultado clave -->
+                        <span id="outputTargetSellingPrice" class="text-5xl sm:text-6xl font-extrabold text-calc-green">0.00</span>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <!-- Inversión Total (Output 1) -->
-                        <div class="flex flex-col justify-center p-4 bg-primary-dark rounded-xl shadow-inner border border-calc-red/50">
-                            <span class="text-base text-gray-400">Capital Total:</span>
-                            <span id="outputTotalInvestment" class="text-xl sm:text-2xl font-extrabold text-calc-red">$0.00</span>
+                        <div class="flex flex-col justify-center p-5 bg-primary-dark rounded-xl shadow-inner border border-calc-red/50">
+                            <span class="text-lg text-gray-400">Capital Total:</span>
+                            <span id="outputTotalInvestment" class="text-2xl sm:text-3xl font-extrabold text-calc-red">$0.00</span>
                         </div>
 
                         <!-- Beneficio Neto Objetivo -->
-                        <div class="flex flex-col justify-center p-4 bg-primary-dark rounded-xl shadow-inner border border-calc-green/50">
-                            <span class="text-base text-gray-400">Beneficio Neto Obj.:</span>
-                            <span id="outputNetProfit" class="text-xl sm:text-2xl font-extrabold text-calc-green">$0.00</span>
+                        <div class="flex flex-col justify-center p-5 bg-primary-dark rounded-xl shadow-inner border border-calc-green/50">
+                            <span class="text-lg text-gray-400">Beneficio Neto Obj.:</span>
+                            <span id="outputNetProfit" class="text-2xl sm:text-3xl font-extrabold text-calc-green">$0.00</span>
                         </div>
                     </div>
                     
@@ -324,7 +326,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-secondary-dark mt-12 p-8 text-center text-lg text-gray-400">
+    <footer class="bg-secondary-dark mt-20 p-10 text-center text-xl text-gray-400">
         <p>&copy; 2025 Mabuya Trading. Todos los derechos reservados. Educando la próxima generación de traders.</p>
     </footer>
 
@@ -469,7 +471,7 @@
             // Actualizar el elemento de estado
             marketStatus.textContent = statusText;
             // Asegurarse de que el tamaño de fuente se mantenga para el estado de la bolsa
-            marketStatus.className = `font-bold text-xl sm:text-2xl ${statusColorClass}`;
+            marketStatus.className = `font-black text-2xl sm:text-3xl ${statusColorClass}`;
         }
 
 
