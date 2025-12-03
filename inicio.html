@@ -468,7 +468,7 @@
             </div>
         </section>
         
-        <!-- Sección de Buscador de Noticias con IA (NUEVA) -->
+        <!-- Sección de Buscador de Noticias con IA (MODIFICADA) -->
         <section class="mb-20 pt-16">
             <h2 class="text-5xl font-bold text-center text-accent-blue mb-10">Buscador de Noticias con IA</h2>
             <div class="bg-secondary-dark p-8 rounded-2xl shadow-xl max-w-4xl mx-auto border-2 border-accent-blue/50">
@@ -538,9 +538,13 @@
         let userId = null;
         let isAuthReady = false;
 
+        // Variables de entorno inyectadas por Canvas
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // Determinar si estamos fuera del entorno Canvas (no hay token de autenticación disponible)
+        const IS_EXTERNAL_DEPLOYMENT = typeof __initial_auth_token === 'undefined';
 
         // Función de Inicialización de Firebase (OBLIGATORIA)
         const initializeFirebase = async () => {
@@ -569,7 +573,7 @@
                     isAuthReady = true; 
                 }
             } else {
-                console.warn("Firebase config not found. AI search will still function, but using the default API key.");
+                console.warn("Firebase config not found. Assuming external deployment.");
                 isAuthReady = true; 
             }
         };
@@ -601,6 +605,33 @@
             throw new Error("La llamada a la API falló después de múltiples reintentos.");
         };
 
+        // Función de MOCK para cuando no hay API Key (ej: en GitHub Pages)
+        const getMockNews = (ticker) => {
+            const mockSummary = `
+                🚨 **[Modo Simulación: Despliegue Externo]** 🚨
+
+                Esta función de IA requiere acceso a la API de Gemini, la cual se inyecta automáticamente solo dentro del entorno Canvas de Mabuya Trading (donde se desarrolló esta aplicación).
+
+                **Resumen Simulado para ${ticker.toUpperCase()}:**
+                
+                Se reporta que ${ticker.toUpperCase()} ha mostrado una fuerte volatilidad en las últimas 24 horas. Los analistas sugieren que la incertidumbre sobre la próxima reunión de la Reserva Federal (FOMC) está impulsando tanto compras agresivas en mínimos como tomas de ganancias rápidas en altos. Los volúmenes han sido superiores a la media móvil de 30 días. La recomendación actual es **MANTENER** hasta tener una ruptura confirmada por encima de los niveles de resistencia clave, buscando una posible entrada de **COMPRA** si supera los $190.00.
+
+                ---
+                
+                **Datos Simulados:**
+                - **Activo:** ${ticker.toUpperCase()} (Simulado)
+                - **Precio Actual:** $188.50 USD
+                - **Cambio 24h:** +0.55%
+                - **Sentimiento del Mercado:** Cautelosamente optimista.
+            `;
+            const mockSources = [
+                { title: "Mabuya Trading - Fuente Primaria de Simulación", uri: "#" },
+                { title: "Simulación de Datos de Mercado (No en Vivo)", uri: "#" }
+            ];
+            return { text: mockSummary, sources: mockSources };
+        };
+
+
         const handleNewsSearch = async () => {
             const tickerInput = document.getElementById('tickerInput');
             const searchButton = document.getElementById('searchButton');
@@ -631,83 +662,94 @@
             loadingIndicator.classList.remove('hidden');
             tickerDisplay.textContent = ticker;
             
-            // 3. Configuración de la API Gemini
-            const systemPrompt = "Actúa como un analista de noticias financieras especializado. Tu tarea es encontrar las noticias más relevantes y recientes (últimas 48 horas) para el ticker o activo proporcionado. Proporciona un resumen conciso de los hallazgos clave en español. Al final de tu resumen, DEBES indicar '---' y luego listar el activo, el precio y el cambio porcentual si están disponibles y son relevantes para las noticias, formateado en párrafos o viñetas. NO inventes datos. Finalmente, asegúrate de que todas las afirmaciones fácticas estén respaldadas por las fuentes citadas.";
-            const userQuery = `Encuentra y resume las noticias más relevantes sobre el ticker de acciones o activo: ${ticker}`;
-            const apiKey = ""; 
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            let finalResult;
 
-            const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                tools: [{ "google_search": {} }], // Habilitar Google Search Grounding (tiempo real)
-                systemInstruction: {
-                    parts: [{ text: systemPrompt }]
-                },
-            };
-
-            try {
-                // 4. Realizar la llamada a la API
-                const response = await fetchWithRetry(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+            if (IS_EXTERNAL_DEPLOYMENT) {
+                // Modo Simulación: Retraso simulado
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                finalResult = getMockNews(ticker);
                 
-                const result = await response.json();
-                const candidate = result.candidates?.[0];
+            } else {
+                // Modo Real: Llamada a la API de Gemini (solo funciona dentro de Canvas)
+                const systemPrompt = "Actúa como un analista de noticias financieras especializado. Tu tarea es encontrar las noticias más relevantes y recientes (últimas 48 horas) para el ticker o activo proporcionado. Proporciona un resumen conciso de los hallazgos clave en español. Al final de tu resumen, DEBES indicar '---' y luego listar el activo, el precio y el cambio porcentual si están disponibles y son relevantes para las noticias, formateado en párrafos o viñetas. NO inventes datos. Finalmente, asegúrate de que todas las afirmaciones fácticas estén respaldadas por las fuentes citadas.";
+                const userQuery = `Encuentra y resume las noticias más relevantes sobre el ticker de acciones o activo: ${ticker}`;
+                const apiKey = ""; // Será inyectada automáticamente por el entorno Canvas
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
-                if (!candidate || !candidate.content?.parts?.[0]?.text) {
-                    throw new Error("La IA no pudo generar un resumen de noticias. Inténtalo con un ticker diferente o verifica la conexión.");
-                }
-
-                const rawText = candidate.content.parts[0].text;
+                const payload = {
+                    contents: [{ parts: [{ text: userQuery }] }],
+                    tools: [{ "google_search": {} }], // Habilitar Google Search Grounding (tiempo real)
+                    systemInstruction: {
+                        parts: [{ text: systemPrompt }]
+                    },
+                };
                 
-                // Dividir el texto en resumen y datos adicionales (si existen)
-                const textParts = rawText.split('---');
-                const text = textParts[0].trim();
-                
-                summaryText.innerHTML = text.replace(/\n/g, '<br><br>'); // Mostrar saltos de línea
-                summaryOutput.classList.remove('hidden');
+                try {
+                    // 3. Realizar la llamada a la API
+                    const response = await fetchWithRetry(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    const result = await response.json();
+                    const candidate = result.candidates?.[0];
 
-                // 5. Extraer y mostrar las fuentes
-                let sources = [];
-                const groundingMetadata = candidate.groundingMetadata;
-                sourcesList.innerHTML = ''; 
-
-                if (groundingMetadata && groundingMetadata.groundingAttributions) {
-                    sources = groundingMetadata.groundingAttributions
-                        .map((attribution, index) => ({
-                            uri: attribution.web?.uri,
-                            title: attribution.web?.title || `Fuente ${index + 1}`,
-                        }))
-                        .filter(source => source.uri); 
-
-                    if (sources.length > 0) {
-                        sources.forEach(source => {
-                            const li = document.createElement('li');
-                            li.className = 'flex items-start text-gray-400';
-                            li.innerHTML = `
-                                <span class="text-accent-gold mr-3 mt-1">🔗</span>
-                                <a href="${source.uri}" target="_blank" class="hover:text-white transition duration-200 text-lg sm:text-xl font-medium" title="${source.title}">
-                                    ${source.title}
-                                </a>
-                            `;
-                            sourcesList.appendChild(li);
-                        });
-                        sourcesOutput.classList.remove('hidden');
+                    if (!candidate || !candidate.content?.parts?.[0]?.text) {
+                        throw new Error("La IA no pudo generar un resumen de noticias. Inténtalo con un ticker diferente o verifica la conexión.");
                     }
+
+                    const rawText = candidate.content.parts[0].text;
+                    const textParts = rawText.split('---');
+                    const text = textParts[0].trim();
+                    
+                    let sources = [];
+                    const groundingMetadata = candidate.groundingMetadata;
+
+                    if (groundingMetadata && groundingMetadata.groundingAttributions) {
+                        sources = groundingMetadata.groundingAttributions
+                            .map((attribution, index) => ({
+                                uri: attribution.web?.uri,
+                                title: attribution.web?.title || `Fuente ${index + 1}`,
+                            }))
+                            .filter(source => source.uri); 
+                    }
+                    
+                    finalResult = { text, sources };
+
+                } catch (error) {
+                    console.error("News Search Error:", error);
+                    // Si el modo Real falla, volvemos a mostrar un error detallado
+                    errorOutput.textContent = `Error al buscar noticias: ${error.message}. (Si estás fuera de Canvas, asegúrate de que tu clave API de Gemini esté configurada si deseas funcionalidad en vivo.)`;
+                    errorOutput.classList.remove('hidden');
+                    return; // Detenemos la ejecución si el modo real falla
                 }
-
-
-            } catch (error) {
-                console.error("News Search Error:", error);
-                errorOutput.textContent = `Error al buscar noticias: ${error.message}`;
-                errorOutput.classList.remove('hidden');
-            } finally {
-                // 6. Finalizar el estado de carga
-                loadingIndicator.classList.add('hidden');
-                searchButton.disabled = false;
             }
+            
+            // 4. Mostrar los resultados
+            summaryText.innerHTML = finalResult.text.replace(/\n/g, '<br><br>');
+            summaryOutput.classList.remove('hidden');
+            
+            sourcesList.innerHTML = ''; 
+            if (finalResult.sources.length > 0) {
+                finalResult.sources.forEach(source => {
+                    const li = document.createElement('li');
+                    li.className = 'flex items-start text-gray-400';
+                    li.innerHTML = `
+                        <span class="text-accent-gold mr-3 mt-1">🔗</span>
+                        <a href="${source.uri}" target="_blank" class="hover:text-white transition duration-200 text-lg sm:text-xl font-medium" title="${source.title}">
+                            ${source.title}
+                        </a>
+                    `;
+                    sourcesList.appendChild(li);
+                });
+                sourcesOutput.classList.remove('hidden');
+            }
+
+
+            // 5. Finalizar el estado de carga
+            loadingIndicator.classList.add('hidden');
+            searchButton.disabled = false;
         };
 
 
