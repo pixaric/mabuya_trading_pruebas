@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mabuya Trading - Videos</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuración de Tailwind para un tema oscuro y fuente Inter -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#121212',
+                        'secondary-dark': '#1e1e1e',
+                        'accent-gold': '#ffc107',
+                        'accent-blue': '#007bff',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilo para el enlace activo */
+        .active-link {
+            border-bottom: 2px solid #ffc107;
+            color: #ffc107 !important;
+        }
+    </style>
+</head>
+<body class="bg-primary-dark text-gray-100 font-sans min-h-screen">
+
+    <!-- Barra de Navegación Fija -->
+    <header class="sticky top-0 z-50 bg-secondary-dark shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="inicio.html" class="text-2xl font-bold tracking-wider text-accent-gold transition duration-300 hover:text-white">
+                    MABUYA <span class="text-white">TRADING</span>
+                </a>
+                
+                <!-- Menú de Navegación (Desktop) - Videos Activo -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="inicio.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-2 border-b-2 border-transparent hover:border-accent-gold">Inicio</a>
+                    <a href="academia.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-2 border-b-2 border-transparent hover:border-accent-gold">Academia</a>
+                    <!-- Videos está activo -->
+                    <a href="videos.html" class="nav-link active-link text-gray-300 transition duration-150 py-2 border-b-2 border-transparent hover:border-accent-gold">Videos</a>
+                    <a href="calculadora.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-2 border-b-2 border-transparent hover:border-accent-gold">Calculadora</a>
+                </nav>
+
+                <!-- Botón de Menú Móvil -->
+                <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-accent-gold focus:outline-none p-2 rounded-md" aria-label="Toggle Menu">
+                    <!-- Icono de Hamburguesa (SVG) -->
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Menú Móvil Desplegable -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="inicio.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-accent-gold/20">Inicio</a>
+                <a href="academia.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-accent-gold/20">Academia</a>
+                <a href="videos.html" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-accent-blue/20 hover:bg-accent-gold/20 active-link">Videos</a>
+                <a href="calculadora.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-accent-gold/20">Calculadora</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+        <!-- Sección de Videos (Videos) -->
+        <section class="mb-20 pt-10">
+            <h1 class="text-4xl font-bold text-center text-accent-gold mb-4">Biblioteca de Videos Exclusivos</h1>
+            <p class="text-center text-gray-400 mb-12 max-w-3xl mx-auto">Tutoriales en profundidad y análisis de mercado en vivo para mantenerte actualizado con las últimas tendencias.</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Video 1 Placeholder -->
+                <div class="bg-secondary-dark rounded-xl overflow-hidden shadow-lg hover:ring-2 ring-accent-gold/50 transition duration-300 cursor-pointer">
+                    <img src="https://placehold.co/400x225/2d2d2d/ffffff?text=Video+1:+Estrategia+Básica" alt="Placeholder para Video 1" class="w-full h-auto">
+                    <div class="p-4">
+                        <h4 class="text-xl font-semibold mb-1 text-white">Estrategia de Scalping</h4>
+                        <p class="text-gray-400 text-sm">Aprende a ejecutar operaciones rápidas en mercados volátiles, maximizando ganancias con bajo riesgo.</p>
+                        <span class="text-xs text-accent-gold block mt-2">Nivel: Intermedio</span>
+                    </div>
+                </div>
+                
+                <!-- Video 2 Placeholder -->
+                <div class="bg-secondary-dark rounded-xl overflow-hidden shadow-lg hover:ring-2 ring-accent-gold/50 transition duration-300 cursor-pointer">
+                    <img src="https://placehold.co/400x225/2d2d2d/ffffff?text=Video+2:+Indicadores+Clave" alt="Placeholder para Video 2" class="w-full h-auto">
+                    <div class="p-4">
+                        <h4 class="text-xl font-semibold mb-1 text-white">El Poder del RSI y MACD</h4>
+                        <p class="text-gray-400 text-sm">Configuración y lectura de los indicadores técnicos esenciales para identificar tendencias.</p>
+                        <span class="text-xs text-accent-gold block mt-2">Nivel: Básico/Intermedio</span>
+                    </div>
+                </div>
+                
+                <!-- Video 3 Placeholder -->
+                <div class="bg-secondary-dark rounded-xl overflow-hidden shadow-lg hover:ring-2 ring-accent-gold/50 transition duration-300 cursor-pointer">
+                    <img src="https://placehold.co/400x225/2d2d2d/ffffff?text=Video+3:+Análisis+Fundamental" alt="Placeholder para Video 3" class="w-full h-auto">
+                    <div class="p-4">
+                        <h4 class="text-xl font-semibold mb-1 text-white">Impacto de las Tasas de Interés</h4>
+                        <p class="text-gray-400 text-sm">Cómo las decisiones de la FED afectan tus operaciones y cómo prepararte para los anuncios.</p>
+                        <span class="text-xs text-accent-gold block mt-2">Nivel: Avanzado</span>
+                    </div>
+                </div>
+
+                <!-- Video 4 Placeholder -->
+                <div class="bg-secondary-dark rounded-xl overflow-hidden shadow-lg hover:ring-2 ring-accent-gold/50 transition duration-300 cursor-pointer">
+                    <img src="https://placehold.co/400x225/2d2d2d/ffffff?text=Video+4:+Breakout+Estrategia" alt="Placeholder para Video 4" class="w-full h-auto">
+                    <div class="p-4">
+                        <h4 class="text-xl font-semibold mb-1 text-white">Trading de Breakouts</h4>
+                        <p class="text-gray-400 text-sm">Técnicas efectivas para operar rupturas de niveles de soporte y resistencia.</p>
+                        <span class="text-xs text-accent-gold block mt-2">Nivel: Intermedio</span>
+                    </div>
+                </div>
+                
+                <!-- Video 5 Placeholder -->
+                <div class="bg-secondary-dark rounded-xl overflow-hidden shadow-lg hover:ring-2 ring-accent-gold/50 transition duration-300 cursor-pointer">
+                    <img src="https://placehold.co/400x225/2d2d2d/ffffff?text=Video+5:+Backtesting" alt="Placeholder para Video 5" class="w-full h-auto">
+                    <div class="p-4">
+                        <h4 class="text-xl font-semibold mb-1 text-white">Guía Completa de Backtesting</h4>
+                        <p class="text-gray-400 text-sm">Cómo evaluar la efectividad de una estrategia usando datos históricos.</p>
+                        <span class="text-xs text-accent-gold block mt-2">Nivel: Avanzado</span>
+                    </div>
+                </div>
+                
+                <!-- Video 6 Placeholder -->
+                <div class="bg-secondary-dark rounded-xl overflow-hidden shadow-lg hover:ring-2 ring-accent-gold/50 transition duration-300 cursor-pointer">
+                    <img src="https://placehold.co/400x225/2d2d2d/ffffff?text=Video+6:+Trading+en+Cripto" alt="Placeholder para Video 6" class="w-full h-auto">
+                    <div class="p-4">
+                        <h4 class="text-xl font-semibold mb-1 text-white">Trading en el Mercado Cripto</h4>
+                        <p class="text-gray-400 text-sm">Análisis de las particularidades y riesgos del trading de criptomonedas.</p>
+                        <span class="text-xs text-accent-gold block mt-2">Nivel: Intermedio</span>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="mt-12 text-center">
+                 <a href="academia.html" class="inline-block bg-accent-blue text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-blue-600">
+                    Ir a Módulos de la Academia
+                </a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-secondary-dark mt-10 p-6 text-center text-gray-400">
+        <p>&copy; 2025 Mabuya Trading. Todos los derechos reservados. Educando la próxima generación de traders.</p>
+    </footer>
+
+    <script>
+        // Lógica de JavaScript para la Navegación Móvil
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

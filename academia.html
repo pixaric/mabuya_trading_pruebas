@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mabuya Trading - Academia</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuración de Tailwind para un tema oscuro y fuente Inter -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#121212',
+                        'secondary-dark': '#1e1e1e',
+                        'accent-gold': '#ffc107',
+                        'accent-blue': '#007bff',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilo para el enlace activo */
+        .active-link {
+            border-bottom: 2px solid #ffc107;
+            color: #ffc107 !important;
+        }
+    </style>
+</head>
+<body class="bg-primary-dark text-gray-100 font-sans min-h-screen">
+
+    <!-- Barra de Navegación Fija -->
+    <header class="sticky top-0 z-50 bg-secondary-dark shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="inicio.html" class="text-2xl font-bold tracking-wider text-accent-gold transition duration-300 hover:text-white">
+                    MABUYA <span class="text-white">TRADING</span>
+                </a>
+                
+                <!-- Menú de Navegación (Desktop) - Academia Activa -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="inicio.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-2 border-b-2 border-transparent hover:border-accent-gold">Inicio</a>
+                    <!-- Academia está activa -->
+                    <a href="academia.html" class="nav-link active-link text-gray-300 transition duration-150 py-2 border-b-2 border-transparent hover:border-accent-gold">Academia</a>
+                    <a href="videos.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-2 border-b-2 border-transparent hover:border-accent-gold">Videos</a>
+                    <a href="calculadora.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-2 border-b-2 border-transparent hover:border-accent-gold">Calculadora</a>
+                </nav>
+
+                <!-- Botón de Menú Móvil -->
+                <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-accent-gold focus:outline-none p-2 rounded-md" aria-label="Toggle Menu">
+                    <!-- Icono de Hamburguesa (SVG) -->
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Menú Móvil Desplegable -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="inicio.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-accent-gold/20">Inicio</a>
+                <a href="academia.html" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-accent-blue/20 hover:bg-accent-gold/20 active-link">Academia</a>
+                <a href="videos.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-accent-gold/20">Videos</a>
+                <a href="calculadora.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-accent-gold/20">Calculadora</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+        <!-- Sección de Academia (Academy) -->
+        <section class="mb-20 pt-10">
+            <h1 class="text-4xl font-bold text-center text-accent-gold mb-4">Currículo de la Academia Mabuya</h1>
+            <p class="text-center text-gray-400 mb-12 max-w-3xl mx-auto">Nuestro programa está diseñado para llevarte de principiante a trader avanzado, enfocándonos en la práctica y la gestión de riesgo.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Módulo 1 -->
+                <div class="bg-secondary-dark p-6 rounded-xl shadow-lg border border-gray-700 hover:shadow-accent-gold/30 transition duration-300">
+                    <span class="text-3xl font-extrabold text-accent-gold mb-2 block">01</span>
+                    <h3 class="text-2xl font-semibold mb-3">Introducción al Mercado</h3>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1 pl-4">
+                        <li>Qué es el Trading y cómo funciona.</li>
+                        <li>Tipos de activos: Forex, Cripto y Acciones.</li>
+                        <li>Terminología clave (pips, lotes, apalancamiento).</li>
+                    </ul>
+                </div>
+                
+                <!-- Módulo 2 -->
+                <div class="bg-secondary-dark p-6 rounded-xl shadow-lg border border-gray-700 hover:shadow-accent-gold/30 transition duration-300">
+                    <span class="text-3xl font-extrabold text-accent-gold mb-2 block">02</span>
+                    <h3 class="text-2xl font-semibold mb-3">Análisis Técnico y Fundamental</h3>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1 pl-4">
+                        <li>Lectura de gráficos y velas japonesas.</li>
+                        <li>Uso avanzado de indicadores (RSI, MACD, Medias).</li>
+                        <li>Interpretación de noticias y datos macroeconómicos.</li>
+                    </ul>
+                </div>
+                
+                <!-- Módulo 3 -->
+                <div class="bg-secondary-dark p-6 rounded-xl shadow-lg border border-gray-700 hover:shadow-accent-gold/30 transition duration-300">
+                    <span class="text-3xl font-extrabold text-accent-gold mb-2 block">03</span>
+                    <h3 class="text-2xl font-semibold mb-3">Gestión de Riesgo y Psicología</h3>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1 pl-4">
+                        <li>Cálculo de riesgo (R:R) y tamaño de posición.</li>
+                        <li>Desarrollo de un Plan de Trading sólido.</li>
+                        <li>Control emocional y manejo de rachas perdedoras.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                 <a href="videos.html" class="inline-block bg-accent-blue text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-blue-600">
+                    Explorar Recursos en Video
+                </a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-secondary-dark mt-10 p-6 text-center text-gray-400">
+        <p>&copy; 2025 Mabuya Trading. Todos los derechos reservados. Educando la próxima generación de traders.</p>
+    </footer>
+
+    <script>
+        // Lógica de JavaScript para la Navegación Móvil
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
