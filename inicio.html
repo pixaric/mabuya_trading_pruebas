@@ -468,18 +468,21 @@
             </div>
         </section>
         
-        <!-- Sección de Buscador de Noticias con IA (MODIFICADA) -->
+        <!-- Sección de Buscador de Noticias con IA (MODIFICADA para Proxy) -->
         <section class="mb-20 pt-16">
-            <h2 class="text-5xl font-bold text-center text-accent-blue mb-10">Buscador de Noticias con IA</h2>
+            <h2 class="text-5xl font-bold text-center text-accent-blue mb-10">Buscador Web de Noticias Financieras</h2>
             <div class="bg-secondary-dark p-8 rounded-2xl shadow-xl max-w-4xl mx-auto border-2 border-accent-blue/50">
                 <p class="text-xl text-gray-400 mb-6 text-center">
-                    Ingresa un símbolo de acciones (ticker, ej: AAPL, TSLA) para obtener un resumen de noticias clave del mercado, asistido por Inteligencia Artificial.
+                    Ingresa un símbolo de acciones (ticker, ej: AAPL, TSLA) para obtener los enlaces a noticias clave del mercado.
                 </p>
+                <div id="proxyNote" class="bg-yellow-800/30 p-4 mb-6 rounded-lg border border-accent-gold text-lg text-gray-200">
+                    ⚠️ **Nota de Despliegue en GitHub:** Para que la funcionalidad de búsqueda en tiempo real funcione, debes configurar una **Función Proxy sin Servidor** (consulta el documento `SOLUCION_PROXY.md`). Este código está configurado para llamar al endpoint `/api/gemini-proxy`.
+                </div>
 
                 <div class="flex flex-col sm:flex-row gap-4 mb-8">
                     <input type="text" id="tickerInput" placeholder="Ej: GOOG, MSFT, BTC/USD" class="flex-grow p-4 rounded-xl bg-primary-dark border border-gray-600 focus:ring-accent-gold focus:border-accent-gold text-white text-xl uppercase" style="text-transform: uppercase;">
                     <button id="searchButton" class="bg-accent-gold text-primary-dark font-black py-4 px-8 rounded-xl text-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed">
-                        Buscar Noticias con IA
+                        Buscar Artículos
                     </button>
                 </div>
                 
@@ -491,19 +494,25 @@
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        <p class="mt-4 text-xl text-gray-400">Analizando el mercado y generando el resumen...</p>
+                        <p class="mt-4 text-xl text-gray-400">Buscando en la web y cargando artículos...</p>
                     </div>
 
-                    <!-- Output summary -->
+                    <!-- Output summary (Ahora una Introducción Mínima) -->
                     <div id="summaryOutput" class="hidden bg-primary-dark p-6 rounded-xl border border-accent-gold/50">
-                        <h4 class="text-3xl font-bold text-accent-gold mb-4">Resumen de Noticias para <span id="tickerDisplay" class="text-white"></span></h4>
+                        <h4 class="text-3xl font-bold text-accent-gold mb-4">Introducción de la Búsqueda para <span id="tickerDisplay" class="text-white"></span></h4>
                         <p id="summaryText" class="text-xl text-gray-300 leading-relaxed"></p>
                     </div>
+                    
+                    <!-- MENSAJE DE FALLBACK (NUEVO) -->
+                    <div id="noSourcesWarning" class="hidden mt-4 p-4 rounded-lg bg-yellow-600/20 border border-yellow-500 text-yellow-300 text-xl font-medium">
+                        ⚠️ **Nota:** El sistema generó el resumen, pero no se encontraron fuentes específicas de noticias en tiempo real para este activo en este momento. Intenta con un ticker diferente.
+                    </div>
 
-                    <!-- Sources/Citations -->
-                    <div id="sourcesOutput" class="hidden mt-6 bg-primary-dark p-6 rounded-xl border border-gray-600">
-                        <h4 class="text-xl font-semibold text-white mb-3">Fuentes (Grounding)</h4>
-                        <ul id="sourcesList" class="space-y-2 text-lg">
+                    <!-- Sources/Citations - ENFOCADO COMO LISTA DE ARTÍCULOS -->
+                    <div id="sourcesOutput" class="hidden mt-8 bg-secondary-dark p-6 rounded-xl border border-accent-blue/50">
+                        <h4 class="text-2xl font-bold text-accent-blue mb-4">Artículos de Noticias Encontrados (Acceso Directo)</h4>
+                        <p class="text-gray-400 mb-4 text-lg">Haz clic en los enlaces a continuación para ir directamente a la fuente original:</p>
+                        <ul id="sourcesList" class="space-y-3 text-lg">
                             <!-- Sources will be injected here -->
                         </ul>
                     </div>
@@ -526,12 +535,12 @@
 
     <!-- Bloque de Script Reestructurado como Módulo -->
     <script type="module">
-        // Importaciones de Firebase (Necesarias para la autenticación del entorno)
+        // Importaciones de Firebase (Necesarias para la autenticación del entorno Canvas)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Variables Globales para Firebase y el entorno Canvas
+        // Variables Globales de Firebase (necesarias para la ejecución en Canvas)
         let app;
         let db;
         let auth;
@@ -542,9 +551,13 @@
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        
+        // ** URL del Proxy Serverless: ¡ADAPTA ESTO EN GITHUB! **
+        const PROXY_URL = "/api/gemini-proxy"; 
+        
+        // Esta variable nos ayuda a saber si estamos ejecutando en el entorno Canvas.
+        const IS_IN_CANVAS_RUNTIME = typeof __initial_auth_token !== 'undefined';
 
-        // Determinar si estamos fuera del entorno Canvas (no hay token de autenticación disponible)
-        const IS_EXTERNAL_DEPLOYMENT = typeof __initial_auth_token === 'undefined';
 
         // Función de Inicialización de Firebase (OBLIGATORIA)
         const initializeFirebase = async () => {
@@ -578,7 +591,7 @@
             }
         };
 
-        // --- Lógica del Buscador de Noticias con IA (Gemini API) ---
+        // --- Lógica del Buscador de Noticias con IA (Gemini API o Proxy) ---
 
         // Función para implementar la retirada exponencial para reintentos de API
         const fetchWithRetry = async (url, options, maxRetries = 5) => {
@@ -589,7 +602,8 @@
                         if (response.status === 429 && i < maxRetries - 1) {
                             throw new Error("Rate limit exceeded. Retrying...");
                         }
-                        const errorData = await response.json();
+                        // Intenta parsear el error si no es 429 para dar un mensaje más claro
+                        const errorData = await response.json().catch(() => ({})); 
                         throw new Error(errorData.error?.message || `API request failed with status: ${response.status}`);
                     }
                     return response;
@@ -605,30 +619,23 @@
             throw new Error("La llamada a la API falló después de múltiples reintentos.");
         };
 
-        // Función de MOCK para cuando no hay API Key (ej: en GitHub Pages)
+        // Función de MOCK para cuando la llamada real (proxy) falla
         const getMockNews = (ticker) => {
-            const mockSummary = `
-                🚨 **[Modo Simulación: Despliegue Externo]** 🚨
-
-                Esta función de IA requiere acceso a la API de Gemini, la cual se inyecta automáticamente solo dentro del entorno Canvas de Mabuya Trading (donde se desarrolló esta aplicación).
-
-                **Resumen Simulado para ${ticker.toUpperCase()}:**
+            const mockText = `
+                🚨 **[Modo de Emergencia/Simulación]** 🚨
                 
-                Se reporta que ${ticker.toUpperCase()} ha mostrado una fuerte volatilidad en las últimas 24 horas. Los analistas sugieren que la incertidumbre sobre la próxima reunión de la Reserva Federal (FOMC) está impulsando tanto compras agresivas en mínimos como tomas de ganancias rápidas en altos. Los volúmenes han sido superiores a la media móvil de 30 días. La recomendación actual es **MANTENER** hasta tener una ruptura confirmada por encima de los niveles de resistencia clave, buscando una posible entrada de **COMPRA** si supera los $190.00.
+                No se pudo contactar al servidor proxy de búsqueda (${PROXY_URL}). Esto ocurre si el servidor está caído o si el código se está ejecutando en un entorno que bloquea las llamadas de red externas.
 
                 ---
                 
-                **Datos Simulados:**
-                - **Activo:** ${ticker.toUpperCase()} (Simulado)
-                - **Precio Actual:** $188.50 USD
-                - **Cambio 24h:** +0.55%
-                - **Sentimiento del Mercado:** Cautelosamente optimista.
+                **Resultados Simulados:**
+                
+                El activo ${ticker.toUpperCase()} muestra un comportamiento errático en la pre-apertura. Las métricas de volumen indican indecisión, pero el sentimiento general se inclina ligeramente a la baja debido a preocupaciones macroeconómicas globales.
             `;
             const mockSources = [
-                { title: "Mabuya Trading - Fuente Primaria de Simulación", uri: "#" },
-                { title: "Simulación de Datos de Mercado (No en Vivo)", uri: "#" }
+                { title: "Mabuya Trading - Fallback de Datos Simulados (Sin Enlace Real)", uri: "#" },
             ];
-            return { text: mockSummary, sources: mockSources };
+            return { text: mockText, sources: mockSources };
         };
 
 
@@ -642,6 +649,7 @@
             const sourcesOutput = document.getElementById('sourcesOutput');
             const sourcesList = document.getElementById('sourcesList');
             const errorOutput = document.getElementById('errorOutput');
+            const noSourcesWarning = document.getElementById('noSourcesWarning'); // NUEVO
 
             const ticker = tickerInput.value.trim().toUpperCase();
 
@@ -649,6 +657,7 @@
             summaryOutput.classList.add('hidden');
             sourcesOutput.classList.add('hidden');
             errorOutput.classList.add('hidden');
+            noSourcesWarning.classList.add('hidden'); // NUEVO
             errorOutput.textContent = '';
             
             if (!ticker) {
@@ -663,73 +672,77 @@
             tickerDisplay.textContent = ticker;
             
             let finalResult;
+            
+            // ** PROMPT ALTAMENTE REFORZADO **
+            const systemPrompt = `Actúa estrictamente como un Analista de Búsqueda Web Financiera. Tu única misión es:
+                1. USAR OBLIGATORIAMENTE la herramienta de Google Search para encontrar noticias recientes para el ticker: ${ticker}.
+                2. Generar UNA ÚNICA frase de introducción muy breve sobre la actualidad del activo.
+                3. ES IMPERATIVO que la respuesta NO contenga la lista de enlaces, ya que el código JavaScript extrae automáticamente las fuentes del 'groundingMetadata'. Solo enfócate en la frase de introducción.
+                4. Tu respuesta debe ser breve y concisa, y debe ser posible citar la información en ella.`;
+            
+            const userQuery = `Busca noticias y artículos recientes para el activo: ${ticker}`;
 
-            if (IS_EXTERNAL_DEPLOYMENT) {
-                // Modo Simulación: Retraso simulado
-                await new Promise(resolve => setTimeout(resolve, 1500));
-                finalResult = getMockNews(ticker);
+            // El payload que enviamos al proxy o a la API de Gemini
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                tools: [{ "google_search": {} }], 
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+                model: "gemini-2.5-flash-preview-09-2025" // Especificamos el modelo
+            };
+            
+            const urlToCall = IS_IN_CANVAS_RUNTIME 
+                ? `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=` 
+                : PROXY_URL; 
+
+
+            try {
+                // 3. Realizar la llamada al Proxy o a la API (si estamos en Canvas)
+                const response = await fetchWithRetry(urlToCall, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload) 
+                });
                 
-            } else {
-                // Modo Real: Llamada a la API de Gemini (solo funciona dentro de Canvas)
-                const systemPrompt = "Actúa como un analista de noticias financieras especializado. Tu tarea es encontrar las noticias más relevantes y recientes (últimas 48 horas) para el ticker o activo proporcionado. Proporciona un resumen conciso de los hallazgos clave en español. Al final de tu resumen, DEBES indicar '---' y luego listar el activo, el precio y el cambio porcentual si están disponibles y son relevantes para las noticias, formateado en párrafos o viñetas. NO inventes datos. Finalmente, asegúrate de que todas las afirmaciones fácticas estén respaldadas por las fuentes citadas.";
-                const userQuery = `Encuentra y resume las noticias más relevantes sobre el ticker de acciones o activo: ${ticker}`;
-                const apiKey = ""; // Será inyectada automáticamente por el entorno Canvas
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+                const result = await response.json();
 
-                const payload = {
-                    contents: [{ parts: [{ text: userQuery }] }],
-                    tools: [{ "google_search": {} }], // Habilitar Google Search Grounding (tiempo real)
-                    systemInstruction: {
-                        parts: [{ text: systemPrompt }]
-                    },
-                };
-                
-                try {
-                    // 3. Realizar la llamada a la API
-                    const response = await fetchWithRetry(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    
-                    const result = await response.json();
-                    const candidate = result.candidates?.[0];
+                // Usamos el mismo objeto de resultado tanto si viene del Proxy como de la API directa.
+                const candidate = result.candidates?.[0]; 
 
-                    if (!candidate || !candidate.content?.parts?.[0]?.text) {
-                        throw new Error("La IA no pudo generar un resumen de noticias. Inténtalo con un ticker diferente o verifica la conexión.");
-                    }
-
-                    const rawText = candidate.content.parts[0].text;
-                    const textParts = rawText.split('---');
-                    const text = textParts[0].trim();
-                    
-                    let sources = [];
-                    const groundingMetadata = candidate.groundingMetadata;
-
-                    if (groundingMetadata && groundingMetadata.groundingAttributions) {
-                        sources = groundingMetadata.groundingAttributions
-                            .map((attribution, index) => ({
-                                uri: attribution.web?.uri,
-                                title: attribution.web?.title || `Fuente ${index + 1}`,
-                            }))
-                            .filter(source => source.uri); 
-                    }
-                    
-                    finalResult = { text, sources };
-
-                } catch (error) {
-                    console.error("News Search Error:", error);
-                    // Si el modo Real falla, volvemos a mostrar un error detallado
-                    errorOutput.textContent = `Error al buscar noticias: ${error.message}. (Si estás fuera de Canvas, asegúrate de que tu clave API de Gemini esté configurada si deseas funcionalidad en vivo.)`;
-                    errorOutput.classList.remove('hidden');
-                    return; // Detenemos la ejecución si el modo real falla
+                if (!candidate || !candidate.content?.parts?.[0]?.text) {
+                    throw new Error("El buscador no pudo generar resultados o la estructura de respuesta es incorrecta.");
                 }
+
+                const text = candidate.content.parts[0].text.trim();
+                
+                let sources = [];
+                const groundingMetadata = candidate.groundingMetadata;
+                
+                // *** LÓGICA CLAVE: EXTRACCIÓN DE FUENTES ***
+                if (groundingMetadata && groundingMetadata.groundingAttributions) {
+                    sources = groundingMetadata.groundingAttributions
+                        .map((attribution, index) => ({
+                            uri: attribution.web?.uri,
+                            title: attribution.web?.title || `Fuente ${index + 1}`,
+                        }))
+                        .filter(source => source.uri); 
+                }
+                
+                finalResult = { text, sources };
+
+            } catch (error) {
+                console.error("News Search Error (Llamada al Proxy/API Fallida):", error);
+                // Fallback a modo de simulación.
+                finalResult = getMockNews(ticker);
             }
             
             // 4. Mostrar los resultados
+            // 4a. Mostrar la introducción generada.
             summaryText.innerHTML = finalResult.text.replace(/\n/g, '<br><br>');
             summaryOutput.classList.remove('hidden');
             
+            // 4b. Procesar y mostrar las fuentes (Artículos)
             sourcesList.innerHTML = ''; 
             if (finalResult.sources.length > 0) {
                 finalResult.sources.forEach(source => {
@@ -744,6 +757,11 @@
                     sourcesList.appendChild(li);
                 });
                 sourcesOutput.classList.remove('hidden');
+                noSourcesWarning.classList.add('hidden'); // Ocultar advertencia si hay fuentes
+            } else {
+                // Mostrar advertencia si hay texto de resumen pero no fuentes (el caso reportado por el usuario)
+                noSourcesWarning.classList.remove('hidden');
+                sourcesOutput.classList.add('hidden');
             }
 
 
@@ -775,6 +793,11 @@
                 });
             }
 
+            // Ocultar la nota de proxy si estamos en el entorno Canvas
+            if (IS_IN_CANVAS_RUNTIME) {
+                 document.getElementById('proxyNote').classList.add('hidden');
+            }
+            
             // Lógica de JavaScript para la Navegación Móvil (Existente)
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
