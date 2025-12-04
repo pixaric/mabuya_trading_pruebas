@@ -123,7 +123,7 @@
                     <p class="text-gray-300 text-sm">
                         El control de las emociones (miedo y avaricia) es crucial. Un plan bien definido te ayuda a ejecutar sin dejarte llevar por el pánico o la euforia.
                     </p>
-                    <div class="mt-4"></div>
+                    <div class="mt-4">[Image of trader psychology]</div>
                 </div>
             </div>
         </section>
@@ -139,10 +139,8 @@
                     <p class="text-gray-400 text-center py-4">Cargando datos estáticos...</p>
                 </div>
                 
-                <!-- Display de Usuario (Mantenido por consistencia) -->
                 <div class="mt-6 text-xs text-gray-500 text-right border-t border-gray-700 pt-3">
-                    <p>ID de Usuario: <span id="userIdDisplay" class="font-mono text-gray-400">Cargando...</span></p>
-                    <p>Esta lista contiene datos estáticos de análisis fundamental.</p>
+                    <p>Fuente: Datos estáticos simulados. Para datos en tiempo real, consulta los enlaces de interés.</p>
                 </div>
             </div>
         </section>
@@ -196,54 +194,7 @@
 
 
     <!-- JAVASCRIPT: Lógica de la Navegación Móvil y Lista Estática -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        // NOTA: Se eliminaron las importaciones de Firestore como 'addDoc', 'onSnapshot', etc., 
-        // ya que la lista de seguimiento es ahora estática.
-
-        // --- Configuración e Inicialización de Firebase (Mantenido para el ID de Usuario) ---
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-
-        let db;
-        let auth;
-        let userId = null;
-        
-        setLogLevel('Debug');
-
-        try {
-            const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
-            
-            // Intentar autenticación
-            const authPromise = typeof __initial_auth_token !== 'undefined' && __initial_auth_token.length > 0
-                ? signInWithCustomToken(auth, __initial_auth_token)
-                : signInAnonymously(auth);
-
-            authPromise.catch(error => {
-                console.error("Firebase Auth Error:", error);
-            });
-
-        } catch (e) {
-            console.error("Firebase Initialization Error:", e);
-        }
-
-        // Listener para el estado de autenticación
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                userId = user.uid;
-            } else {
-                userId = crypto.randomUUID();
-            }
-            // Mostrar ID y renderizar la Watchlist estática
-            document.getElementById('userIdDisplay').textContent = userId;
-            renderStaticWatchlist();
-        });
-
-
+    <script>
         // --- Datos Estáticos para la Lista de Seguimiento ---
         const staticWatchlistData = [
             {
@@ -326,23 +277,28 @@
             container.innerHTML = header + listItems;
         }
 
+        // --- Lógica de la Navegación Móvil y Carga Inicial ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Renderiza la lista estática al cargar el DOM
+            renderStaticWatchlist();
 
-        // --- Lógica de la Navegación Móvil ---
-        document.getElementById('menu-button').addEventListener('click', function() {
+            // Configura el botón del menú móvil
+            const menuButton = document.getElementById('menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('hidden');
-        });
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', function() {
-                document.getElementById('mobile-menu').classList.add('hidden');
+
+            if (menuButton) {
+                menuButton.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // Oculta el menú móvil al hacer clic en un enlace
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.add('hidden');
+                });
             });
         });
-
-        // Asegurar que la lista estática se renderice incluso si el auth listener es lento o no dispara.
-        if (!userId) {
-            // Renderizar inmediatamente con un ID temporal si es necesario
-            renderStaticWatchlist();
-        }
     </script>
 
 </body>
