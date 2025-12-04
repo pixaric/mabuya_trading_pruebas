@@ -3,21 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mabuya Trading - Calculadora</title>
-    <!-- Carga de Tailwind CSS -->
+    <title>Calculadora Objetivo | Mabuya Trading Academy</title>
+    <!-- Carga de Tailwind CSS para estilos responsivos y rápidos -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Configuración de Tailwind para un tema oscuro y fuente Inter -->
+    <!-- Configuración de Tailwind para usar el color principal y la fuente -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'primary-dark': '#0d0d0d', /* Un poco más oscuro */
-                        'secondary-dark': '#1a1a1a',
-                        'accent-gold': '#ffc107',
-                        'accent-blue': '#007bff',
-                        'calc-red': '#f87171', /* Tono más legible */
-                        'calc-green': '#34d399', /* Tono más legible */
+                        'primary-dark': '#0a0a0a',
+                        'accent': '#06b6d4', // Cyan
+                        'secondary-accent': '#facc15', // Amber
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -27,641 +24,505 @@
         }
     </script>
     <style>
-        /* Estilo para el enlace activo */
-        .active-link {
-            border-bottom: 3px solid #ffc107; /* Borde más grueso */
-            color: #ffc107 !important;
-        }
-        /* Estilos de la calculadora para el foco */
-        input:focus {
-            box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.7); /* Anillo de foco más grueso */
-            border-color: #ffc107 !important;
-        }
-        /* Aumento de la fuente base para todo el cuerpo */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         body {
-            font-size: 1rem; /* text-xl: 20px */
+            background-color: #0a0a0a;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
         }
-        /* Ajuste de inputs y botones para mejor legibilidad */
-        input, button, select {
-            font-size: 1rem; /* text-xl: 20px */
+        /* Estilo para el enlace activo */
+        .nav-link:hover, .nav-link.active-page {
+            color: #06b6d4; /* Cyan */
+            border-bottom: 2px solid #06b6d4;
+        }
+        /* Estilo personalizado para las cajas de contenido */
+        .content-card {
+            background-color: #1f2937; /* Dark Gray for cards */
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+        }
+        /* Ajuste de altura de inputs para mejor densidad en móvil */
+        .input-compact {
+            padding-top: 0.625rem; /* p-2.5 */
+            padding-bottom: 0.625rem; /* p-2.5 */
         }
     </style>
 </head>
-<body class="bg-primary-dark text-gray-100 font-sans min-h-screen pt-32 sm:pt-40"> 
-    <!-- Aumento de padding superior por el tamaño de la barra de navegación aumentada -->
+<body class="bg-primary-dark">
 
-    <!-- ========================================================= -->
-    <!-- BARRA DE NAVEGACIÓN Y RELOJ FIJO JUNTOS (TAMAÑO AUMENTADO) -->
-    <!-- ========================================================= -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-secondary-dark shadow-2xl">
-        <!-- Contenedor principal de navegación -->
+    <!-- BARRA DE NAVEGACIÓN (HEADER) - Enlaces externos a otros archivos -->
+    <header class="sticky top-0 z-50 bg-primary-dark/95 border-b border-gray-800 backdrop-blur-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-24"> <!-- Altura muy aumentada -->
-                <!-- Logo -->
-                <a href="inicio.html" class="text-4xl font-black tracking-widest text-accent-gold transition duration-300 hover:text-white"> <!-- text-4xl -->
-                    MABUYA <span class="text-white">TRADING</span>
-                </a>
-                
-                <!-- Menú de Navegación (Desktop) -->
-                <nav class="hidden md:flex space-x-12"> <!-- Espacio aumentado -->
-                    <a href="inicio.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-3 text-xl font-medium border-b-3 border-transparent hover:border-accent-gold">Inicio</a>
-                    <a href="academia.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-3 text-xl font-medium border-b-3 border-transparent hover:border-accent-gold">Academia</a>
-                    <a href="videos.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-3 text-xl font-medium border-b-3 border-transparent hover:border-accent-gold">Videos</a>
-                    <!-- Calculadora está activa -->
-                    <a href="calculadora.html" class="nav-link active-link text-gray-300 transition duration-150 py-3 text-xl font-medium border-b-3 border-transparent hover:border-accent-gold">Calculadora</a>
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center">
+                    <a href="inicio.html" class="text-3xl font-extrabold text-accent tracking-widest">
+                        MABUYA
+                        <span class="text-secondary-accent text-lg block leading-none">Trading Academy</span>
+                    </a>
+                </div>
+                <!-- Menú de Navegación (Escritorio) -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="inicio.html" class="nav-link text-lg px-2 py-1 transition duration-300">Inicio</a>
+                    <a href="academia.html" class="nav-link text-lg px-2 py-1 transition duration-300">Academia</a>
+                    <a href="calculadora.html" class="nav-link active-page text-lg px-2 py-1 transition duration-300">Calculadora RR</a>
+                    <a href="videos.html" class="nav-link text-lg px-2 py-1 transition duration-300">Videos</a>
                 </nav>
-
                 <!-- Botón de Menú Móvil -->
-                <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-accent-gold focus:outline-none p-3 rounded-md" aria-label="Toggle Menu">
-                    <!-- Icono de Hamburguesa (SVG) -->
-                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                <button id="menu-button" class="md:hidden p-2 text-white hover:text-accent focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                 </button>
             </div>
         </div>
-        
         <!-- Menú Móvil Desplegable -->
-        <div id="mobile-menu" class="hidden md:hidden">
-            <div class="px-4 pt-2 pb-4 space-y-2 sm:px-6">
-                <a href="inicio.html" class="block px-3 py-3 rounded-lg text-2xl font-semibold text-gray-300 hover:bg-accent-gold/20">Inicio</a>
-                <a href="academia.html" class="block px-3 py-3 rounded-lg text-2xl font-semibold text-gray-300 hover:bg-accent-gold/20">Academia</a>
-                <a href="videos.html" class="block px-3 py-3 rounded-lg text-2xl font-semibold text-gray-300 hover:bg-accent-gold/20">Videos</a>
-                <a href="calculadora.html" class="block px-3 py-3 rounded-lg text-2xl font-semibold text-white bg-accent-blue/20 hover:bg-accent-gold/20 active-link">Calculadora</a>
-            </div>
-        </div>
-        
-        <!-- ========================================================= -->
-        <!-- PANEL DE RELOJ (Compacto y GRANDE) -->
-        <!-- ========================================================= -->
-        <div class="bg-primary-dark border-t border-gray-700 p-3 sm:p-4 shadow-inner">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-center sm:justify-between items-center space-y-3 sm:space-y-0 sm:space-x-8">
-                
-                <!-- Contenedor de Relojes en una sola línea (mobile/desktop) -->
-                <div class="flex flex-row items-center space-x-8">
-                    
-                    <!-- 1. Hora NYSE -->
-                    <div class="flex items-center space-x-3 text-lg text-gray-300">
-                        <span class="font-bold text-accent-gold text-xl hidden sm:inline">NYSE (ET):</span>
-                        <span class="font-bold text-accent-gold text-xl sm:hidden">NYSE:</span>
-                        <span id="nyseClock" class="font-mono text-3xl sm:text-4xl text-white">00:00:00</span>
-                    </div>
-                    
-                    <!-- Separador (Solo visible en desktop) -->
-                    <div class="hidden sm:block w-px h-10 bg-gray-700"></div>
-
-                    <!-- 2. Estado de la Bolsa (TEMPORIZADOR) -->
-                    <div class="flex items-center space-x-3">
-                        <!-- El texto y color se actualizan dinámicamente -->
-                        <span id="marketStatus" class="font-black text-white text-2xl sm:text-3xl">Cargando...</span>
-                    </div>
-                    
-                    <!-- Separador (Solo visible en desktop) -->
-                    <div class="hidden sm:block w-px h-10 bg-gray-700"></div>
-
-                    <!-- 3. Hora Local -->
-                    <div class="flex items-center space-x-3 text-lg text-gray-300">
-                        <span class="font-bold text-xl hidden sm:inline">Hora Local:</span>
-                        <span class="font-bold text-xl sm:hidden">Local:</span>
-                        <span id="localClock" class="font-mono text-3xl sm:text-4xl text-white">00:00:00</span>
-                    </div>
-                </div>
+        <div id="mobile-menu" class="hidden md:hidden absolute w-full bg-primary-dark/95 border-t border-gray-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col items-center">
+                <a href="inicio.html" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700 w-full text-center">Inicio</a>
+                <a href="academia.html" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700 w-full text-center">Academia</a>
+                <a href="calculadora.html" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700 w-full text-center">Calculadora RR</a>
+                <a href="videos.html" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700 w-full text-center">Videos</a>
             </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
+    <main>
+        <!-- SECCIÓN 1: CALCULADORA DE PRECIO OBJETIVO POR PORCENTAJE -->
+        <section id="calculadora-objetivo" class="py-10 px-4 flex items-start justify-center">
+            <div class="max-w-xl mx-auto w-full"> 
+                <h2 class="text-3xl font-bold text-center mb-8 text-secondary-accent sm:text-4xl">Calculadora de Precio Objetivo (Ganancia %)</h2>
+                <div class="content-card p-6 rounded-xl sm:p-8">
+                    <p class="text-gray-300 mb-6 text-center text-sm sm:text-base">Calcula el precio de venta y la ganancia total para alcanzar un porcentaje objetivo, basado en el número de unidades.</p>
 
-        <!-- Sección 1: Calculadora de Porcentaje (Target Price) -->
-        <section class="pt-4">
-            <h1 class="text-5xl sm:text-6xl font-black text-center text-accent-blue mb-6">Calculadora de Porcentaje</h1>
-            <p class="text-gray-400 mb-10 text-center max-w-xl mx-auto text-xl">Calcula el precio de venta (Take Profit) y el capital total invertido para la operación.</p>
-
-            <!-- CAMBIO: max-w-4xl para PC -->
-            <div class="bg-secondary-dark p-8 md:p-16 rounded-3xl shadow-2xl max-w-sm sm:max-w-md md:max-w-4xl mx-auto border-4 border-accent-blue/40">
-                
-                <!-- Inputs for Markup Calculator: Organizado en 3 columnas -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
-                    
-                    <!-- 1. Precio de Entrada -->
-                    <div>
-                        <label for="purchasePrice" class="block text-xl font-medium text-gray-300 mb-1">Precio de Entrada ($)</label>
-                        <input type="number" id="purchasePrice" value="" step="0.0001" class="w-full p-2 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateMarkup()">
-                    </div>
-
-                    <!-- 2. Ganancia Objetivo (%) -->
-                    <div>
-                        <label for="markupPercent" class="block text-xl font-medium text-gray-300 mb-3">Ganancia Objetivo (%)</label>
-                        <input type="number" id="markupPercent" value="" step="0.01" class="w-full p-2 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateMarkup()">
-                    </div>
-                    
-                    <!-- 3. Cantidad de Acciones -->
-                    <div>
-                        <label for="sharesQuantity" class="block text-xl font-medium text-gray-300 mb-3">Cantidad de Acciones</label>
-                        <input type="number" id="sharesQuantity" value="" step="1" class="w-full p-2 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateMarkup()">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 sm:gap-6 sm:mb-8">
+                        <!-- Campo 1: Precio de Compra/Entrada -->
+                        <div>
+                            <label for="entryPrice" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Precio de Compra (Entrada)</label>
+                            <input type="number" id="entryPrice" value="" step="0.01" class="w-full input-compact bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring-accent focus:border-accent" placeholder="Ej. 100.00">
+                        </div>
+                        <!-- Campo 2: Porcentaje de Ganancia Deseado -->
+                        <div>
+                            <label for="percentage" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Porcentaje de Ganancia Deseado (%)</label>
+                            <input type="number" id="percentage" value="" step="0.1" class="w-full input-compact bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring-accent focus:border-accent" placeholder="Ej. 5">
+                        </div>
+                        <!-- Campo 3: Cantidad de Acciones/Unidades (Ocupa todo el ancho) -->
+                        <div class="md:col-span-2"> 
+                            <label for="numberOfUnits" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Cantidad de Acciones/Unidades</label>
+                            <input type="number" id="numberOfUnits" value="" step="1" class="w-full input-compact bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring-accent focus:border-accent" placeholder="Ej. 10">
+                        </div>
                     </div>
                     
+                    <!-- Botón de Cálculo -->
+                    <button onclick="calculateTargetPrice()" class="w-full bg-accent text-primary-dark font-bold py-3 rounded-lg hover:bg-cyan-500 transition duration-300 transform hover:scale-[1.01]">
+                        Calcular Objetivo
+                    </button>
+
+                    <!-- Resultados: Fuentes de texto ajustadas (text-base y text-xl) -->
+                    <div id="results-objetivo" class="mt-6 pt-4 border-t border-gray-700 space-y-2 sm:mt-8 sm:pt-6 sm:space-y-3">
+                        <h3 class="text-lg font-semibold text-white mb-2 sm:text-xl">Resultados del Objetivo:</h3>
+                        <p class="text-base sm:text-lg">Precio de Venta (Objetivo): <span id="sellingPrice" class="font-bold text-accent">0.00</span> USD</p>
+                        <p class="text-base sm:text-lg">Cantidad Invertida: <span id="amountInvestedDisplay" class="font-bold text-gray-400">0.00</span> USD</p>
+                        <p class="text-base sm:text-lg">Ganancia Bruta Estimada: <span id="totalProfit" class="font-bold text-green-500">0.00</span> USD</p>
+                        <p class="text-xl pt-1 font-extrabold sm:text-2xl sm:pt-2">Retorno Total Estimado: <span id="totalReturn" class="text-secondary-accent">0.00</span> USD</p>
+                        <p id="riskWarning" class="text-red-400 text-xs mt-1 hidden sm:text-sm">⚠️ Por favor, ingresa valores numéricos válidos y positivos.</p>
+                    </div>
+
                 </div>
+            </div>
+        </section>
 
-                <!-- Results for Markup Calculator -->
-                <div class="border-t-2 border-gray-700 pt-10 mt-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-                    
-                    <!-- Precio de Venta Calculado (Mayor énfasis) -->
-                    <div class="md:col-span-2 flex flex-col sm:flex-row justify-between items-start sm:items-center p-6 sm:p-8 bg-primary-dark rounded-xl shadow-inner border-2 border-accent-blue">
-                        <span class="text-2xl sm:text-3xl font-black text-gray-300 mb-2 sm:mb-0">Precio de Venta (TP):</span>
-                        <!-- Aumento de tamaño de fuente a 6XL para el resultado clave -->
-                        <span id="outputSellingPrice" class="text-5xl sm:text-6xl font-extrabold text-accent-gold">0.00</span>
-                    </div>
-                    
-                    <!-- Total Invertido & Incremento Absoluto -->
-                    <div class="md:col-span-1 space-y-6">
-                        <div class="flex flex-col justify-center p-4 bg-primary-dark rounded-xl shadow-inner border border-accent-gold/50">
-                            <span class="text-lg text-gray-400">Total Invertido:</span>
-                            <span id="outputTotalInvestmentMarkup" class="text-2xl sm:text-3xl font-bold text-white">$0.00</span>
+        <!-- SECCIÓN 2: CALCULADORA DE PRECIO PROMEDIO -->
+        <section id="calculadora-promedio" class="py-10 px-4 flex items-start justify-center">
+            <div class="max-w-xl mx-auto w-full"> 
+                <h2 class="text-3xl font-bold text-center mb-8 text-secondary-accent sm:text-4xl">Calculadora de Precio Promedio (Aumento de Posición)</h2>
+                <div class="content-card p-6 rounded-xl sm:p-8">
+                    <p class="text-gray-300 mb-6 text-center text-sm sm:text-base">Calcula el precio promedio de tu posición después de realizar hasta tres compras.</p>
+
+                    <div class="grid grid-cols-2 gap-4 mb-6 sm:gap-6 sm:mb-8">
+                        <!-- Compra 1 -->
+                        <div>
+                            <label for="price1" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Precio 1</label>
+                            <input type="number" id="price1" value="" step="0.01" class="w-full input-compact bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring-accent focus:border-accent" placeholder="Precio de Compra">
+                        </div>
+                        <div>
+                            <label for="shares1" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Acciones 1</label>
+                            <input type="number" id="shares1" value="" step="1" class="w-full input-compact bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring-accent focus:border-accent" placeholder="Cantidad">
+                        </div>
+
+                        <!-- Compra 2 -->
+                        <div>
+                            <label for="price2" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Precio 2</label>
+                            <input type="number" id="price2" value="" step="0.01" class="w-full input-compact bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring-accent focus:border-accent" placeholder="Precio de Compra (Opcional)">
+                        </div>
+                        <div>
+                            <label for="shares2" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Acciones 2</label>
+                            <input type="number" id="shares2" value="" step="1" class="w-full input-compact bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring-accent focus:border-accent" placeholder="Cantidad (Opcional)">
                         </div>
                         
-                        <!-- Incremento Absoluto ($) -->
-                        <div class="flex flex-col justify-center p-4 bg-primary-dark rounded-xl shadow-inner border border-gray-700">
-                            <span class="text-lg text-gray-400">Incremento Absoluto:</span>
-                            <span id="outputGrossProfit" class="text-2xl sm:text-3xl font-bold text-calc-green">0.00</span>
+                        <!-- Compra 3 -->
+                        <div>
+                            <label for="price3" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Precio 3</label>
+                            <input type="number" id="price3" value="" step="0.01" class="w-full input-compact bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring-accent focus:border-accent" placeholder="Precio de Compra (Opcional)">
                         </div>
+                        <div>
+                            <label for="shares3" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Acciones 3</label>
+                            <input type="number" id="shares3" value="" step="1" class="w-full input-compact bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring-accent focus:border-accent" placeholder="Cantidad (Opcional)">
+                        </div>
+                    </div>
+                    
+                    <!-- Botón de Cálculo -->
+                    <button onclick="calculateAveragePrice()" class="w-full bg-secondary-accent text-primary-dark font-bold py-3 rounded-lg hover:bg-amber-400 transition duration-300 transform hover:scale-[1.01]">
+                        Calcular Promedio
+                    </button>
+
+                    <!-- Resultados -->
+                    <div id="results-promedio" class="mt-6 pt-4 border-t border-gray-700 space-y-2 sm:mt-8 sm:pt-6 sm:space-y-3">
+                        <h3 class="text-lg font-semibold text-white mb-2 sm:text-xl">Resultados del Promedio:</h3>
+                        <p class="text-base sm:text-lg">Costo Total: <span id="totalCost" class="font-bold text-gray-400">0.00</span> USD</p>
+                        <p class="text-base sm:text-lg">Cantidad Total de Acciones: <span id="totalShares" class="font-bold text-accent">0</span> unidades</p>
+                        <p class="text-xl pt-1 font-extrabold sm:text-2xl sm:pt-2">Precio Promedio: <span id="averagePrice" class="text-secondary-accent">0.00</span> USD</p>
+                        <p id="avgWarning" class="text-red-400 text-xs mt-1 hidden sm:text-sm">⚠️ Por favor, ingresa al menos la Compra 1 con valores numéricos válidos y positivos.</p>
                     </div>
 
                 </div>
             </div>
         </section>
 
-        <!-- Sección 2: Calculadora de Precio Promedio Ponderado -->
-        <section class="pt-16 mt-16 border-t border-gray-700">
-            <h2 class="text-4xl sm:text-5xl font-black text-center text-accent-gold mb-6">Calculadora de Posición Promedio</h2>
-            <p class="text-gray-400 mb-10 text-center max-w-3xl mx-auto text-xl">Calcula el precio promedio de tu posición combinada (DCA).</p>
-            
-            <!-- CAMBIO: max-w-4xl para PC -->
-            <div class="bg-secondary-dark p-8 md:p-16 rounded-3xl shadow-2xl max-w-sm sm:max-w-md md:max-w-4xl mx-auto border-4 border-accent-gold/40">
-                
-                <!-- Encabezados de la tabla de posiciones: gap-6 en desktop -->
-                <div class="grid grid-cols-4 gap-8 text-xl font-bold text-gray-300 mb-6 border-b-2 border-gray-700 pb-4">
-                    <span class="col-span-1 text-accent-gold">Posición</span>
-                    <span class="col-span-1 text-center">Precio ($)</span>
-                    <span class="col-span-1 text-center">Acciones</span>
-                    <span class="col-span-1 text-right">Invertido ($)</span>
-                </div>
+        <!-- SECCIÓN 3: CALCULADORA DE OPCIONES -->
+        <section id="calculadora-opciones" class="py-10 px-4 flex items-start justify-center">
+            <div class="max-w-xl mx-auto w-full"> 
+                <h2 class="text-3xl font-bold text-center mb-8 text-accent sm:text-4xl">Calculadora de Opciones (Objetivo de Retorno)</h2>
+                <div class="content-card p-6 rounded-xl sm:p-8">
+                    <p class="text-gray-300 mb-6 text-center text-sm sm:text-base">Calcula el precio de venta necesario y la ganancia neta para un porcentaje de retorno deseado en contratos de opciones (asumiendo 1 contrato = 100 acciones).</p>
 
-                <!-- Fila 1: Compra 1 -->
-                <div class="grid grid-cols-4 gap-8 items-center mb-6">
-                    <span class="col-span-1 text-xl font-medium">Compra 1</span>
-                    <input type="number" id="price1" value="" step="0.01" class="col-span-1 w-full p-4 bg-primary-dark border-2 border-gray-600 rounded-xl text-white text-center" oninput="calculateDCA()">
-                    <input type="number" id="shares1" value="" step="1" class="col-span-1 w-full p-4 bg-primary-dark border-2 border-gray-600 rounded-xl text-white text-center" oninput="calculateDCA()">
-                    <span id="invested1" class="col-span-1 text-right text-gray-400 text-xl">$0.00</span>
-                </div>
-
-                <!-- Fila 2: Compra 2 -->
-                <div class="grid grid-cols-4 gap-8 items-center mb-6">
-                    <span class="col-span-1 text-xl font-medium">Compra 2</span>
-                    <input type="number" id="price2" value="" step="0.01" class="col-span-1 w-full p-4 bg-primary-dark border-2 border-gray-600 rounded-xl text-white text-center" oninput="calculateDCA()">
-                    <input type="number" id="shares2" value="" step="1" class="col-span-1 w-full p-4 bg-primary-dark border-2 border-gray-600 rounded-xl text-white text-center" oninput="calculateDCA()">
-                    <span id="invested2" class="col-span-1 text-right text-gray-400 text-xl">$0.00</span>
-                </div>
-                
-                <!-- Fila 3: Compra 3 -->
-                <div class="grid grid-cols-4 gap-8 items-center mb-10">
-                    <span class="col-span-1 text-xl font-medium">Compra 3</span>
-                    <input type="number" id="price3" value="" step="0.01" class="col-span-1 w-full p-4 bg-primary-dark border-2 border-gray-600 rounded-xl text-white text-center" oninput="calculateDCA()">
-                    <input type="number" id="shares3" value="" step="1" class="col-span-1 w-full p-4 bg-primary-dark border-2 border-gray-600 rounded-xl text-white text-center" oninput="calculateDCA()">
-                    <span id="invested3" class="col-span-1 text-right text-gray-400 text-xl">$0.00</span>
-                </div>
-
-                <!-- Resultados Totales -->
-                <div class="border-t-2 border-gray-600 pt-10 mt-6 space-y-6">
-                    
-                    <!-- Precio Promedio -->
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-6 sm:p-8 bg-primary-dark rounded-xl shadow-inner border-2 border-accent-gold/50">
-                        <span class="text-2xl sm:text-3xl font-black text-gray-300 mb-2 sm:mb-0">Precio Promedio:</span>
-                        <!-- Aumento de tamaño de fuente a 6XL para el resultado clave -->
-                        <span id="outputAvgPrice" class="text-5xl sm:text-6xl font-extrabold text-accent-gold">$0.00</span>
+                    <div class="grid grid-cols-2 gap-4 mb-6 sm:gap-6 sm:mb-8">
+                        <!-- Precio por Contrato (o prima) -->
+                        <div>
+                            <label for="optionsPrice" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Precio por Contrato (Prima)</label>
+                            <input type="number" id="optionsPrice" value="" step="0.01" class="w-full input-compact bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring-accent focus:border-accent" placeholder="Ej. 2.50 USD">
+                        </div>
+                        <!-- Número de Contratos -->
+                        <div>
+                            <label for="optionsContracts" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Número de Contratos</label>
+                            <input type="number" id="optionsContracts" value="" step="1" class="w-full input-compact bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring-accent focus:border-accent" placeholder="Ej. 10">
+                        </div>
+                        <!-- Porcentaje de Retorno Deseado (Positivo/Negativo) -->
+                        <div>
+                            <label for="optionsPercentage" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Porcentaje de Retorno Deseado (%)</label>
+                            <input type="number" id="optionsPercentage" value="" step="0.1" class="w-full input-compact bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring-accent focus:border-accent" placeholder="Ej. 20 o -10">
+                        </div>
+                        <!-- Comisión Total (Editable, por defecto 2) -->
+                        <div>
+                            <label for="optionsCommission" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Comisión Total (Round Trip)</label>
+                            <input type="number" id="optionsCommission" value="2.00" step="0.01" class="w-full input-compact bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring-accent focus:border-accent" placeholder="Ej. 2.00 USD">
+                        </div>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <!-- Acciones Totales -->
-                        <div class="flex flex-col justify-center p-5 bg-primary-dark rounded-xl shadow-inner">
-                            <span class="text-lg text-gray-300">Total de Unidades:</span>
-                            <span id="outputTotalShares" class="text-2xl sm:text-3xl font-bold text-white">0</span>
-                        </div>
+                    <!-- Botón de Cálculo -->
+                    <button onclick="calculateOptionsTarget()" class="w-full bg-accent text-primary-dark font-bold py-3 rounded-lg hover:bg-cyan-500 transition duration-300 transform hover:scale-[1.01]">
+                        Calcular Opciones
+                    </button>
 
-                        <!-- Capital Total Invertido -->
-                        <div class="flex flex-col justify-center p-5 bg-primary-dark rounded-xl shadow-inner">
-                            <span class="text-lg text-gray-300">Capital Total ($):</span>
-                            <span id="outputTotalInvested" class="text-2xl sm:text-3xl font-bold text-calc-green">$0.00</span>
-                        </div>
+                    <!-- Resultados -->
+                    <div id="results-opciones" class="mt-6 pt-4 border-t border-gray-700 space-y-2 sm:mt-8 sm:pt-6 sm:space-y-3">
+                        <h3 class="text-lg font-semibold text-white mb-2 sm:text-xl">Resultados del Cálculo de Opciones:</h3>
+                        <p class="text-base sm:text-lg">Costo Total de Entrada: <span id="optionsTotalCost" class="font-bold text-gray-400">0.00</span> USD</p>
+                        <p class="text-base sm:text-lg">Ganancia Bruta (sin comisión): <span id="optionsGrossProfit" class="font-bold text-green-500">0.00</span> USD</p>
+                        <p class="text-xl pt-1 font-extrabold sm:text-2xl sm:pt-2">Ganancia Neta (Retorno): <span id="optionsNetProfit" class="text-secondary-accent">0.00</span> USD</p>
+                        <p class="text-base sm:text-lg">Precio de Venta Objetivo (Prima): <span id="optionsSalePrice" class="font-bold text-accent">0.00</span> USD</p>
+                        <p id="optionsWarning" class="text-red-400 text-xs mt-1 hidden sm:text-sm">⚠️ Por favor, ingresa valores numéricos válidos. Precio debe ser ≥ 0 y Contratos debe ser > 0.</p>
                     </div>
 
                 </div>
             </div>
         </section>
-        
-        <!-- Sección 3: Calculadora de Posiciones de Opciones -->
-        <section class="pt-16 mt-16 border-t border-gray-700">
-            <h2 class="text-4xl sm:text-5xl font-black text-center text-accent-blue mb-6">Calculadora de Opciones</h2>
-            <p class="text-gray-400 mb-10 text-center max-w-3xl mx-auto text-xl">Calcula la inversión, el beneficio neto y el precio de venta (premium) objetivo.</p>
-            
-            <!-- CAMBIO: max-w-4xl para PC -->
-            <div class="bg-secondary-dark p-8 md:p-16 rounded-3xl shadow-2xl max-w-sm sm:max-w-md md:max-w-4xl mx-auto border-4 border-accent-blue/40">
-                
-                <!-- Inputs for Options Calculator: Ahora en grid 2x2 con p-5 para más espacio -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8 mb-10">
-                    
-                    <!-- Precio (Premium) -->
-                    <div>
-                        <label for="optionPrice" class="block text-xl font-medium text-gray-300 mb-3">Precio de Opción (Premium $)</label>
-                        <input type="number" id="optionPrice" value="" step="0.01" class="w-full p-2 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateOptionsPosition()">
-                    </div>
-
-                    <!-- Cantidad de Contratos -->
-                    <div>
-                        <label for="optionContracts" class="block text-xl font-medium text-gray-300 mb-3">Cantidad de Contratos</label>
-                        <input type="number" id="optionContracts" value="" step="1" class="w-full p-2 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateOptionsPosition()">
-                    </div>
-
-                    <!-- Porcentaje de Ganancia Objetivo (Valor por defecto 12) -->
-                    <div>
-                        <label for="optionTargetPercent" class="block text-xl font-medium text-gray-300 mb-3">Ganancia Objetivo (%)</label>
-                        <input type="number" id="optionTargetPercent" value="12" step="1" class="w-full p-2 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateOptionsPosition()">
-                    </div>
-                    
-                    <!-- Comisión por Contrato (Default 2) -->
-                    <div>
-                        <label for="optionCommission" class="block text-xl font-medium text-gray-300 mb-3">Comisión por Contrato ($)</label>
-                        <input type="number" id="optionCommission" value="2" step="0.01" class="w-full p-2 bg-primary-dark border-2 border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-accent-gold transition" oninput="calculateOptionsPosition()">
-                    </div>
-                    
-                </div>
-
-                <!-- Results for Options Calculator -->
-                <div class="border-t-2 border-gray-700 pt-10 mt-6 space-y-6">
-                    
-                    <!-- Precio de Venta Objetivo (Output 2) -->
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-6 sm:p-8 bg-primary-dark rounded-xl shadow-inner border-2 border-calc-green/50">
-                        <span class="text-2xl sm:text-3xl font-black text-gray-300 mb-2 sm:mb-0">Precio Venta Objetivo:</span>
-                        <!-- Aumento de tamaño de fuente a 6XL para el resultado clave -->
-                        <span id="outputTargetSellingPrice" class="text-5xl sm:text-6xl font-extrabold text-calc-green">0.00</span>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <!-- Inversión Total (Output 1) -->
-                        <div class="flex flex-col justify-center p-5 bg-primary-dark rounded-xl shadow-inner border border-calc-red/50">
-                            <span class="text-lg text-gray-400">Capital Total:</span>
-                            <span id="outputTotalInvestment" class="text-2xl sm:text-3xl font-extrabold text-calc-red">$0.00</span>
-                        </div>
-
-                        <!-- Beneficio Neto Objetivo -->
-                        <div class="flex flex-col justify-center p-5 bg-primary-dark rounded-xl shadow-inner border border-calc-green/50">
-                            <span class="text-lg text-gray-400">Beneficio Neto Obj.:</span>
-                            <span id="outputNetProfit" class="text-2xl sm:text-3xl font-extrabold text-calc-green">$0.00</span>
-                        </div>
-                    </div>
-                    
-                </div>
-
-            </div>
-        </section>
-
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-secondary-dark mt-20 p-10 text-center text-xl text-gray-400">
-        <p>&copy; 2025 Mabuya Trading. Todos los derechos reservados. Educando la próxima generación de traders.</p>
+    <!-- FOOTER -->
+    <footer class="bg-primary-dark border-t border-gray-800 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
+            <p>&copy; 2024 Mabuya Trading Academy. Todos los derechos reservados.</p>
+            <div class="mt-4 space-x-4 text-sm">
+                <a href="#" class="hover:text-accent transition duration-300">Términos y Condiciones</a>
+                <span class="text-gray-600">|</span>
+                <a href="#" class="hover:text-accent transition duration-300">Política de Privacidad</a>
+            </div>
+        </div>
     </footer>
 
-    <script>
-        // Lógica de JavaScript para la Navegación Móvil
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
 
-        mobileMenuButton.addEventListener('click', () => {
+    <!-- JAVASCRIPT: Lógica de las Calculadoras y Navegación Móvil -->
+    <script>
+        // --- Lógica de la Navegación Móvil ---
+        document.getElementById('menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
             mobileMenu.classList.toggle('hidden');
         });
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
 
-        // =========================================================
-        // FUNCIÓN UTILITARIA PARA FORMATO DE TIEMPO (HH:MM:SS)
-        // =========================================================
-        function formatTimeDifference(ms) {
-            if (ms <= 0) return "00:00:00";
-            
-            let seconds = Math.floor(ms / 1000);
-            const hours = Math.floor(seconds / 3600);
-            seconds %= 3600;
-            const minutes = Math.floor(seconds / 60);
-            seconds %= 60;
-
-            const pad = (num) => String(num).padStart(2, '0');
-            return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
-        }
+        // Opciones de formato de moneda
+        const formatOptionsPrice = { minimumFractionDigits: 2, maximumFractionDigits: 4 };
+        const formatOptionsCurrency = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
         
-        // =========================================================
-        // LÓGICA DEL RELOJ Y ESTADO DE LA BOLSA (ACTUALIZADA A TEMPORIZADOR Y FESTIVOS)
-        // =========================================================
-
         /**
-         * Verifica si la fecha actual (en hora ET) es un día festivo de NYSE.
-         * Se incluyen los festivos principales de 2025.
-         * @param {Date} nyseDate - Objeto Date ajustado a la zona horaria de NYSE.
-         * @returns {boolean} True si es festivo, false en caso contrario.
+         * CALCULADORA 1: Precio Objetivo (Ganancia %)
          */
-        function isNYSEHoliday(nyseDate) {
-            const year = nyseDate.getFullYear();
-            // Formato YYYY-MM-DD para comparación sencilla de fechas
-            const month = String(nyseDate.getMonth() + 1).padStart(2, '0');
-            const day = String(nyseDate.getDate()).padStart(2, '0');
-            const dateString = `${year}-${month}-${day}`;
+        function calculateTargetPrice() {
+            // Obtener valores de los campos
+            const entryPrice = parseFloat(document.getElementById('entryPrice').value);
+            const percentage = parseFloat(document.getElementById('percentage').value);
+            const numberOfUnits = parseFloat(document.getElementById('numberOfUnits').value);
 
-            // Días festivos de NYSE para 2025 (cierre completo)
-            const holidays = [
-                `${year}-01-01`, // Día de Año Nuevo
-                `${year}-01-20`, // Día de MLK Jr.
-                `${year}-02-17`, // Día de los Presidentes
-                `${year}-04-18`, // Viernes Santo
-                `${year}-05-26`, // Día de los Caídos
-                `${year}-06-19`, // Día de Juneteenth
-                `${year}-07-04`, // Día de la Independencia
-                `${year}-09-01`, // Día del Trabajo
-                `${year}-11-27`, // Día de Acción de Gracias
-                `${year}-12-25`, // Día de Navidad
-            ];
+            // Calcular Cantidad Invertida: Precio Compra * Cantidad de Unidades
+            const amountInvested = entryPrice * numberOfUnits; 
 
-            return holidays.includes(dateString);
-        }
+            const sellingPriceEl = document.getElementById('sellingPrice');
+            const amountInvestedDisplayEl = document.getElementById('amountInvestedDisplay');
+            const totalProfitEl = document.getElementById('totalProfit');
+            const totalReturnEl = document.getElementById('totalReturn');
+            const riskWarningEl = document.getElementById('riskWarning');
 
-        function updateClocksAndStatus() {
-            const now = new Date();
-            const nyseClock = document.getElementById('nyseClock');
-            const localClock = document.getElementById('localClock');
-            const marketStatus = document.getElementById('marketStatus');
+            // Resetear resultados
+            sellingPriceEl.textContent = '0.00';
+            amountInvestedDisplayEl.textContent = '0.00';
+            totalProfitEl.textContent = '0.00';
+            totalReturnEl.textContent = '0.00';
+            riskWarningEl.classList.add('hidden');
+            riskWarningEl.textContent = "⚠️ Por favor, ingresa valores numéricos válidos y positivos.";
 
-            // Formato de hora estándar
-            const timeOptions = { 
-                hour: '2-digit', 
-                minute: '2-digit', 
-                second: '2-digit' 
-            };
 
-            // 1. Hora Local
-            const localTime = now.toLocaleTimeString('es-ES', timeOptions);
-            localClock.textContent = localTime;
-
-            // 2. Hora NYSE (America/New_York - Hora del Este)
-            const nyseTime = now.toLocaleTimeString('en-US', { ...timeOptions, timeZone: 'America/New_York', hour12: false });
-            nyseClock.textContent = nyseTime;
-
-            // 3. Calcular Estado de la Bolsa (NYSE) con Temporizador
-            
-            // Obtener la fecha y hora actual en la zona horaria de NYSE
-            const nyseDate = new Date(now.toLocaleString("en-US", { timeZone: "America/New_York" }));
-            const nyseDateMs = nyseDate.getTime();
-            const currentNYSEDOW = nyseDate.getDay(); // Domingo=0, Lunes=1, ... Sábado=6
-
-            // Crear objetos Date para la apertura (9:30 ET) y el cierre (4:00 PM ET) de HOY
-            const nyseOpenToday = new Date(nyseDate);
-            nyseOpenToday.setHours(9, 30, 0, 0); 
-
-            const nyseCloseToday = new Date(nyseDate);
-            nyseCloseToday.setHours(16, 0, 0, 0); 
-            
-            let statusText = '';
-            let statusColorClass = '';
-            
-            // Días de la semana de negociación: Lunes (1) a Viernes (5)
-            const isTradingDay = currentNYSEDOW >= 1 && currentNYSEDOW <= 5;
-            const isHoliday = isNYSEHoliday(nyseDate); // Chequeo de días festivos
-            
-            if (!isTradingDay || isHoliday) {
-                // Fin de semana O Día Festivo
-                if (!isTradingDay) {
-                    // Fin de semana
-                    statusText = 'CERRADA (Fin de Semana)';
-                    statusColorClass = 'text-gray-500';
-                } else {
-                    // Día festivo (es un día de la semana, pero está cerrada)
-                    statusText = 'CERRADA (Día Festivo)';
-                    statusColorClass = 'text-calc-red'; // Rojo para cerrado por festivo
-                }
-            } else {
-                // Es un día de negociación y no es festivo
-                const openTimeMs = nyseOpenToday.getTime();
-                const closeTimeMs = nyseCloseToday.getTime();
-
-                if (nyseDateMs < openTimeMs) {
-                    // CERRADA: Contando hasta la Apertura
-                    const timeToOpenMs = openTimeMs - nyseDateMs;
-                    const countdown = formatTimeDifference(timeToOpenMs);
-                    
-                    statusText = `Abre en: ${countdown}`;
-                    statusColorClass = 'text-calc-red'; // Rojo para apertura
-                } else if (nyseDateMs >= openTimeMs && nyseDateMs < closeTimeMs) {
-                    // ABIERTA: Contando hasta el Cierre
-                    const timeToCloseMs = closeTimeMs - nyseDateMs;
-                    const countdown = formatTimeDifference(timeToCloseMs);
-
-                    statusText = `Cierra en: ${countdown}`;
-                    statusColorClass = 'text-calc-green'; // Verde para cierre
-                } else {
-                    // CERRADA: Después del Cierre
-                    statusText = 'CERRADA';
-                    statusColorClass = 'text-calc-red'; // Rojo para cerrada
-                }
+            // Validar que los campos sean números válidos (NaN cuando están vacíos) y que no sean negativos.
+            if (isNaN(entryPrice) || isNaN(percentage) || isNaN(numberOfUnits) || entryPrice < 0 || numberOfUnits < 0) {
+                riskWarningEl.classList.remove('hidden');
+                return;
             }
             
-            // Actualizar el elemento de estado
-            marketStatus.textContent = statusText;
-            // Asegurarse de que el tamaño de fuente se mantenga para el estado de la bolsa
-            marketStatus.className = `font-black text-2xl sm:text-3xl ${statusColorClass}`;
+            // Cálculos
+            const factor = 1 + (percentage / 100);
+            
+            // 1. Precio de Venta (Objetivo)
+            const sellingPrice = entryPrice * factor;
+
+            // 2. Ganancia Bruta Estimada
+            const totalProfit = amountInvested * (percentage / 100);
+
+            // 3. Retorno Total Estimado (Capital + Ganancia)
+            const totalReturn = amountInvested + totalProfit;
+
+
+            // Mostrar resultados
+            sellingPriceEl.textContent = sellingPrice.toLocaleString('es-ES', formatOptionsPrice);
+            amountInvestedDisplayEl.textContent = amountInvested.toLocaleString('es-ES', formatOptionsCurrency);
+            totalProfitEl.textContent = totalProfit.toLocaleString('es-ES', formatOptionsCurrency);
+            totalReturnEl.textContent = totalReturn.toLocaleString('es-ES', formatOptionsCurrency);
+            
+            // Mostrar advertencias si el porcentaje o la inversión son cero
+            if (entryPrice === 0 || numberOfUnits === 0) {
+                 riskWarningEl.textContent = `⚠️ Advertencia: El Precio de Compra o la Cantidad de Acciones es cero, la Ganancia Bruta y el Retorno Total serán 0.`;
+                 riskWarningEl.classList.remove('hidden');
+            } else if (percentage < 0) {
+                 riskWarningEl.textContent = `⚠️ Advertencia: El porcentaje es negativo (${percentage}%), calculando precio objetivo para una pérdida.`;
+                 riskWarningEl.classList.remove('hidden');
+            } else if (percentage === 0) {
+                 riskWarningEl.textContent = `⚠️ El porcentaje de ganancia es 0%, el precio objetivo será igual al precio de entrada.`;
+                 riskWarningEl.classList.remove('hidden');
+            } else {
+                 riskWarningEl.classList.add('hidden');
+            }
+
         }
 
+        /**
+         * CALCULADORA 2: Precio Promedio (Aumento de Posición)
+         */
+        function calculateAveragePrice() {
+            // Get inputs, treating empty fields as 0 for calculation purposes
+            const price1 = parseFloat(document.getElementById('price1').value) || 0;
+            const shares1 = parseFloat(document.getElementById('shares1').value) || 0;
+            const price2 = parseFloat(document.getElementById('price2').value) || 0;
+            const shares2 = parseFloat(document.getElementById('shares2').value) || 0;
+            const price3 = parseFloat(document.getElementById('price3').value) || 0;
+            const shares3 = parseFloat(document.getElementById('shares3').value) || 0;
 
-        // =========================================================
-        // LÓGICA DE NAVEGACIÓN RÁPIDA (ENTER KEY)
-        // =========================================================
+            const totalCostEl = document.getElementById('totalCost');
+            const totalSharesEl = document.getElementById('totalShares');
+            const averagePriceEl = document.getElementById('averagePrice');
+            const avgWarningEl = document.getElementById('avgWarning');
+            
+            // Reset results and warning
+            totalCostEl.textContent = '0.00';
+            totalSharesEl.textContent = '0';
+            averagePriceEl.textContent = '0.00';
+            avgWarningEl.classList.add('hidden');
 
-        function setupNavigation() {
-            // Definición del orden de los inputs por sección
-            const markupInputs = ['purchasePrice', 'markupPercent', 'sharesQuantity'];
-            const dcaInputs = ['price1', 'shares1', 'price2', 'shares2', 'price3', 'shares3'];
-            const optionsInputs = ['optionPrice', 'optionContracts', 'optionTargetPercent', 'optionCommission'];
+            // Basic validation for the first purchase and negative values
+            if (shares1 <= 0 || price1 < 0 || shares1 < 0 || price2 < 0 || shares2 < 0 || price3 < 0 || shares3 < 0) {
+                if (shares1 <= 0) {
+                    avgWarningEl.textContent = "⚠️ Debe ingresar un número positivo de acciones para la Compra 1.";
+                } else {
+                    avgWarningEl.textContent = "⚠️ Por favor, ingresa precios y cantidades positivas.";
+                }
+                avgWarningEl.classList.remove('hidden');
+                return;
+            }
 
-            // Combinar todos los arrays para facilitar el manejo
-            const allInputIds = [...markupInputs, ...dcaInputs, ...optionsInputs];
+            // Calculations
+            // Total Cost (Weighted Sum)
+            const totalCost = (price1 * shares1) + (price2 * shares2) + (price3 * shares3);
 
-            allInputIds.forEach(id => {
-                const input = document.getElementById(id);
-                if (input) {
-                    input.addEventListener('keydown', (event) => {
-                        // Solo actuar cuando se presiona la tecla Enter
-                        if (event.key === 'Enter') {
-                            event.preventDefault(); // Evitar el comportamiento por defecto (e.g., submit)
+            // Total Shares
+            const totalShares = shares1 + shares2 + shares3;
 
-                            let currentInputs;
-                            // Determinar a qué grupo pertenece el input actual
-                            if (markupInputs.includes(id)) {
-                                currentInputs = markupInputs;
-                            } else if (dcaInputs.includes(id)) {
-                                currentInputs = dcaInputs;
-                            } else if (optionsInputs.includes(id)) {
-                                currentInputs = optionsInputs;
+            // Average Price (Handle division by zero, though shares1 > 0 guarantees totalShares > 0)
+            const averagePrice = totalShares > 0 ? (totalCost / totalShares) : 0;
+            
+            // Display results
+            totalCostEl.textContent = totalCost.toLocaleString('es-ES', formatOptionsCurrency);
+            totalSharesEl.textContent = totalShares.toLocaleString('es-ES', { maximumFractionDigits: 0 }); // Shares are usually integers
+            averagePriceEl.textContent = averagePrice.toLocaleString('es-ES', formatOptionsPrice);
+        }
+
+        /**
+         * CALCULADORA 3: Opciones (Objetivo de Retorno)
+         */
+        function calculateOptionsTarget() {
+            // Obtener valores (tratar vacíos como 0, excepto comisión que tiene default)
+            const price = parseFloat(document.getElementById('optionsPrice').value) || 0;
+            const contracts = parseFloat(document.getElementById('optionsContracts').value) || 0;
+            const percentage = parseFloat(document.getElementById('optionsPercentage').value) || 0;
+            // Comisión tiene valor por defecto de 2.00 en el HTML, pero se obtiene el valor actual.
+            const commission = parseFloat(document.getElementById('optionsCommission').value) || 0; 
+
+            // Elementos de resultado y advertencia
+            const totalCostEl = document.getElementById('optionsTotalCost');
+            const grossProfitEl = document.getElementById('optionsGrossProfit');
+            const netProfitEl = document.getElementById('optionsNetProfit');
+            const salePriceEl = document.getElementById('optionsSalePrice');
+            const optionsWarningEl = document.getElementById('optionsWarning');
+
+            // Resetear resultados
+            totalCostEl.textContent = '0.00';
+            grossProfitEl.textContent = '0.00';
+            netProfitEl.textContent = '0.00';
+            salePriceEl.textContent = '0.00';
+            optionsWarningEl.classList.add('hidden');
+            
+            // Validaciones: Price >= 0, Contracts > 0, y todos deben ser números
+            if (price < 0 || contracts <= 0 || isNaN(price) || isNaN(contracts) || isNaN(percentage) || isNaN(commission)) {
+                optionsWarningEl.textContent = "⚠️ Por favor, ingresa valores numéricos válidos. El Precio por Contrato debe ser ≥ 0 y el Número de Contratos debe ser > 0.";
+                optionsWarningEl.classList.remove('hidden');
+                return;
+            }
+
+            // Constante: 1 contrato de opciones representa 100 acciones.
+            const sharesPerContract = 100;
+
+            // 1. Costo Total de Entrada (Inversión Inicial)
+            const totalCost = price * contracts * sharesPerContract;
+            
+            // 2. Ganancia Bruta (Profit/Loss basado en porcentaje)
+            const grossProfit = totalCost * (percentage / 100);
+
+            // 3. Ganancia Neta (Ganancia Bruta - Comisión Total)
+            const netProfit = grossProfit - commission;
+
+            // 4. Retorno Total Esperado (Capital + Ganancia Bruta)
+            const totalReturn = totalCost + grossProfit;
+            
+            // 5. Precio de Venta Objetivo (Precio de Prima Necesario)
+            // Se calcula Price_Sale = totalReturn / (contracts * sharesPerContract)
+            let targetSalePrice = 0;
+            if (contracts > 0) {
+                 targetSalePrice = totalReturn / (contracts * sharesPerContract);
+            }
+
+            // Mostrar resultados y aplicar estilos de color
+            totalCostEl.textContent = totalCost.toLocaleString('es-ES', formatOptionsCurrency);
+            
+            // Ganancia Bruta
+            grossProfitEl.textContent = grossProfit.toLocaleString('es-ES', formatOptionsCurrency);
+            grossProfitEl.classList.remove('text-green-500', 'text-red-500');
+            grossProfitEl.classList.add(grossProfit >= 0 ? 'text-green-500' : 'text-red-500');
+
+            // Ganancia Neta
+            netProfitEl.textContent = netProfit.toLocaleString('es-ES', formatOptionsCurrency);
+            netProfitEl.classList.remove('text-green-500', 'text-red-500', 'text-secondary-accent');
+            
+            if (netProfit > 0) {
+                netProfitEl.classList.add('text-green-500');
+            } else if (netProfit < 0) {
+                netProfitEl.classList.add('text-red-500');
+            } else {
+                netProfitEl.classList.add('text-secondary-accent'); // Amarillo si es cero
+            }
+            
+            // Precio de Venta Objetivo
+            salePriceEl.textContent = targetSalePrice.toLocaleString('es-ES', formatOptionsPrice);
+            
+            // Advertencias adicionales (e.g., net loss due to commission)
+            if (netProfit < 0 && grossProfit > 0) {
+                optionsWarningEl.textContent = `⚠️ Advertencia: Aunque la Ganancia Bruta es positiva, la Comisión Total (${commission.toLocaleString('es-ES', formatOptionsCurrency)} USD) resulta en una Pérdida Neta.`;
+                optionsWarningEl.classList.remove('hidden');
+            } else if (percentage === 0 && commission !== 0) {
+                optionsWarningEl.textContent = `⚠️ Advertencia: Con 0% de retorno, la Ganancia Neta será igual al negativo de su Comisión Total.`;
+                optionsWarningEl.classList.remove('hidden');
+            } else if (percentage === 0 && commission === 0) {
+                optionsWarningEl.classList.add('hidden'); // Sin advertencia si todo es cero
+            } else if (totalReturn < 0) {
+                optionsWarningEl.textContent = `⚠️ Advertencia: El Precio de Venta Objetivo es negativo. Esto ocurre si la pérdida porcentual es mayor al 100%.`;
+                optionsWarningEl.classList.remove('hidden');
+            }
+        }
+        
+        // --- Lógica de Navegación por Teclado (Enter y Flechas) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Seleccionar todos los inputs dentro de la sección de la calculadora Objetivo
+            const inputsObjetivo = document.querySelectorAll('#calculadora-objetivo input');
+            const buttonObjetivo = document.querySelector('#calculadora-objetivo button');
+            
+            // Seleccionar todos los inputs dentro de la sección de la calculadora Promedio
+            const inputsPromedio = document.querySelectorAll('#calculadora-promedio input');
+            const buttonPromedio = document.querySelector('#calculadora-promedio button');
+
+            // Seleccionar todos los inputs dentro de la sección de la calculadora Opciones
+            const inputsOpciones = document.querySelectorAll('#calculadora-opciones input');
+            const buttonOpciones = document.querySelector('#calculadora-opciones button');
+
+            // Función genérica de navegación por Enter/Flechas
+            const setupKeyboardNavigation = (inputs, button, calculateFunction) => {
+                inputs.forEach((input, index) => {
+                    input.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault(); 
+                            if (index < inputs.length - 1) {
+                                inputs[index + 1].focus();
+                            } else {
+                                calculateFunction();
                             }
-                            
-                            if (currentInputs) {
-                                const currentIndex = currentInputs.indexOf(id);
-                                // Calcular el índice del siguiente input. Usamos el operador % para hacer un loop.
-                                const nextIndex = (currentIndex + 1) % currentInputs.length;
-                                const nextInputId = currentInputs[nextIndex];
-                                
-                                // Mover el foco al siguiente input
-                                const nextInput = document.getElementById(nextInputId);
-                                if (nextInput) {
-                                    nextInput.focus();
-                                    // Seleccionar todo el texto para facilitar la sobreescritura
-                                    nextInput.select();
-                                }
+                        } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                            e.preventDefault();
+                            if (e.key === 'ArrowDown' && index < inputs.length - 1) {
+                                inputs[index + 1].focus();
+                            } else if (e.key === 'ArrowUp' && index > 0) {
+                                inputs[index - 1].focus();
                             }
                         }
                     });
+                });
+                // Enlazar el botón a la función de cálculo
+                if (button) {
+                    button.addEventListener('click', calculateFunction);
                 }
-            });
-        }
-        
-        // =========================================================
-        // LÓGICA DE CÁLCULO
-        // =========================================================
-
-        // Lógica de JavaScript para la Calculadora de Porcentaje (Markup)
-        function calculateMarkup() {
-            const purchasePrice = parseFloat(document.getElementById('purchasePrice').value) || 0;
-            const markupPercent = parseFloat(document.getElementById('markupPercent').value) || 0;
-            const sharesQuantity = parseInt(document.getElementById('sharesQuantity').value) || 0; 
+            };
             
-            const outputSellingPrice = document.getElementById('outputSellingPrice');
-            const outputGrossProfit = document.getElementById('outputGrossProfit');
-            const outputTotalInvestmentMarkup = document.getElementById('outputTotalInvestmentMarkup');
-            
-            if (purchasePrice <= 0 && sharesQuantity === 0) {
-                outputSellingPrice.textContent = '0.00';
-                outputGrossProfit.textContent = '0.00';
-                outputTotalInvestmentMarkup.textContent = '$0.00';
-                return;
-            }
-
-            // 1. Calcular Precio de Venta
-            const sellingPrice = purchasePrice * (1 + markupPercent / 100);
-            
-            // 2. Calcular Incremento Absoluto (Diferencia) - 2 decimales
-            const priceDifference = sellingPrice - purchasePrice;
-
-            // 3. Calcular Total Invertido: Precio de Entrada * Cantidad de Acciones
-            const totalInvestment = purchasePrice * sharesQuantity;
-
-            // 4. Actualizar Outputs
-            outputSellingPrice.textContent = sellingPrice.toFixed(2);
-            outputGrossProfit.textContent = priceDifference.toFixed(2);
-            outputTotalInvestmentMarkup.textContent = `$${totalInvestment.toFixed(2)}`;
-        }
-        
-        // Lógica de JavaScript para la Calculadora de Precio Promedio Ponderado (DCA)
-        function calculateDCA() {
-            const prices = [
-                parseFloat(document.getElementById('price1').value) || 0,
-                parseFloat(document.getElementById('price2').value) || 0,
-                parseFloat(document.getElementById('price3').value) || 0
-            ];
-            const shares = [
-                parseFloat(document.getElementById('shares1').value) || 0,
-                parseFloat(document.getElementById('shares2').value) || 0,
-                parseFloat(document.getElementById('shares3').value) || 0
-            ];
-            
-            let totalInvested = 0;
-            let totalShares = 0;
-
-            // Calcular Invertido por Posición
-            for (let i = 0; i < 3; i++) {
-                const invested = prices[i] * shares[i];
-                document.getElementById(`invested${i + 1}`).textContent = `$${invested.toFixed(2)}`;
-                
-                totalInvested += invested;
-                totalShares += shares[i];
-            }
-            
-            // Calcular Precio Promedio Ponderado
-            let averagePrice = 0;
-            if (totalShares > 0) {
-                averagePrice = totalInvested / totalShares;
-            }
-
-            // Actualizar Outputs
-            document.getElementById('outputAvgPrice').textContent = `$${averagePrice.toFixed(2)}`;
-            document.getElementById('outputTotalShares').textContent = totalShares.toFixed(0);
-            document.getElementById('outputTotalInvested').textContent = `$${totalInvested.toFixed(2)}`;
-        }
-        
-        // Lógica de JavaScript para la Calculadora de Opciones
-        function calculateOptionsPosition() {
-            const price = parseFloat(document.getElementById('optionPrice').value) || 0;
-            const contracts = parseInt(document.getElementById('optionContracts').value) || 0;
-            const commission = parseFloat(document.getElementById('optionCommission').value) || 0;
-            const targetPercent = parseFloat(document.getElementById('optionTargetPercent').value) || 0;
-
-            const outputTotalInvestment = document.getElementById('outputTotalInvestment');
-            const outputNetProfit = document.getElementById('outputNetProfit'); 
-            const outputTargetSellingPrice = document.getElementById('outputTargetSellingPrice');
-
-            const sharesPerContract = 100;
-
-            if (price <= 0 || contracts <= 0) {
-                outputTotalInvestment.textContent = '$0.00';
-                outputNetProfit.textContent = '$0.00'; 
-                outputTargetSellingPrice.textContent = '0.00';
-                return;
-            }
-
-            // Costo por Contrato (Premium * 100 + Comisión de Entrada)
-            const costPerContract = (price * sharesPerContract) + commission;
-
-            // Inversión Total
-            const totalInvestment = costPerContract * contracts;
-            
-            // Ganancia Bruta Deseada
-            const grossProfitNeeded = totalInvestment * (targetPercent / 100);
-
-            // Comisión Total (Entrada + Salida)
-            const totalCommissions = 2 * commission * contracts;
-            
-            // Beneficio Neto Objetivo
-            const netProfit = grossProfitNeeded - totalCommissions; 
-
-            // Valor de Venta Total (Inversión + Ganancia Bruta Necesaria)
-            const totalSellingValue = totalInvestment + grossProfitNeeded;
-            
-            // Precio de Venta por Contrato
-            const sellingPricePerContract = totalSellingValue / contracts;
-            
-            // Precio Venta de la Opción (Premium)
-            const targetSellingPrice = (sellingPricePerContract - commission) / sharesPerContract;
-
-            // Actualizar Outputs
-            outputTotalInvestment.textContent = `$${totalInvestment.toFixed(2)}`;
-            outputNetProfit.textContent = `$${netProfit.toFixed(2)}`; 
-            outputTargetSellingPrice.textContent = targetSellingPrice.toFixed(2);
-        }
-
-
-        // Ejecutar las funciones al cargar la página para inicializar los valores y la navegación
-        window.onload = function() {
-            calculateMarkup(); 
-            calculateDCA();
-            calculateOptionsPosition(); 
-            setupNavigation(); // Configura la navegación con Enter
-            
-            // Inicia y actualiza los relojes y el estado de la bolsa cada segundo
-            updateClocksAndStatus();
-            // Actualiza el reloj y el estado de la bolsa cada segundo (1000ms)
-            setInterval(updateClocksAndStatus, 1000); 
-        };
+            // Aplicar navegación a todas las calculadoras
+            setupKeyboardNavigation(inputsObjetivo, buttonObjetivo, calculateTargetPrice);
+            setupKeyboardNavigation(inputsPromedio, buttonPromedio, calculateAveragePrice);
+            setupKeyboardNavigation(inputsOpciones, buttonOpciones, calculateOptionsTarget);
+        });
     </script>
+
 </body>
 </html>

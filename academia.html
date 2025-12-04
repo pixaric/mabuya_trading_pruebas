@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mabuya Trading - Academia</title>
-    <!-- Carga de Tailwind CSS -->
+    <title>Academia | Mabuya Trading Academy</title>
+    <!-- Carga de Tailwind CSS para estilos responsivos y rápidos -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Configuración de Tailwind para un tema oscuro y fuente Inter -->
+    <!-- Configuración de Tailwind para usar el color principal y la fuente -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'primary-dark': '#121212',
-                        'secondary-dark': '#1e1e1e',
-                        'accent-gold': '#ffc107',
-                        'accent-blue': '#007bff',
+                        'primary-dark': '#0a0a0a',
+                        'accent': '#06b6d4', // Cyan
+                        'secondary-accent': '#facc15', // Amber
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -25,117 +24,133 @@
         }
     </script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            background-color: #0a0a0a;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
         /* Estilo para el enlace activo */
-        .active-link {
-            border-bottom: 2px solid #ffc107;
-            color: #ffc107 !important;
+        .nav-link:hover, .nav-link.active-page {
+            color: #06b6d4; /* Cyan */
+            border-bottom: 2px solid #06b6d4;
+        }
+        /* Estilo personalizado para las cajas de contenido */
+        .content-card {
+            background-color: #1f2937; /* Dark Gray for cards */
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
-<body class="bg-primary-dark text-gray-100 font-sans min-h-screen">
+<body class="bg-primary-dark">
 
-    <!-- Barra de Navegación Fija -->
-    <header class="sticky top-0 z-50 bg-secondary-dark shadow-xl">
+    <!-- BARRA DE NAVEGACIÓN (HEADER) - Enlaces externos a otros archivos -->
+    <header class="sticky top-0 z-50 bg-primary-dark/95 border-b border-gray-800 backdrop-blur-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
-                <a href="inicio.html" class="text-2xl font-bold tracking-wider text-accent-gold transition duration-300 hover:text-white">
-                    MABUYA <span class="text-white">TRADING</span>
-                </a>
-                
-                <!-- Menú de Navegación (Desktop) - Academia Activa -->
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center">
+                    <a href="inicio.html" class="text-3xl font-extrabold text-accent tracking-widest">
+                        MABUYA
+                        <span class="text-secondary-accent text-lg block leading-none">Trading Academy</span>
+                    </a>
+                </div>
+                <!-- Menú de Navegación (Escritorio) -->
                 <nav class="hidden md:flex space-x-8">
-                    <a href="inicio.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-2 border-b-2 border-transparent hover:border-accent-gold">Inicio</a>
-                    <!-- Academia está activa -->
-                    <a href="academia.html" class="nav-link active-link text-gray-300 transition duration-150 py-2 border-b-2 border-transparent hover:border-accent-gold">Academia</a>
-                    <a href="videos.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-2 border-b-2 border-transparent hover:border-accent-gold">Videos</a>
-                    <a href="calculadora.html" class="nav-link text-gray-300 hover:text-accent-gold transition duration-150 py-2 border-b-2 border-transparent hover:border-accent-gold">Calculadora</a>
+                    <a href="inicio.html" class="nav-link text-lg px-2 py-1 transition duration-300">Inicio</a>
+                    <a href="academia.html" class="nav-link active-page text-lg px-2 py-1 transition duration-300">Academia</a>
+                    <a href="calculadora.html" class="nav-link text-lg px-2 py-1 transition duration-300">Calculadora RR</a>
+                    <a href="videos.html" class="nav-link text-lg px-2 py-1 transition duration-300">Videos</a>
                 </nav>
-
                 <!-- Botón de Menú Móvil -->
-                <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-accent-gold focus:outline-none p-2 rounded-md" aria-label="Toggle Menu">
-                    <!-- Icono de Hamburguesa (SVG) -->
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                <button id="menu-button" class="md:hidden p-2 text-white hover:text-accent focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                 </button>
             </div>
         </div>
-        
         <!-- Menú Móvil Desplegable -->
-        <div id="mobile-menu" class="hidden md:hidden">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="inicio.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-accent-gold/20">Inicio</a>
-                <a href="academia.html" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-accent-blue/20 hover:bg-accent-gold/20 active-link">Academia</a>
-                <a href="videos.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-accent-gold/20">Videos</a>
-                <a href="calculadora.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-accent-gold/20">Calculadora</a>
+        <div id="mobile-menu" class="hidden md:hidden absolute w-full bg-primary-dark/95 border-t border-gray-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col items-center">
+                <a href="inicio.html" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700 w-full text-center">Inicio</a>
+                <a href="academia.html" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700 w-full text-center">Academia</a>
+                <a href="calculadora.html" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700 w-full text-center">Calculadora RR</a>
+                <a href="videos.html" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700 w-full text-center">Videos</a>
             </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <main>
+        <!-- SECCIÓN 2: ACADEMIA (ACADEMY) -->
+        <section id="academia" class="py-20 px-4 bg-gray-900 min-h-[calc(100vh-10rem)]">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-12 text-accent">Nuestra Academia de Trading</h2>
+                <p class="text-lg text-gray-400 text-center max-w-3xl mx-auto mb-16">
+                    Ofrecemos un currículo estructurado desde nivel principiante hasta avanzado, cubriendo análisis técnico, gestión de riesgo y psicología del trading.
+                </p>
 
-        <!-- Sección de Academia (Academy) -->
-        <section class="mb-20 pt-10">
-            <h1 class="text-4xl font-bold text-center text-accent-gold mb-4">Currículo de la Academia Mabuya</h1>
-            <p class="text-center text-gray-400 mb-12 max-w-3xl mx-auto">Nuestro programa está diseñado para llevarte de principiante a trader avanzado, enfocándonos en la práctica y la gestión de riesgo.</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Módulo 1 -->
-                <div class="bg-secondary-dark p-6 rounded-xl shadow-lg border border-gray-700 hover:shadow-accent-gold/30 transition duration-300">
-                    <span class="text-3xl font-extrabold text-accent-gold mb-2 block">01</span>
-                    <h3 class="text-2xl font-semibold mb-3">Introducción al Mercado</h3>
-                    <ul class="list-disc list-inside text-gray-400 space-y-1 pl-4">
-                        <li>Qué es el Trading y cómo funciona.</li>
-                        <li>Tipos de activos: Forex, Cripto y Acciones.</li>
-                        <li>Terminología clave (pips, lotes, apalancamiento).</li>
-                    </ul>
-                </div>
-                
-                <!-- Módulo 2 -->
-                <div class="bg-secondary-dark p-6 rounded-xl shadow-lg border border-gray-700 hover:shadow-accent-gold/30 transition duration-300">
-                    <span class="text-3xl font-extrabold text-accent-gold mb-2 block">02</span>
-                    <h3 class="text-2xl font-semibold mb-3">Análisis Técnico y Fundamental</h3>
-                    <ul class="list-disc list-inside text-gray-400 space-y-1 pl-4">
-                        <li>Lectura de gráficos y velas japonesas.</li>
-                        <li>Uso avanzado de indicadores (RSI, MACD, Medias).</li>
-                        <li>Interpretación de noticias y datos macroeconómicos.</li>
-                    </ul>
-                </div>
-                
-                <!-- Módulo 3 -->
-                <div class="bg-secondary-dark p-6 rounded-xl shadow-lg border border-gray-700 hover:shadow-accent-gold/30 transition duration-300">
-                    <span class="text-3xl font-extrabold text-accent-gold mb-2 block">03</span>
-                    <h3 class="text-2xl font-semibold mb-3">Gestión de Riesgo y Psicología</h3>
-                    <ul class="list-disc list-inside text-gray-400 space-y-1 pl-4">
-                        <li>Cálculo de riesgo (R:R) y tamaño de posición.</li>
-                        <li>Desarrollo de un Plan de Trading sólido.</li>
-                        <li>Control emocional y manejo de rachas perdedoras.</li>
-                    </ul>
+                <!-- Módulos de la Academia -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Módulo 1 -->
+                    <div class="content-card p-6 rounded-xl transform hover:scale-[1.02] transition duration-300 cursor-pointer">
+                        <div class="text-accent text-3xl mb-3">
+                            <!-- Icono de Básico -->
+                            <svg class="w-8 h-8 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3 .895 3 2s-1.343 2-3 2-3 .895-3 2 1.343 2 3 2m-3 2h6m-6-12h6"></path></svg>
+                            <span class="font-bold">Nivel Básico</span>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-3 text-white">Introducción a los Mercados</h3>
+                        <p class="text-gray-400">Conceptos fundamentales, tipos de órdenes y estructura del mercado. Perfecto para empezar desde cero.</p>
+                    </div>
+
+                    <!-- Módulo 2 -->
+                    <div class="content-card p-6 rounded-xl transform hover:scale-[1.02] transition duration-300 cursor-pointer">
+                        <div class="text-secondary-accent text-3xl mb-3">
+                            <!-- Icono de Intermedio -->
+                            <svg class="w-8 h-8 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v14m-6 3h-6a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v10a2 2 0 01-2 2z"></path></svg>
+                            <span class="font-bold">Análisis Intermedio</span>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-3 text-white">Análisis Técnico y Estrategias</h3>
+                        <p class="text-gray-400">Indicadores, patrones de velas, zonas de soporte y resistencia. Desarrolla tu plan de trading.</p>
+                    </div>
+
+                    <!-- Módulo 3 -->
+                    <div class="content-card p-6 rounded-xl transform hover:scale-[1.02] transition duration-300 cursor-pointer">
+                        <div class="text-accent text-3xl mb-3">
+                            <!-- Icono de Avanzado -->
+                            <svg class="w-8 h-8 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            <span class="font-bold">Trading Avanzado</span>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-3 text-white">Gestión de Riesgo y Psicología</h3>
+                        <p class="text-gray-400">Dominio de la gestión monetaria, cálculo de riesgo y control emocional avanzado.</p>
+                    </div>
                 </div>
             </div>
-
-            <div class="mt-12 text-center">
-                 <a href="videos.html" class="inline-block bg-accent-blue text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-blue-600">
-                    Explorar Recursos en Video
-                </a>
-            </div>
-
         </section>
-
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-secondary-dark mt-10 p-6 text-center text-gray-400">
-        <p>&copy; 2025 Mabuya Trading. Todos los derechos reservados. Educando la próxima generación de traders.</p>
+    <!-- FOOTER -->
+    <footer class="bg-primary-dark border-t border-gray-800 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
+            <p>&copy; 2024 Mabuya Trading Academy. Todos los derechos reservados.</p>
+            <div class="mt-4 space-x-4 text-sm">
+                <a href="#" class="hover:text-accent transition duration-300">Términos y Condiciones</a>
+                <span class="text-gray-600">|</span>
+                <a href="#" class="hover:text-accent transition duration-300">Política de Privacidad</a>
+            </div>
+        </div>
     </footer>
 
+    <!-- JAVASCRIPT: Lógica de la Navegación Móvil -->
     <script>
-        // Lógica de JavaScript para la Navegación Móvil
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileMenuButton.addEventListener('click', () => {
+        document.getElementById('menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
             mobileMenu.classList.toggle('hidden');
         });
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
     </script>
+
 </body>
 </html>
