@@ -43,8 +43,34 @@
         }
         /* Ajuste de altura de inputs para mejor densidad en móvil */
         .input-compact {
-            padding-top: 0.625rem; /* p-2.5 */
-            padding-bottom: 0.625rem; /* p-2.5 */
+            padding-top: 0.5rem; /* p-2 */
+            padding-bottom: 0.5rem; /* p-2 */
+            font-size: 0.875rem; /* text-sm */
+        }
+        /* Ajuste de márgenes y paddings para móvil */
+        .mobile-compact-gap {
+            gap: 1rem; /* gap-4 en lugar de gap-6 */
+            margin-bottom: 1.25rem; /* mb-5 en lugar de mb-8 */
+        }
+        /* Ajuste para el espaciado entre items de resultado */
+        .results-space {
+            margin-top: 1.5rem; /* mt-6 */
+            padding-top: 1rem; /* pt-4 */
+        }
+
+        /* Aplicar ajustes solo a pantallas pequeñas */
+        @media (max-width: 639px) { 
+            .mobile-compact-gap {
+                gap: 0.75rem; /* gap-3 en móvil */
+                margin-bottom: 1rem; /* mb-4 en móvil */
+            }
+            .content-card {
+                padding: 1rem; /* p-4 en móvil */
+            }
+            .results-space {
+                margin-top: 1.25rem; /* mt-5 en móvil */
+                padding-top: 0.75rem; /* pt-3 en móvil */
+            }
         }
     </style>
 </head>
@@ -101,13 +127,13 @@
 
     <main>
         <!-- SECCIÓN 1: CALCULADORA DE PRECIO OBJETIVO POR PORCENTAJE -->
-        <section id="calculadora-objetivo" class="py-10 px-4 flex items-start justify-center">
+        <section id="calculadora-objetivo" class="py-8 px-4 sm:py-10 flex items-start justify-center">
             <div class="max-w-xl mx-auto w-full"> 
-                <h2 class="text-3xl font-bold text-center mb-8 text-secondary-accent sm:text-4xl">Calculadora de Precio Objetivo (Ganancia %)</h2>
-                <div class="content-card p-6 rounded-xl sm:p-8">
-                    <p class="text-gray-300 mb-6 text-center text-sm sm:text-base">Calcula el precio de venta y la ganancia total para alcanzar un porcentaje objetivo, basado en el número de unidades.</p>
+                <h2 class="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-secondary-accent sm:text-4xl">Calculadora de Precio Objetivo (Ganancia %)</h2>
+                <div class="content-card p-4 sm:p-6 rounded-xl sm:p-8">
+                    <p class="text-gray-300 mb-5 sm:mb-6 text-center text-sm sm:text-base">Calcula el precio de venta y la ganancia total para alcanzar un porcentaje objetivo, basado en el número de unidades.</p>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 sm:gap-6 sm:mb-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mobile-compact-gap">
                         <!-- Campo 1: Precio de Compra/Entrada -->
                         <div>
                             <label for="entryPrice" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Precio de Compra (Entrada)</label>
@@ -126,17 +152,17 @@
                     </div>
                     
                     <!-- Botón de Cálculo -->
-                    <button onclick="calculateTargetPrice()" class="w-full bg-accent text-primary-dark font-bold py-3 rounded-lg hover:bg-cyan-500 transition duration-300 transform hover:scale-[1.01]">
+                    <button onclick="calculateTargetPrice()" class="w-full bg-accent text-primary-dark font-bold py-3 rounded-lg hover:bg-cyan-500 transition duration-300 transform hover:scale-[1.01] mt-2">
                         Calcular Objetivo
                     </button>
 
                     <!-- Resultados: Fuentes de texto ajustadas (text-base y text-xl) -->
-                    <div id="results-objetivo" class="mt-6 pt-4 border-t border-gray-700 space-y-2 sm:mt-8 sm:pt-6 sm:space-y-3">
+                    <div id="results-objetivo" class="results-space border-t border-gray-700 space-y-2 sm:space-y-3">
                         <h3 class="text-lg font-semibold text-white mb-2 sm:text-xl">Resultados del Objetivo:</h3>
-                        <p class="text-base sm:text-lg">Precio de Venta (Objetivo): <span id="sellingPrice" class="font-bold text-accent">0.00</span> USD</p>
-                        <p class="text-base sm:text-lg">Cantidad Invertida: <span id="amountInvestedDisplay" class="font-bold text-gray-400">0.00</span> USD</p>
-                        <p class="text-base sm:text-lg">Ganancia Bruta Estimada: <span id="totalProfit" class="font-bold text-green-500">0.00</span> USD</p>
-                        <p class="text-xl pt-1 font-extrabold sm:text-2xl sm:pt-2">Retorno Total Estimado: <span id="totalReturn" class="text-secondary-accent">0.00</span> USD</p>
+                        <p class="text-sm sm:text-base">Precio de Venta (Objetivo): <span id="sellingPrice" class="font-bold text-accent">0.00</span> USD</p>
+                        <p class="text-sm sm:text-base">Cantidad Invertida: <span id="amountInvestedDisplay" class="font-bold text-gray-400">0.00</span> USD</p>
+                        <p class="text-sm sm:text-base">Ganancia Bruta Estimada: <span id="totalProfit" class="font-bold text-green-500">0.00</span> USD</p>
+                        <p class="text-lg pt-1 font-extrabold sm:text-xl sm:pt-2">Retorno Total Estimado: <span id="totalReturn" class="text-secondary-accent">0.00</span> USD</p>
                         <p id="riskWarning" class="text-red-400 text-xs mt-1 hidden sm:text-sm">⚠️ Por favor, ingresa valores numéricos válidos y positivos.</p>
                     </div>
 
@@ -145,17 +171,17 @@
         </section>
 
         <!-- SECCIÓN 2: CALCULADORA DE PRECIO PROMEDIO -->
-        <section id="calculadora-promedio" class="py-10 px-4 flex items-start justify-center">
+        <section id="calculadora-promedio" class="py-8 px-4 sm:py-10 flex items-start justify-center">
             <div class="max-w-xl mx-auto w-full"> 
-                <h2 class="text-3xl font-bold text-center mb-8 text-secondary-accent sm:text-4xl">Calculadora de Precio Promedio (Aumento de Posición)</h2>
-                <div class="content-card p-6 rounded-xl sm:p-8">
-                    <p class="text-gray-300 mb-6 text-center text-sm sm:text-base">Calcula el precio promedio de tu posición después de realizar hasta tres compras.</p>
+                <h2 class="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-secondary-accent sm:text-4xl">Calculadora de Precio Promedio (Aumento de Posición)</h2>
+                <div class="content-card p-4 sm:p-6 rounded-xl sm:p-8">
+                    <p class="text-gray-300 mb-5 sm:mb-6 text-center text-sm sm:text-base">Calcula el precio promedio de tu posición después de realizar hasta tres compras.</p>
 
-                    <div class="grid grid-cols-2 gap-4 mb-6 sm:gap-6 sm:mb-8">
+                    <div class="grid grid-cols-2 gap-3 mobile-compact-gap">
                         <!-- Compra 1 -->
                         <div>
                             <label for="price1" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Precio 1</label>
-                            <input type="number" id="price1" value="" step="0.01" class="w-full input-compact bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring-accent focus:border-accent" placeholder="Precio de Compra">
+                            <input type="number" id="price1" value="" step="0.01" class="w-full input-compact bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring-accent focus:border-accent" placeholder="Precio">
                         </div>
                         <div>
                             <label for="shares1" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Acciones 1</label>
@@ -165,7 +191,7 @@
                         <!-- Compra 2 -->
                         <div>
                             <label for="price2" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Precio 2</label>
-                            <input type="number" id="price2" value="" step="0.01" class="w-full input-compact bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring-accent focus:border-accent" placeholder="Precio de Compra (Opcional)">
+                            <input type="number" id="price2" value="" step="0.01" class="w-full input-compact bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring-accent focus:border-accent" placeholder="Precio (Opcional)">
                         </div>
                         <div>
                             <label for="shares2" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Acciones 2</label>
@@ -175,7 +201,7 @@
                         <!-- Compra 3 -->
                         <div>
                             <label for="price3" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Precio 3</label>
-                            <input type="number" id="price3" value="" step="0.01" class="w-full input-compact bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring-accent focus:border-accent" placeholder="Precio de Compra (Opcional)">
+                            <input type="number" id="price3" value="" step="0.01" class="w-full input-compact bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring-accent focus:border-accent" placeholder="Precio (Opcional)">
                         </div>
                         <div>
                             <label for="shares3" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Acciones 3</label>
@@ -184,16 +210,16 @@
                     </div>
                     
                     <!-- Botón de Cálculo -->
-                    <button onclick="calculateAveragePrice()" class="w-full bg-secondary-accent text-primary-dark font-bold py-3 rounded-lg hover:bg-amber-400 transition duration-300 transform hover:scale-[1.01]">
+                    <button onclick="calculateAveragePrice()" class="w-full bg-secondary-accent text-primary-dark font-bold py-3 rounded-lg hover:bg-amber-400 transition duration-300 transform hover:scale-[1.01] mt-2">
                         Calcular Promedio
                     </button>
 
                     <!-- Resultados -->
-                    <div id="results-promedio" class="mt-6 pt-4 border-t border-gray-700 space-y-2 sm:mt-8 sm:pt-6 sm:space-y-3">
+                    <div id="results-promedio" class="results-space border-t border-gray-700 space-y-2 sm:space-y-3">
                         <h3 class="text-lg font-semibold text-white mb-2 sm:text-xl">Resultados del Promedio:</h3>
-                        <p class="text-base sm:text-lg">Costo Total: <span id="totalCost" class="font-bold text-gray-400">0.00</span> USD</p>
-                        <p class="text-base sm:text-lg">Cantidad Total de Acciones: <span id="totalShares" class="font-bold text-accent">0</span> unidades</p>
-                        <p class="text-xl pt-1 font-extrabold sm:text-2xl sm:pt-2">Precio Promedio: <span id="averagePrice" class="text-secondary-accent">0.00</span> USD</p>
+                        <p class="text-sm sm:text-base">Costo Total: <span id="totalCost" class="font-bold text-gray-400">0.00</span> USD</p>
+                        <p class="text-sm sm:text-base">Cantidad Total de Acciones: <span id="totalShares" class="font-bold text-accent">0</span> unidades</p>
+                        <p class="text-lg pt-1 font-extrabold sm:text-xl sm:pt-2">Precio Promedio: <span id="averagePrice" class="text-secondary-accent">0.00</span> USD</p>
                         <p id="avgWarning" class="text-red-400 text-xs mt-1 hidden sm:text-sm">⚠️ Por favor, ingresa al menos la Compra 1 con valores numéricos válidos y positivos.</p>
                     </div>
 
@@ -202,13 +228,13 @@
         </section>
 
         <!-- SECCIÓN 3: CALCULADORA DE OPCIONES -->
-        <section id="calculadora-opciones" class="py-10 px-4 flex items-start justify-center">
+        <section id="calculadora-opciones" class="py-8 px-4 sm:py-10 flex items-start justify-center">
             <div class="max-w-xl mx-auto w-full"> 
-                <h2 class="text-3xl font-bold text-center mb-8 text-accent sm:text-4xl">Calculadora de Opciones (Objetivo de Retorno)</h2>
-                <div class="content-card p-6 rounded-xl sm:p-8">
-                    <p class="text-gray-300 mb-6 text-center text-sm sm:text-base">Calcula el precio de venta necesario y la ganancia neta para un porcentaje de retorno deseado en contratos de opciones (asumiendo 1 contrato = 100 acciones).</p>
+                <h2 class="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-accent sm:text-4xl">Calculadora de Opciones (Objetivo de Retorno)</h2>
+                <div class="content-card p-4 sm:p-6 rounded-xl sm:p-8">
+                    <p class="text-gray-300 mb-5 sm:mb-6 text-center text-sm sm:text-base">Calcula el precio de venta necesario y la ganancia neta para un porcentaje de retorno deseado en contratos de opciones.</p>
 
-                    <div class="grid grid-cols-2 gap-4 mb-6 sm:gap-6 sm:mb-8">
+                    <div class="grid grid-cols-2 gap-3 mobile-compact-gap">
                         <!-- Precio por Contrato (o prima) -->
                         <div>
                             <label for="optionsPrice" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Precio por Contrato (Prima)</label>
@@ -221,7 +247,7 @@
                         </div>
                         <!-- Porcentaje de Retorno Deseado (Positivo/Negativo) -->
                         <div>
-                            <label for="optionsPercentage" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Porcentaje de Retorno Deseado (%)</label>
+                            <label for="optionsPercentage" class="block text-xs font-medium text-gray-400 mb-1 sm:text-sm">Retorno Deseado (%)</label>
                             <input type="number" id="optionsPercentage" value="" step="0.1" class="w-full input-compact bg-gray-700 text-white border border-gray-600 rounded-lg focus:ring-accent focus:border-accent" placeholder="Ej. 20 o -10">
                         </div>
                         <!-- Comisión Total (Editable, por defecto 2) -->
@@ -232,17 +258,17 @@
                     </div>
                     
                     <!-- Botón de Cálculo -->
-                    <button onclick="calculateOptionsTarget()" class="w-full bg-accent text-primary-dark font-bold py-3 rounded-lg hover:bg-cyan-500 transition duration-300 transform hover:scale-[1.01]">
+                    <button onclick="calculateOptionsTarget()" class="w-full bg-accent text-primary-dark font-bold py-3 rounded-lg hover:bg-cyan-500 transition duration-300 transform hover:scale-[1.01] mt-2">
                         Calcular Opciones
                     </button>
 
                     <!-- Resultados -->
-                    <div id="results-opciones" class="mt-6 pt-4 border-t border-gray-700 space-y-2 sm:mt-8 sm:pt-6 sm:space-y-3">
+                    <div id="results-opciones" class="results-space border-t border-gray-700 space-y-2 sm:space-y-3">
                         <h3 class="text-lg font-semibold text-white mb-2 sm:text-xl">Resultados del Cálculo de Opciones:</h3>
-                        <p class="text-base sm:text-lg">Costo Total de Entrada: <span id="optionsTotalCost" class="font-bold text-gray-400">0.00</span> USD</p>
-                        <p class="text-base sm:text-lg">Ganancia Bruta (sin comisión): <span id="optionsGrossProfit" class="font-bold text-green-500">0.00</span> USD</p>
-                        <p class="text-xl pt-1 font-extrabold sm:text-2xl sm:pt-2">Ganancia Neta (Retorno): <span id="optionsNetProfit" class="text-secondary-accent">0.00</span> USD</p>
-                        <p class="text-base sm:text-lg">Precio de Venta Objetivo (Prima): <span id="optionsSalePrice" class="font-bold text-accent">0.00</span> USD</p>
+                        <p class="text-sm sm:text-base">Costo Total de Entrada: <span id="optionsTotalCost" class="font-bold text-gray-400">0.00</span> USD</p>
+                        <p class="text-sm sm:text-base">Ganancia Bruta (sin comisión): <span id="optionsGrossProfit" class="font-bold text-green-500">0.00</span> USD</p>
+                        <p class="text-lg pt-1 font-extrabold sm:text-xl sm:pt-2">Ganancia Neta (Retorno): <span id="optionsNetProfit" class="text-secondary-accent">0.00</span> USD</p>
+                        <p class="text-sm sm:text-base">Precio de Venta Objetivo (Prima): <span id="optionsSalePrice" class="font-bold text-accent">0.00</span> USD</p>
                         <p id="optionsWarning" class="text-red-400 text-xs mt-1 hidden sm:text-sm">⚠️ Por favor, ingresa valores numéricos válidos. Precio debe ser ≥ 0 y Contratos debe ser > 0.</p>
                     </div>
 
