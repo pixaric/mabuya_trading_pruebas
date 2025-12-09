@@ -84,21 +84,22 @@
         </div>
     </header>
 
-    <main>
-        <!-- SECCIÓN 0: RELOJ DE MERCADO NYSE (Compacto) -->
-        <!-- Muestra la hora actual de Nueva York y el estado del mercado (Abierto/Cerrado) con un temporizador. -->
-        <section id="reloj-mercado" class="py-4 px-4 bg-gray-900 border-b border-gray-700">
-            <div class="max-w-7xl mx-auto text-center">
-                <h3 class="text-lg font-semibold text-gray-300 mb-1 sm:text-xl">Bolsa de Valores de Nueva York (NYSE) - Hora ET</h3>
-                <!-- Fuente reducida para hacerlo más compacto (3xl/4xl) -->
-                <p class="text-3xl font-extrabold text-accent mb-1 sm:text-4xl" id="nyse-time">--:--:--</p>
-                <p class="text-base font-medium text-gray-400 mb-2" id="nyse-date">Cargando fecha...</p>
-                
-                <!-- TEMPORIZADOR DE ESTATUS -->
-                <p id="market-status-text" class="text-lg font-extrabold text-white sm:text-xl">Cargando estado...</p>
+    <!-- SECCIÓN 0: RELOJ DE MERCADO NYSE (Compacto) -->
+    <section id="reloj-mercado" class="py-4 px-4 bg-gray-900 border-b border-gray-700">
+        <div class="max-w-7xl mx-auto text-center">
+            <h3 class="text-lg font-semibold text-gray-300 mb-1 sm:text-xl">Bolsa de Valores de Nueva York (NYSE) - Hora ET</h3>
+            
+            <!-- Estructura del reloj con IDs específicos para actualizar solo el texto -->
+            <div id="nyse-clock-container">
+                <p id="nyse-time" class="text-3xl font-extrabold text-accent mb-1 sm:text-4xl">--:--:--</p>
+                <p id="nyse-date" class="text-base font-medium text-gray-400 mb-2">Cargando fecha...</p>
+                <p id="nyse-status" class="text-lg font-extrabold text-white sm:text-xl">Cargando estado...</p>
             </div>
-        </section>
 
+        </div>
+    </section>
+
+    <main>
         <!-- SECCIÓN 1: CALCULADORA DE PRECIO OBJETIVO POR PORCENTAJE -->
         <section id="calculadora-objetivo" class="py-10 px-4 flex items-start justify-center">
             <div class="max-w-xl mx-auto w-full"> 
@@ -287,6 +288,12 @@
         const CLOSE_HOUR = 16;
         const CLOSE_MINUTE = 0; // 4:00 PM
 
+        // Referencias a los elementos del DOM del reloj (Se obtienen una sola vez)
+        const nyseTimeEl = document.getElementById('nyse-time');
+        const nyseDateEl = document.getElementById('nyse-date');
+        const nyseStatusEl = document.getElementById('nyse-status');
+        const statusColorClasses = ['text-red-500', 'text-green-500', 'text-white']; // Clases de color para limpiar
+
         /**
          * Formatea la diferencia de tiempo en horas, minutos y segundos.
          * @param {number} ms - Diferencia de tiempo en milisegundos.
@@ -303,15 +310,13 @@
 
             let parts = [];
             if (days > 0) parts.push(`${days} días`);
-            // Muestra horas solo si hay días o si es la última parte significativa
             if (hours > 0 || days > 0) parts.push(`${hours}h`);
-            // Muestra minutos y segundos siempre
             parts.push(`${minutes}m`);
             parts.push(`${seconds}s`);
 
-            // Asegurar que siempre se muestre al menos minutos y segundos si el tiempo es corto
+            // Asegurar que siempre se muestre al menos minutos y segundos
             if (parts.length === 1 && totalSeconds > 0) {
-                 return `${minutes}m ${seconds}s`; // Should not happen with the logic above, but safety first
+                 return `${minutes}m ${seconds}s`; 
             }
 
             return parts.join(' ');
@@ -322,7 +327,6 @@
          */
         function updateClockAndTimer() {
             // Utilizamos la zona horaria TIMEZONE ('America/New_York') para obtener la hora precisa.
-            // Creamos un nuevo objeto Date a partir del string localizado para garantizar la hora ET.
             const nowET = new Date(new Date().toLocaleString("en-US", { timeZone: TIMEZONE }));
 
             // **LOG DE DEPURACIÓN:** Este mensaje debería aparecer en la Consola del navegador cada segundo.
@@ -336,7 +340,7 @@
             const closeTimeInMinutes = CLOSE_HOUR * 60 + CLOSE_MINUTE; // 16:00 ET
 
             let statusText = '';
-            let statusClass = '';
+            let statusClass = 'text-white'; // Por defecto, si algo sale mal
             let countdownMs = 0;
             
             const isWeekend = (currentDay === 0 || currentDay === 6); // Domingo o Sábado
@@ -344,7 +348,6 @@
             const isOpen = isTradingDay && (currentTimeInMinutes >= openTimeInMinutes && currentTimeInMinutes < closeTimeInMinutes);
 
             if (isWeekend) {
-                // Mercado Cerrado - Fin de Semana
                 statusText = 'CERRADO (Fin de Semana)';
                 statusClass = 'text-red-500';
 
@@ -360,50 +363,55 @@
             } else {
                 // Mercado Cerrado: Calcular tiempo hasta la próxima apertura (9:30 AM ET)
                 let nextOpenTime = new Date(nowET);
-                nextOpenTime.setHours(OPEN_HOUR, OPEN_MINUTE, 0, 0); // Establece el tiempo de apertura de hoy
+                nextOpenTime.setHours(OPEN_HOUR, OPEN_MINUTE, 0, 0); 
 
-                // Ajustar si la apertura ya pasó hoy (después de 16:00 ET de ayer o antes de 9:30 ET de hoy)
                 if (currentTimeInMinutes >= closeTimeInMinutes) {
-                    // Si es después de las 16:00 ET, la próxima apertura es mañana
                     nextOpenTime.setDate(nextOpenTime.getDate() + 1);
                 }
                 
-                // Ajustar para el fin de semana: si la próxima apertura cae en Sáb/Dom, avanzar al Lunes.
                 let nextDay = nextOpenTime.getDay();
-                if (nextDay === 0) { // Domingo -> Lunes
+                if (nextDay === 0) { 
                     nextOpenTime.setDate(nextOpenTime.getDate() + 1);
-                } else if (nextDay === 6) { // Sábado -> Lunes
+                } else if (nextDay === 6) { 
                     nextOpenTime.setDate(nextOpenTime.getDate() + 2);
                 }
                 
-                // Recalcular el tiempo si el día fue ajustado
                 countdownMs = nextOpenTime.getTime() - nowET.getTime();
                 
                 if (countdownMs > 0) {
                     statusText = `ABRE en ${formatTimeDifference(countdownMs)}`;
                     statusClass = 'text-red-500';
                 } else {
-                    statusText = 'CERRADO'; // Fallback
+                    statusText = 'CERRADO'; 
                     statusClass = 'text-red-500';
                 }
             }
             
-            // ** SOLUCIÓN DE RENDERIZADO **
-            // Forzar un pequeño cambio de estilo en cada tick para obligar al navegador a repintar.
-            const nyseTimeEl = document.getElementById('nyse-time');
-            const newTime = nowET.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true, timeZone: TIMEZONE });
+            // --- CÓDIGO DE ACTUALIZACIÓN ESPECÍFICA DE TEXTO (SOLUCIÓN ROBUSTA) ---
             
-            if (nyseTimeEl.textContent !== newTime) {
-                nyseTimeEl.textContent = newTime;
-                // Alternar una clase de Tailwind insignificante para forzar el repintado
-                nyseTimeEl.classList.toggle('opacity-99');
+            // 1. **Hora (Nuevo Método Robusto)**: Formateo manual para evitar problemas de entorno/locale.
+            const hours = String(nowET.getHours()).padStart(2, '0');
+            const minutes = String(nowET.getMinutes()).padStart(2, '0');
+            const seconds = String(nowET.getSeconds()).padStart(2, '0');
+            // Muestra la hora en formato 24h, asegurando que siempre se genere un string.
+            const newTime = `${hours}:${minutes}:${seconds} ET`; 
+            
+            // 2. Fecha (Usando toLocaleDateString, que es menos propenso a errores de visualización)
+            const newDate = nowET.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: TIMEZONE });
+            
+            // Actualizar Hora
+            if (nyseTimeEl) nyseTimeEl.textContent = newTime;
+
+            // Actualizar Fecha
+            if (nyseDateEl) nyseDateEl.textContent = newDate;
+            
+            // Actualizar Estado (Texto y Clase de color)
+            if (nyseStatusEl) {
+                nyseStatusEl.textContent = statusText;
+                // Remueve las clases anteriores de color y aplica la nueva
+                nyseStatusEl.classList.remove(...statusColorClasses);
+                nyseStatusEl.classList.add(statusClass);
             }
-
-
-            // Actualizar elementos HTML
-            document.getElementById('nyse-date').textContent = nowET.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: TIMEZONE });
-            document.getElementById('market-status-text').textContent = statusText;
-            document.getElementById('market-status-text').className = `text-lg font-extrabold ${statusClass} sm:text-xl`; // Ajuste de tamaño aquí
         }
 
         // --- Inicialización del Reloj ---
