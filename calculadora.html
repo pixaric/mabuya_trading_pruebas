@@ -85,17 +85,17 @@
     </header>
 
     <main>
-        <!-- SECCIÓN 0: RELOJ DE MERCADO NYSE -->
+        <!-- SECCIÓN 0: RELOJ DE MERCADO NYSE (Compacto) -->
         <!-- Muestra la hora actual de Nueva York y el estado del mercado (Abierto/Cerrado) con un temporizador. -->
-        <section id="reloj-mercado" class="py-6 px-4 bg-gray-900 border-b border-gray-700">
+        <section id="reloj-mercado" class="py-4 px-4 bg-gray-900 border-b border-gray-700">
             <div class="max-w-7xl mx-auto text-center">
-                <h3 class="text-xl font-semibold text-gray-300 mb-1 sm:text-2xl">Bolsa de Valores de Nueva York (NYSE) - Hora ET</h3>
-                <p class="text-5xl font-extrabold text-accent mb-2 sm:text-6xl" id="nyse-time">--:--:--</p>
-                <p class="text-lg font-medium text-gray-400 mb-4" id="nyse-date">Cargando fecha...</p>
+                <h3 class="text-lg font-semibold text-gray-300 mb-1 sm:text-xl">Bolsa de Valores de Nueva York (NYSE) - Hora ET</h3>
+                <!-- Fuente reducida para hacerlo más compacto (3xl/4xl) -->
+                <p class="text-3xl font-extrabold text-accent mb-1 sm:text-4xl" id="nyse-time">--:--:--</p>
+                <p class="text-base font-medium text-gray-400 mb-2" id="nyse-date">Cargando fecha...</p>
                 
-                <!-- TEMPORIZADOR DE ESTATUS (Se actualiza con JS para mostrar Abre/Cierra en X tiempo) -->
-                <!-- Clase dinámica: 'text-green-500' para abierto, 'text-red-500' para cerrado/fin de semana -->
-                <p id="market-status-text" class="text-xl font-extrabold text-white sm:text-2xl">Cargando estado...</p>
+                <!-- TEMPORIZADOR DE ESTATUS -->
+                <p id="market-status-text" class="text-lg font-extrabold text-white sm:text-xl">Cargando estado...</p>
             </div>
         </section>
 
@@ -321,7 +321,13 @@
          * Actualiza el reloj de la NYSE y el temporizador de estado.
          */
         function updateClockAndTimer() {
+            // Utilizamos la zona horaria TIMEZONE ('America/New_York') para obtener la hora precisa.
+            // Creamos un nuevo objeto Date a partir del string localizado para garantizar la hora ET.
             const nowET = new Date(new Date().toLocaleString("en-US", { timeZone: TIMEZONE }));
+
+            // **LOG DE DEPURACIÓN:** Este mensaje debería aparecer en la Consola del navegador cada segundo.
+            console.log("Reloj NYSE actualizado. Hora calculada:", nowET.toLocaleTimeString('en-US', { timeZone: TIMEZONE }));
+            
             const currentDay = nowET.getDay(); // 0=Dom, 6=Sáb
             const currentTimeInMinutes = nowET.getHours() * 60 + nowET.getMinutes();
             
@@ -381,12 +387,23 @@
                     statusClass = 'text-red-500';
                 }
             }
+            
+            // ** SOLUCIÓN DE RENDERIZADO **
+            // Forzar un pequeño cambio de estilo en cada tick para obligar al navegador a repintar.
+            const nyseTimeEl = document.getElementById('nyse-time');
+            const newTime = nowET.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true, timeZone: TIMEZONE });
+            
+            if (nyseTimeEl.textContent !== newTime) {
+                nyseTimeEl.textContent = newTime;
+                // Alternar una clase de Tailwind insignificante para forzar el repintado
+                nyseTimeEl.classList.toggle('opacity-99');
+            }
+
 
             // Actualizar elementos HTML
-            document.getElementById('nyse-time').textContent = nowET.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true, timeZone: TIMEZONE });
             document.getElementById('nyse-date').textContent = nowET.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: TIMEZONE });
             document.getElementById('market-status-text').textContent = statusText;
-            document.getElementById('market-status-text').className = `text-xl font-extrabold ${statusClass} sm:text-2xl`;
+            document.getElementById('market-status-text').className = `text-lg font-extrabold ${statusClass} sm:text-xl`; // Ajuste de tamaño aquí
         }
 
         // --- Inicialización del Reloj ---
@@ -449,16 +466,16 @@
             
             // Mostrar advertencias si el porcentaje o la inversión son cero
             if (entryPrice === 0 || numberOfUnits === 0) {
-                 riskWarningEl.textContent = `⚠️ Advertencia: El Precio de Compra o la Cantidad de Acciones es cero, la Ganancia Bruta y el Retorno Total serán 0.`;
-                 riskWarningEl.classList.remove('hidden');
+                riskWarningEl.textContent = `⚠️ Advertencia: El Precio de Compra o la Cantidad de Acciones es cero, la Ganancia Bruta y el Retorno Total serán 0.`;
+                riskWarningEl.classList.remove('hidden');
             } else if (percentage < 0) {
-                 riskWarningEl.textContent = `⚠️ Advertencia: El porcentaje es negativo (${percentage}%), calculando precio objetivo para una pérdida.`;
-                 riskWarningEl.classList.remove('hidden');
+                riskWarningEl.textContent = `⚠️ Advertencia: El porcentaje es negativo (${percentage}%), calculando precio objetivo para una pérdida.`;
+                riskWarningEl.classList.remove('hidden');
             } else if (percentage === 0) {
-                 riskWarningEl.textContent = `⚠️ El porcentaje de ganancia es 0%, el precio objetivo será igual al precio de entrada.`;
-                 riskWarningEl.classList.remove('hidden');
+                riskWarningEl.textContent = `⚠️ El porcentaje de ganancia es 0%, el precio objetivo será igual al precio de entrada.`;
+                riskWarningEl.classList.remove('hidden');
             } else {
-                 riskWarningEl.classList.add('hidden');
+                riskWarningEl.classList.add('hidden');
             }
 
         }
@@ -513,145 +530,91 @@
             averagePriceEl.textContent = averagePrice.toLocaleString('es-ES', formatOptionsPrice);
         }
 
+
         /**
          * CALCULADORA 3: Opciones (Objetivo de Retorno)
          */
         function calculateOptionsTarget() {
-            // Obtener valores (tratar vacíos como 0, excepto comisión que tiene default)
-            const price = parseFloat(document.getElementById('optionsPrice').value) || 0;
-            const contracts = parseFloat(document.getElementById('optionsContracts').value) || 0;
-            const percentage = parseFloat(document.getElementById('optionsPercentage').value) || 0;
-            // Comisión tiene valor por defecto de 2.00 en el HTML, pero se obtiene el valor actual.
+            // Obtener valores (tratar vacíos como NaN para la validación)
+            const optionsPrice = parseFloat(document.getElementById('optionsPrice').value);
+            const optionsContracts = parseFloat(document.getElementById('optionsContracts').value);
+            const optionsPercentage = parseFloat(document.getElementById('optionsPercentage').value);
+            // Si la comisión está vacía, se asume 0 para que la validación sea más flexible.
             const commission = parseFloat(document.getElementById('optionsCommission').value) || 0; 
 
-            // Elementos de resultado y advertencia
             const totalCostEl = document.getElementById('optionsTotalCost');
             const grossProfitEl = document.getElementById('optionsGrossProfit');
             const netProfitEl = document.getElementById('optionsNetProfit');
             const salePriceEl = document.getElementById('optionsSalePrice');
-            const optionsWarningEl = document.getElementById('optionsWarning');
+            const warningEl = document.getElementById('optionsWarning');
 
             // Resetear resultados
             totalCostEl.textContent = '0.00';
             grossProfitEl.textContent = '0.00';
             netProfitEl.textContent = '0.00';
             salePriceEl.textContent = '0.00';
-            optionsWarningEl.classList.add('hidden');
-            
-            // Validaciones: Price >= 0, Contracts > 0, y todos deben ser números
-            if (price < 0 || contracts <= 0 || isNaN(price) || isNaN(contracts) || isNaN(percentage) || isNaN(commission)) {
-                optionsWarningEl.textContent = "⚠️ Por favor, ingresa valores numéricos válidos. El Precio por Contrato debe ser ≥ 0 y el Número de Contratos debe ser > 0.";
-                optionsWarningEl.classList.remove('hidden');
+            warningEl.classList.add('hidden');
+            warningEl.textContent = "⚠️ Por favor, ingresa valores numéricos válidos. Precio debe ser ≥ 0 y Contratos debe ser > 0.";
+
+            // Validación
+            if (isNaN(optionsPrice) || isNaN(optionsContracts) || isNaN(optionsPercentage) || isNaN(commission) ||
+                optionsPrice < 0 || optionsContracts <= 0 || commission < 0) {
+                warningEl.classList.remove('hidden');
                 return;
             }
 
-            // Constante: 1 contrato de opciones representa 100 acciones.
-            const sharesPerContract = 100;
+            // El factor de 100 es crucial para las opciones (1 contrato = 100 acciones)
+            const multiplier = optionsContracts * 100;
 
-            // 1. Costo Total de Entrada (Inversión Inicial)
-            const totalCost = price * contracts * sharesPerContract;
+            // 1. Costo Total de Entrada (Prima * 100 * Contratos)
+            const totalCost = optionsPrice * multiplier;
+
+            // 2. Ganancia Bruta Deseada (sin comisión)
+            const targetGrossProfit = totalCost * (optionsPercentage / 100);
+
+            // 3. Ganancia Neta (Retorno)
+            const netProfit = targetGrossProfit - commission;
             
-            // 2. Ganancia Bruta (Profit/Loss basado en porcentaje)
-            const grossProfit = totalCost * (percentage / 100);
+            // 4. Monto Total de Venta (Capital + Ganancia Bruta)
+            const totalSaleAmount = totalCost + targetGrossProfit;
 
-            // 3. Ganancia Neta (Ganancia Bruta - Comisión Total)
-            const netProfit = grossProfit - commission;
-
-            // 4. Retorno Total Esperado (Capital + Ganancia Bruta)
-            const totalReturn = totalCost + grossProfit;
+            // 5. Precio de Venta Objetivo (Prima)
+            // Se calcula dividiendo el valor total de la posición al cierre entre el número de acciones.
+            const optionsSalePrice = totalSaleAmount / multiplier;
             
-            // 5. Precio de Venta Objetivo (Precio de Prima Necesario)
-            // Se calcula Price_Sale = totalReturn / (contracts * sharesPerContract)
-            let targetSalePrice = 0;
-            if (contracts > 0) {
-                 targetSalePrice = totalReturn / (contracts * sharesPerContract);
-            }
-
-            // Mostrar resultados y aplicar estilos de color
-            totalCostEl.textContent = totalCost.toLocaleString('es-ES', formatOptionsCurrency);
-            
-            // Ganancia Bruta
-            grossProfitEl.textContent = grossProfit.toLocaleString('es-ES', formatOptionsCurrency);
-            grossProfitEl.classList.remove('text-green-500', 'text-red-500');
-            grossProfitEl.classList.add(grossProfit >= 0 ? 'text-green-500' : 'text-red-500');
-
-            // Ganancia Neta
-            netProfitEl.textContent = netProfit.toLocaleString('es-ES', formatOptionsCurrency);
-            netProfitEl.classList.remove('text-green-500', 'text-red-500', 'text-secondary-accent');
-            
+            // Asignar clases de color para Ganancia Neta
+            let netProfitClass = 'text-gray-400';
             if (netProfit > 0) {
-                netProfitEl.classList.add('text-green-500');
+                netProfitClass = 'text-green-500';
             } else if (netProfit < 0) {
-                netProfitEl.classList.add('text-red-500');
-            } else {
-                netProfitEl.classList.add('text-secondary-accent'); // Amarillo si es cero
+                netProfitClass = 'text-red-500';
             }
+
+            // Mostrar resultados
+            totalCostEl.textContent = totalCost.toLocaleString('es-ES', formatOptionsCurrency);
+            grossProfitEl.textContent = targetGrossProfit.toLocaleString('es-ES', formatOptionsCurrency);
             
-            // Precio de Venta Objetivo
-            salePriceEl.textContent = targetSalePrice.toLocaleString('es-ES', formatOptionsPrice);
-            
-            // Advertencias adicionales (e.g., net loss due to commission)
-            if (netProfit < 0 && grossProfit > 0) {
-                optionsWarningEl.textContent = `⚠️ Advertencia: Aunque la Ganancia Bruta es positiva, la Comisión Total (${commission.toLocaleString('es-ES', formatOptionsCurrency)} USD) resulta en una Pérdida Neta.`;
-                optionsWarningEl.classList.remove('hidden');
-            } else if (percentage === 0 && commission !== 0) {
-                optionsWarningEl.textContent = `⚠️ Advertencia: Con 0% de retorno, la Ganancia Neta será igual al negativo de su Comisión Total.`;
-                optionsWarningEl.classList.remove('hidden');
-            } else if (percentage === 0 && commission === 0) {
-                optionsWarningEl.classList.add('hidden'); // Sin advertencia si todo es cero
-            } else if (totalReturn < 0) {
-                optionsWarningEl.textContent = `⚠️ Advertencia: El Precio de Venta Objetivo es negativo. Esto ocurre si la pérdida porcentual es mayor al 100%.`;
-                optionsWarningEl.classList.remove('hidden');
+            // Aplicar estilo de color a la Ganancia Neta
+            netProfitEl.textContent = netProfit.toLocaleString('es-ES', formatOptionsCurrency);
+            // Limpiar clases existentes de color y aplicar la nueva
+            netProfitEl.classList.remove('text-secondary-accent', 'text-green-500', 'text-red-500'); 
+            netProfitEl.classList.add(netProfitClass);
+
+            salePriceEl.textContent = optionsSalePrice.toLocaleString('es-ES', formatOptionsPrice);
+
+            // Advertencias específicas
+            if (optionsPercentage === 0) {
+                warningEl.textContent = `⚠️ El porcentaje de retorno es 0%. La ganancia neta será igual a su comisión total de -${commission.toLocaleString('es-ES', formatOptionsCurrency)} USD (pérdida).`;
+                warningEl.classList.remove('hidden');
+            } else if (netProfit < 0 && optionsPercentage > 0) {
+                warningEl.textContent = `⚠️ La ganancia neta es negativa debido a la comisión de ${commission.toLocaleString('es-ES', formatOptionsCurrency)} USD. Necesitas un retorno bruto mayor al costo de la comisión.`;
+                warningEl.classList.remove('hidden');
+            } else if (optionsPercentage < 0) {
+                 warningEl.textContent = `⚠️ El porcentaje de retorno es negativo (${optionsPercentage}%), la calculadora muestra el precio objetivo para salir con esa pérdida.`;
+                 warningEl.classList.remove('hidden');
             }
         }
-        
-        // --- Lógica de Navegación por Teclado (Enter y Flechas) ---
-        document.addEventListener('DOMContentLoaded', () => {
-            // Seleccionar todos los inputs dentro de la sección de la calculadora Objetivo
-            const inputsObjetivo = document.querySelectorAll('#calculadora-objetivo input');
-            const buttonObjetivo = document.querySelector('#calculadora-objetivo button');
-            
-            // Seleccionar todos los inputs dentro de la sección de la calculadora Promedio
-            const inputsPromedio = document.querySelectorAll('#calculadora-promedio input');
-            const buttonPromedio = document.querySelector('#calculadora-promedio button');
 
-            // Seleccionar todos los inputs dentro de la sección de la calculadora Opciones
-            const inputsOpciones = document.querySelectorAll('#calculadora-opciones input');
-            const buttonOpciones = document.querySelector('#calculadora-opciones button');
-
-            // Función genérica de navegación por Enter/Flechas
-            const setupKeyboardNavigation = (inputs, button, calculateFunction) => {
-                inputs.forEach((input, index) => {
-                    input.addEventListener('keydown', (e) => {
-                        if (e.key === 'Enter') {
-                            e.preventDefault(); 
-                            if (index < inputs.length - 1) {
-                                inputs[index + 1].focus();
-                            } else {
-                                calculateFunction();
-                            }
-                        } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-                            e.preventDefault();
-                            if (e.key === 'ArrowDown' && index < inputs.length - 1) {
-                                inputs[index + 1].focus();
-                            } else if (e.key === 'ArrowUp' && index > 0) {
-                                inputs[index - 1].focus();
-                            }
-                        }
-                    });
-                });
-                // Enlazar el botón a la función de cálculo
-                if (button) {
-                    button.addEventListener('click', calculateFunction);
-                }
-            };
-            
-            // Aplicar navegación a todas las calculadoras
-            setupKeyboardNavigation(inputsObjetivo, buttonObjetivo, calculateTargetPrice);
-            setupKeyboardNavigation(inputsPromedio, buttonPromedio, calculateAveragePrice);
-            setupKeyboardNavigation(inputsOpciones, buttonOpciones, calculateOptionsTarget);
-        });
     </script>
-
 </body>
 </html>
